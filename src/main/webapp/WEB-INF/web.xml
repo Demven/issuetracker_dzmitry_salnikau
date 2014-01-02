@@ -8,12 +8,12 @@
   <description>JEE training project implementation by Dzmitry Salnikau</description>
 
   <servlet>
-    <servlet-name>SampleServlet</servlet-name>
-    <servlet-class>org.training.issuetracker.SampleServlet</servlet-class>
+    <servlet-name>MainController</servlet-name>
+    <servlet-class>org.training.issuetracker.controllers.MainController</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>SampleServlet</servlet-name>
-    <url-pattern>/*</url-pattern>
+    <servlet-name>MainController</servlet-name>
+    <url-pattern>/main</url-pattern>
   </servlet-mapping>
 
 </web-app>
