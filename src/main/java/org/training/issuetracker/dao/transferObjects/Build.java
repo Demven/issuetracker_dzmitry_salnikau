@@ -9,10 +9,10 @@ public class Build implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1064428683909095808L;
 	
-	String buildId;
-	String name;
-	String projectId;
-	String createdDate;
+	private String buildId;
+	private String name;
+	private String projectId;
+	private String createdDate;
 	
 	public Build(String buildId, String name, String projectId,
 			String createdDate) {

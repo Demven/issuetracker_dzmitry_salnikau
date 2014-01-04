@@ -1,4 +1,4 @@
-package org.training.issuetracker.dao.XML;
+package org.training.issuetracker.dao.xml;
 
 import org.training.issuetracker.dao.interfaces.ProjectDAO;
 import org.training.issuetracker.dao.transferObjects.Project;

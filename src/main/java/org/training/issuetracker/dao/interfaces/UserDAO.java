@@ -1,5 +1,7 @@
 package org.training.issuetracker.dao.interfaces;
 
+import java.util.ArrayList;
+
 import org.training.issuetracker.dao.transferObjects.User;
 
 /**
@@ -8,6 +10,12 @@ import org.training.issuetracker.dao.transferObjects.User;
  * @since 03.01.2013
  */
 public interface UserDAO {
+	
+	/**
+	 * @return ArrayList of all users, registered into the system
+	 */
+	public ArrayList<User> getUsers();
+	
 	/**
 	 * Check existing of the user with such parameters
 	 * @param email

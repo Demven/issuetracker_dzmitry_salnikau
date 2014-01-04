@@ -9,11 +9,11 @@ public class Project implements java.io.Serializable {
 
 	private static final long serialVersionUID = -6718949855046807801L;
 	
-	String projectId;
-	String name;
-	String description;
-	String buildId;
-	String manager;
+	private String projectId;
+	private String name;
+	private String description;
+	private String buildId;
+	private String manager;
 	
 	public Project(String projectId, String name, String description,
 			String buildId, String manager) {

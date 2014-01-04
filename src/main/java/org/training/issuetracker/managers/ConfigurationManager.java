@@ -10,11 +10,12 @@ public class ConfigurationManager {
 	private static final String BUNDLE_NAME = "config"; 
 	
 	// Pages for users
-	public static final String MAIN_PAGE_PATH = "MAIN_PAGE_PATH";
-	public static final String ERROR_PAGE_PATH = "ERROR_PAGE_PATH";
+	public static final String MAIN_PAGE_HEADER_PATH = "MAIN_PAGE_HEADER_PATH";
+	public static final String MAIN_PAGE_BODY_PATH = "MAIN_PAGE_BODY_PATH";
+	public static final String MAIN_PAGE_FOOTER_PATH = "MAIN_PAGE_FOOTER_PATH";
 	
-	// Cookies
-	public static final String COOKIE_LIFE_TIME = "COOKIE_LIFE_TIME";
+	// XML
+	public static final String XML_USERS_PATH = "XML_USERS_PATH";
 	
 	public static ConfigurationManager getInstance() { 
 		if (instance == null) { 

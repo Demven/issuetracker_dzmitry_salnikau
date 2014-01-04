@@ -9,20 +9,20 @@ public class Issue implements java.io.Serializable {
 
 	private static final long serialVersionUID = 4377407675405841235L;
 	
-	String issueId;
-	String createDate;
-	String createdBy;
-	String modifyDate;
-	String modifiedBy;
-	String summary;
-	String description;
-	String status;
-	String resolution;
-	String type;
-	String priority;
-	String projectId;
-	String buildFound;
-	String assignee;
+	private String issueId;
+	private String createDate;
+	private String createdBy;
+	private String modifyDate;
+	private String modifiedBy;
+	private String summary;
+	private String description;
+	private String status;
+	private String resolution;
+	private String type;
+	private String priority;
+	private String projectId;
+	private String buildFound;
+	private String assignee;
 	
 	public Issue(String issueId, String createDate, String createdBy,
 			String modifyDate, String modifiedBy, String summary,
