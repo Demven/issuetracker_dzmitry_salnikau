@@ -15,26 +15,29 @@ import org.xml.sax.helpers.XMLReaderFactory;
 public class XMLUserDAO implements UserDAO{
 	
 	private static final Logger logger = Logger.getLogger(XMLUserDAO.class);
-	
 	private static final String XML_FILENAME = ConfigurationManager.getInstance().getProperty(ConfigurationManager.XML_USERS_PATH);
+	
+	private String xmlFullPath;
+	
+	public XMLUserDAO(String rootPath){
+		xmlFullPath = rootPath + XML_FILENAME;
+	}
 	
 	@Override
 	public ArrayList<User> getUsers() {
 		ArrayList<User> users = null;
-		try { 
+		try {
 			XMLReader reader = XMLReaderFactory.createXMLReader();  
 			UsersHandler handler = new UsersHandler(); 
 			reader.setContentHandler(handler); 
-			if(handler != null) { 
-				reader.parse(XML_FILENAME); 
-			}
+			reader.parse(xmlFullPath); 
 			users = handler.getUsers();
 		} catch (SAXException e) { 
 			e.printStackTrace(); 
-			logger.error(e.getStackTrace()); 
+			logger.error(e.getMessage()); 
 		} catch (IOException e) { 
 			e.printStackTrace(); 
-			logger.error(e.getStackTrace()); 
+			logger.error(e.getMessage()); 
 		}
 		return users;
 	}

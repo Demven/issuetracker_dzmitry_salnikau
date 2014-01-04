@@ -14,7 +14,7 @@ import org.training.issuetracker.managers.ConfigurationManager;
 public class NoCommand implements Command { 
 	 
 	public void execute(HttpServletRequest request, HttpServletResponse response, ServletContext context) throws ServletException, IOException { 
-		/*в случае прямого обращения к контроллеру - переадресация на главную страницу*/ 
+		// In case of direct address to the servlet - show main page
 		String header = ConfigurationManager.getInstance().getProperty(ConfigurationManager.MAIN_PAGE_HEADER_PATH);
 		context.getRequestDispatcher(header).include(request, response);
 		

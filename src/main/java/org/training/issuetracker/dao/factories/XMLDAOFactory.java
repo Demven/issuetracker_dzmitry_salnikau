@@ -11,8 +11,8 @@ import org.training.issuetracker.dao.xml.XMLUserDAO;
 
 public class XMLDAOFactory extends DAOFactory {
 
-	public UserDAO getUserDAO(){
-	    return new XMLUserDAO();
+	public UserDAO getUserDAO(String rootPath){
+	    return new XMLUserDAO(rootPath);
 	}
 	
 	public IssueDAO getIssueDAO(){

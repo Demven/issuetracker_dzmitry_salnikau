@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.training.issuetracker.commands.Command;
 import org.training.issuetracker.commands.mainCommands.NoCommand;
+import org.training.issuetracker.commands.mainCommands.SignInCommand;
 
 public class MainRequestHelper { 
 	private static MainRequestHelper instance = null; 
@@ -14,7 +15,7 @@ public class MainRequestHelper {
  
 	private MainRequestHelper() { 
 		//заполнение таблицы командами 
-		//commands.put("changeLocale", new ChangeLocaleCommand());
+		commands.put("signIn", new SignInCommand());
 	}  
  
 	public Command getCommand(HttpServletRequest request) { 

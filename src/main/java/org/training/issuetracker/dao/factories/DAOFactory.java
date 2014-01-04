@@ -11,7 +11,7 @@ public abstract class DAOFactory {
 	  public static final int XML = 1;
 
 	  // Methods for each DAO, that can be created
-	  public abstract UserDAO getUserDAO();
+	  public abstract UserDAO getUserDAO(String rootPath);
 	  public abstract IssueDAO getIssueDAO();
 	  public abstract ProjectDAO getProjectDAO();
 	  public abstract BuildDAO getBuildDAO();
