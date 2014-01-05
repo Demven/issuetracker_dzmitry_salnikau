@@ -1,5 +1,7 @@
 package org.training.issuetracker.dao.interfaces;
 
+import java.util.ArrayList;
+
 import org.training.issuetracker.dao.transferObjects.Issue;
 
 /**
@@ -8,6 +10,11 @@ import org.training.issuetracker.dao.transferObjects.Issue;
  * @since 03.01.2013
  */
 public interface IssueDAO {
+	
+	/**
+	 * @return ArrayList of all issues
+	 */
+	public ArrayList<Issue> getIssues();
 	
 	/**
 	 * Returns Issue object with stated issueId

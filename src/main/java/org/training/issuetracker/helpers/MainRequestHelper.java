@@ -16,6 +16,7 @@ public class MainRequestHelper {
 	private MainRequestHelper() { 
 		//заполнение таблицы командами 
 		commands.put("signIn", new SignInCommand());
+		//commands.put("issues", new IssuesCommand());
 	}  
  
 	public Command getCommand(HttpServletRequest request) { 

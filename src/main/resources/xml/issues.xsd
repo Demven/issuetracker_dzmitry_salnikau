@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema  xmlns="http://www.w3.org/2001/XMLSchema" 
+  targetNamespace="http://www.issuetracker.training.org/issues" 
+  xmlns:tns="http://www.issuetracker.training.org/issues">
+	<element name = "issues">
+		<complexType>
+			<sequence>
+				<element name="issue" type="tns:issue" minOccurs="0" maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element> 
+	
+	<complexType name="issue">
+		<sequence>
+			<element name="createdate" type="string" />
+			<element name="createdby" type="string" />
+			<element name="modifydate" type="string" />
+			<element name="modifiedby" type ="string" />
+			<element name="summary" type="string" />
+			<element name="description" type="string" />
+			<element name="status" type="tns:status" />
+			<element name="resolution" type="tns:resolution" />
+			<element name="type" type="tns:type" />
+			<element name="priority" type="tns:priority" />
+			<element name="projectid" type="string" />
+			<element name="buildfound" type="string" />
+			<element name="assignee" type="string" />
+		</sequence>
+		<attribute name="id" type="integer" use="required" />
+	</complexType>
+
+	<simpleType name="status">
+       <restriction base="string">
+          <enumeration value="new" />
+          <enumeration value="assigned" />
+          <enumeration value="in_progress" />
+          <enumeration value="resolved" />
+          <enumeration value="closed" />
+          <enumeration value="reopened" />
+       </restriction>
+    </simpleType>
+    
+    <simpleType name="resolution">
+       <restriction base="string">
+          <enumeration value="fixed" />
+          <enumeration value="invalid" />
+          <enumeration value="wontfix" />
+          <enumeration value="worksforme" />
+       </restriction>
+    </simpleType>
+    
+    <simpleType name="type">
+       <restriction base="string">
+          <enumeration value="cosmetic" />
+          <enumeration value="bug" />
+          <enumeration value="feature" />
+          <enumeration value="performance" />
+       </restriction>
+    </simpleType>
+    
+    <simpleType name="priority">
+       <restriction base="string">
+          <enumeration value="critical" />
+          <enumeration value="major" />
+          <enumeration value="important" />
+          <enumeration value="minor" />
+       </restriction>
+    </simpleType>
+</schema>

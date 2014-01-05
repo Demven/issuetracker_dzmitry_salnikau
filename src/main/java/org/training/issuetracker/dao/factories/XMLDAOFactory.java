@@ -15,8 +15,8 @@ public class XMLDAOFactory extends DAOFactory {
 	    return new XMLUserDAO(rootPath);
 	}
 	
-	public IssueDAO getIssueDAO(){
-	    return new XMLIssueDAO();
+	public IssueDAO getIssueDAO(String rootPath){
+	    return new XMLIssueDAO(rootPath);
 	}
 	
 	public ProjectDAO getProjectDAO(){

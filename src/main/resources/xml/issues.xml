@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:issues xmlns:tns="http://www.issuetracker.training.org/issues" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+  xsi:schemaLocation="http://www.issuetracker.training.org/issues issues.xsd">
+	<issue id = "1">
+		<createdate>01.01.2014</createdate>
+		<createdby>3</createdby>
+		<modifydate></modifydate>
+		<modifiedby></modifiedby>
+		<summary>Progress bar is blinking</summary>
+		<description>When a user tries to download a file, the progress bar is blinking for some strange reason.</description>
+		<status>assigned</status>
+		<resolution>worksforme</resolution>
+		<type>cosmetic</type>
+		<priority>important</priority>
+		<projectid>1</projectid>
+		<buildfound>1</buildfound>
+		<assignee>5</assignee>
+	</issue>
+	<issue id = "2">
+		<createdate>01.01.2014</createdate>
+		<createdby>4</createdby>
+		<modifydate>02.01.2014</modifydate>
+		<modifiedby>5</modifiedby>
+		<summary>Incorrect title on the main page</summary>
+		<description>The title in the main page should be exactly as in the requirements of the customer.</description>
+		<status>in_progress</status>
+		<resolution>worksforme</resolution>
+		<type>cosmetic</type>
+		<priority>major</priority>
+		<projectid>2</projectid>
+		<buildfound>2</buildfound>
+		<assignee>5</assignee>
+	</issue>
+	<issue id = "3">
+		<createdate>02.01.2014</createdate>
+		<createdby>2</createdby>
+		<modifydate>03.01.2014</modifydate>
+		<modifiedby>7</modifiedby>
+		<summary>Invalid transaction</summary>
+		<description>Payment does not come into the account. There is a serious bug with some transactions.</description>
+		<status>resolved</status>
+		<resolution>fixed</resolution>
+		<type>bug</type>
+		<priority>critical</priority>
+		<projectid>2</projectid>
+		<buildfound>2</buildfound>
+		<assignee>7</assignee>
+	</issue>
+	<issue id = "4">
+		<createdate>02.01.2014</createdate>
+		<createdby>1</createdby>
+		<modifydate></modifydate>
+		<modifiedby></modifiedby>
+		<summary>Window doesn't close</summary>
+		<description>The window, that shows a list of transactions doesn't close, when you click on the cross.</description>
+		<status>assigned</status>
+		<resolution>worksforme</resolution>
+		<type>bug</type>
+		<priority>important</priority>
+		<projectid>2</projectid>
+		<buildfound>2</buildfound>
+		<assignee>2</assignee>
+	</issue>
+	<issue id = "5">
+		<createdate>02.01.2014</createdate>
+		<createdby>5</createdby>
+		<modifydate>03.01.2014</modifydate>
+		<modifiedby>8</modifiedby>
+		<summary>Images processing too slow</summary>
+		<description>When a user upload an image to process, it takes too long. Need to check process's perfomance.</description>
+		<status>closed</status>
+		<resolution>invalid</resolution>
+		<type>performance</type>
+		<priority>important</priority>
+		<projectid>1</projectid>
+		<buildfound>1</buildfound>
+		<assignee>8</assignee>
+	</issue>
+	<issue id = "6">
+		<createdate>03.01.2014</createdate>
+		<createdby>5</createdby>
+		<modifydate></modifydate>
+		<modifiedby></modifiedby>
+		<summary>The style for the button doesn't made</summary>
+		<description>In our android app button for a checking updates yet without a style.</description>
+		<status>new</status>
+		<resolution>worksforme</resolution>
+		<type>feature</type>
+		<priority>minor</priority>
+		<projectid>3</projectid>
+		<buildfound>3</buildfound>
+		<assignee></assignee>
+	</issue>
+	<issue id = "7">
+		<createdate>03.01.2014</createdate>
+		<createdby>2</createdby>
+		<modifydate>04.01.2014</modifydate>
+		<modifiedby>2</modifiedby>
+		<summary>Runtime error while checking updates</summary>
+		<description>When the button for checking updates is pressed there an error occurs.</description>
+		<status>resolved</status>
+		<resolution>fixed</resolution>
+		<type>bug</type>
+		<priority>major</priority>
+		<projectid>3</projectid>
+		<buildfound>3</buildfound>
+		<assignee>8</assignee>
+	</issue>
+	<issue id = "8">
+		<createdate>04.01.2014</createdate>
+		<createdby>1</createdby>
+		<modifydate></modifydate>
+		<modifiedby></modifiedby>
+		<summary>Need to create a menu for administrator</summary>
+		<description>When an administrator is authorised in the top left corner should be the link to special menu.</description>
+		<status>assigned</status>
+		<resolution>worksforme</resolution>
+		<type>feature</type>
+		<priority>critical</priority>
+		<projectid>4</projectid>
+		<buildfound>4</buildfound>
+		<assignee>2</assignee>
+	</issue>
+	<issue id = "9">
+		<createdate>04.01.2014</createdate>
+		<createdby>1</createdby>
+		<modifydate>04.01.2014</modifydate>
+		<modifiedby>3</modifiedby>
+		<summary>Link for the admin centre is incorrect</summary>
+		<description>Link for the admin centre (in the top right corner) is incorrect. It leads to the profile.</description>
+		<status>reopened</status>
+		<resolution>worksforme</resolution>
+		<type>bug</type>
+		<priority>minor</priority>
+		<projectid>4</projectid>
+		<buildfound>4</buildfound>
+		<assignee>2</assignee>
+	</issue>
+	<issue id = "10">
+		<createdate>05.01.2014</createdate>
+		<createdby>3</createdby>
+		<modifydate></modifydate>
+		<modifiedby></modifiedby>
+		<summary>The table should be with a 4px border-radius</summary>
+		<description>The table should be with a 4px border-radius</description>
+		<status>closed</status>
+		<resolution>fixed</resolution>
+		<type>cosmetic</type>
+		<priority>important</priority>
+		<projectid>4</projectid>
+		<buildfound>4</buildfound>
+		<assignee>5</assignee>
+	</issue>
+	<issue id = "11">
+		<createdate>05.01.2014</createdate>
+		<createdby>2</createdby>
+		<modifydate>05.01.2014</modifydate>
+		<modifiedby>3</modifiedby>
+		<summary>Hangs while opening frame with the logs</summary>
+		<description>Application hangs while opening frame with the logs.</description>
+		<status>resolved</status>
+		<resolution>fixed</resolution>
+		<type>bug</type>
+		<priority>critical</priority>
+		<projectid>1</projectid>
+		<buildfound>1</buildfound>
+		<assignee>3</assignee>
+	</issue>
+	<issue id = "12">
+		<createdate>05.01.2014</createdate>
+		<createdby>6</createdby>
+		<modifydate></modifydate>
+		<modifiedby></modifiedby>
+		<summary>Scroll into the frame should be twice as bigger</summary>
+		<description>The scroll in the frame, which shows the processing progress, should be twice as bigger. That is requirement of the client.</description>
+		<status>assigned</status>
+		<resolution>worksforme</resolution>
+		<type>bug</type>
+		<priority>important</priority>
+		<projectid>1</projectid>
+		<buildfound>1</buildfound>
+		<assignee>2</assignee>
+	</issue>
+	<issue id = "13">
+		<createdate>05.01.2014</createdate>
+		<createdby>6</createdby>
+		<modifydate></modifydate>
+		<modifiedby></modifiedby>
+		<summary>Vertical alignment should be in the each block</summary>
+		<description>Vertical alignment should be in the each block (cell of the table), because it's look not much esthetical</description>
+		<status>assigned</status>
+		<resolution>worksforme</resolution>
+		<type>bug</type>
+		<priority>important</priority>
+		<projectid>2</projectid>
+		<buildfound>2</buildfound>
+		<assignee>3</assignee>
+	</issue>
+	<issue id = "14">
+		<createdate>06.01.2014</createdate>
+		<createdby>6</createdby>
+		<modifydate>06.01.2014</modifydate>
+		<modifiedby>6</modifiedby>
+		<summary>Activity does not save it's state</summary>
+		<description>The Activity that shows the list of images, when minimized and then recreated - the state lost.</description>
+		<status>resolved</status>
+		<resolution>invalid</resolution>
+		<type>bug</type>
+		<priority>major</priority>
+		<projectid>4</projectid>
+		<buildfound>4</buildfound>
+		<assignee>4</assignee>
+	</issue>
+	<issue id = "15">
+		<createdate>06.01.2014</createdate>
+		<createdby>1</createdby>
+		<modifydate>07.01.2014</modifydate>
+		<modifiedby>5</modifiedby>
+		<summary>Animation lasts too long</summary>
+		<description>Animation of the window opening lasts too long</description>
+		<status>assigned</status>
+		<resolution>worksforme</resolution>
+		<type>cosmetic</type>
+		<priority>minor</priority>
+		<projectid>3</projectid>
+		<buildfound>3</buildfound>
+		<assignee>5</assignee>
+	</issue>
+	<issue id = "16">
+		<createdate>06.01.2014</createdate>
+		<createdby>3</createdby>
+		<modifydate></modifydate>
+		<modifiedby></modifiedby>
+		<summary>Runtime error during network connecting</summary>
+		<description>Runtime error during network connecting, when you try to open the list with images</description>
+		<status>assigned</status>
+		<resolution>worksforme</resolution>
+		<type>bug</type>
+		<priority>critical</priority>
+		<projectid>3</projectid>
+		<buildfound>3</buildfound>
+		<assignee>2</assignee>
+	</issue>
+	<issue id = "17">
+		<createdate>06.01.2014</createdate>
+		<createdby>8</createdby>
+		<modifydate>07.01.2014</modifydate>
+		<modifiedby>8</modifiedby>
+		<summary>Russian is not supported</summary>
+		<description>Russian is not supported, check out the properties</description>
+		<status>closed</status>
+		<resolution>invalid</resolution>
+		<type>bug</type>
+		<priority>minor</priority>
+		<projectid>5</projectid>
+		<buildfound>5</buildfound>
+		<assignee>3</assignee>
+	</issue>
+	<issue id = "18">
+		<createdate>07.01.2014</createdate>
+		<createdby>8</createdby>
+		<modifydate>07.01.2014</modifydate>
+		<modifiedby>4</modifiedby>
+		<summary>Eye motion capture working not good for user with glasses.</summary>
+		<description>Algorithm of the eye motion capture should be improved, because reflections impede.</description>
+		<status>in_progress</status>
+		<resolution>worksforme</resolution>
+		<type>feature</type>
+		<priority>critical</priority>
+		<projectid>5</projectid>
+		<buildfound>5</buildfound>
+		<assignee>4</assignee>
+	</issue>
+	<issue id = "19">
+		<createdate>07.01.2014</createdate>
+		<createdby>8</createdby>
+		<modifydate>08.01.2014</modifydate>
+		<modifiedby>4</modifiedby>
+		<summary>While scrolling with eye motion, sometimes application hangs.</summary>
+		<description>While scrolling with eye motion, sometimes application hangs.</description>
+		<status>resolved</status>
+		<resolution>worksforme</resolution>
+		<type>feature</type>
+		<priority>critical</priority>
+		<projectid>5</projectid>
+		<buildfound>5</buildfound>
+		<assignee>4</assignee>
+	</issue>
+	<issue id = "20">
+		<createdate>07.01.2014</createdate>
+		<createdby>8</createdby>
+		<modifydate>08.01.2014</modifydate>
+		<modifiedby>2</modifiedby>
+		<summary>Sweden should be supported</summary>
+		<description>In Sweden we have some customers, so it's required to support Swedish language.</description>
+		<status>resolved</status>
+		<resolution>wontfix</resolution>
+		<type>feature</type>
+		<priority>important</priority>
+		<projectid>5</projectid>
+		<buildfound>5</buildfound>
+		<assignee>2</assignee>
+	</issue>
+</tns:issues>

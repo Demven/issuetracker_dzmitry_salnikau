@@ -16,6 +16,7 @@ public class ConfigurationManager {
 	
 	// XML
 	public static final String XML_USERS_PATH = "XML_USERS_PATH";
+	public static final String XML_ISSUES_PATH = "XML_ISSUES_PATH";
 	
 	public static ConfigurationManager getInstance() { 
 		if (instance == null) { 

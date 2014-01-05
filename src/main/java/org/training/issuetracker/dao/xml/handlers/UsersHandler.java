@@ -27,7 +27,7 @@ public class UsersHandler implements ContentHandler {
 	public void startElement(String uri, String localName, String qName, Attributes attrs){ 
 		if(qName.equals(User.ELEMENT_ROOT)){ 
 			currentUser = new User();			
-			currentUser.setUserId(attrs.getValue(0)); 
+			currentUser.setUserId(Integer.valueOf(attrs.getValue(0))); 
 		}
 		currentElement = qName.toLowerCase(); 
 	} 

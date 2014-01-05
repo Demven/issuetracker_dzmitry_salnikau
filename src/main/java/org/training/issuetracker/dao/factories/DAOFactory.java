@@ -12,7 +12,7 @@ public abstract class DAOFactory {
 
 	  // Methods for each DAO, that can be created
 	  public abstract UserDAO getUserDAO(String rootPath);
-	  public abstract IssueDAO getIssueDAO();
+	  public abstract IssueDAO getIssueDAO(String rootPath);
 	  public abstract ProjectDAO getProjectDAO();
 	  public abstract BuildDAO getBuildDAO();
 

@@ -16,14 +16,14 @@ public class User implements java.io.Serializable {
 	public final static String SUBELEMENT_ROLE = "role";
 	public final static String SUBELEMENT_PASSWORD = "password";
 	
-	private String userId;
+	private int userId;
 	private String firstName;
 	private String lastName;
 	private String email;
 	private Role role;
 	private String password;
 	
-	public User(String userId, String firstName, String lastName, String email,
+	public User(int userId, String firstName, String lastName, String email,
 			Role role, String password) {
 		this.userId = userId;
 		this.firstName = firstName;
@@ -67,10 +67,10 @@ public class User implements java.io.Serializable {
 	    }
 	}
 
-	public String getUserId() {
+	public int getUserId() {
 		return userId;
 	}
-	public void setUserId(String userId) {
+	public void setUserId(int userId) {
 		this.userId = userId;
 	}
 
