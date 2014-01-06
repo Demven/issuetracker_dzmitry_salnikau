@@ -10,13 +10,16 @@ public class ConfigurationManager {
 	private static final String BUNDLE_NAME = "config"; 
 	
 	// Pages for users
-	public static final String MAIN_PAGE_HEADER_PATH = "MAIN_PAGE_HEADER_PATH";
+	public static final String HEADER_PATH = "HEADER_PATH";
+	public static final String FOOTER_PATH = "FOOTER_PATH";
+	
 	public static final String MAIN_PAGE_BODY_PATH = "MAIN_PAGE_BODY_PATH";
-	public static final String MAIN_PAGE_FOOTER_PATH = "MAIN_PAGE_FOOTER_PATH";
 	
 	// XML
 	public static final String XML_USERS_PATH = "XML_USERS_PATH";
 	public static final String XML_ISSUES_PATH = "XML_ISSUES_PATH";
+	public static final String XML_PROJECTS_PATH = "XML_PROJECTS_PATH";
+	public static final String XML_BUILDS_PATH = "XML_BUILDS_PATH";
 	
 	public static ConfigurationManager getInstance() { 
 		if (instance == null) { 

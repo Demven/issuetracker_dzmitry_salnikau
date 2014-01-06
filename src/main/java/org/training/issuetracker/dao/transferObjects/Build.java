@@ -9,48 +9,46 @@ public class Build implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1064428683909095808L;
 	
-	private String buildId;
-	private String name;
-	private String projectId;
-	private String createdDate;
+	public final static String ELEMENT_ROOT = "build";
+	public final static String SUBELEMENT_PROJECT = "project";
+	public final static String SUBELEMENT_VERSION = "version";
 	
-	public Build(String buildId, String name, String projectId,
-			String createdDate) {
+	private int buildId;
+	private int project;
+	private String version;
+	
+	public Build(int buildId, int project,
+			String version) {
 		this.buildId = buildId;
-		this.name = name;
-		this.projectId = projectId;
-		this.createdDate = createdDate;
+		this.project = project;
+		this.version = version;
 	}
 
-	public String getBuildId() {
+	public Build(){
+	}
+	
+	public int getBuildId() {
 		return buildId;
 	}
-
-	public void setBuildId(String buildId) {
+	public void setBuildId(int buildId) {
 		this.buildId = buildId;
 	}
 
-	public String getName() {
-		return name;
+	
+	public int getProject() {
+		return project;
+	}
+	public void setProject(int project) {
+		this.project = project;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	
+	public String getVersion() {
+		return version;
+	}
+	public void setVersion(String version) {
+		this.version = version;
 	}
 
-	public String getProjectId() {
-		return projectId;
-	}
 
-	public void setProjectId(String projectId) {
-		this.projectId = projectId;
-	}
-
-	public String getCreatedDate() {
-		return createdDate;
-	}
-
-	public void setCreatedDate(String createdDate) {
-		this.createdDate = createdDate;
-	}
 }

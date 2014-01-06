@@ -5,7 +5,9 @@ import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 
 import org.training.issuetracker.commands.Command;
+import org.training.issuetracker.commands.mainCommands.BuildsCommand;
 import org.training.issuetracker.commands.mainCommands.NoCommand;
+import org.training.issuetracker.commands.mainCommands.ProjectsCommand;
 import org.training.issuetracker.commands.mainCommands.SignInCommand;
 
 public class MainRequestHelper { 
@@ -16,7 +18,8 @@ public class MainRequestHelper {
 	private MainRequestHelper() { 
 		//заполнение таблицы командами 
 		commands.put("signIn", new SignInCommand());
-		//commands.put("issues", new IssuesCommand());
+		commands.put("projects", new ProjectsCommand());
+		commands.put("builds", new BuildsCommand());
 	}  
  
 	public Command getCommand(HttpServletRequest request) { 

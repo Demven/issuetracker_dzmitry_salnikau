@@ -1,5 +1,7 @@
 package org.training.issuetracker.dao.interfaces;
 
+import java.util.ArrayList;
+
 import org.training.issuetracker.dao.transferObjects.Project;
 
 /**
@@ -8,6 +10,11 @@ import org.training.issuetracker.dao.transferObjects.Project;
  * @since 03.01.2013
  */
 public interface ProjectDAO {
+	
+	/**
+	 * @return ArrayList of all projects
+	 */
+	public ArrayList<Project> getProjects();
 	
 	/**
 	 * Returns Project object with stated projectId

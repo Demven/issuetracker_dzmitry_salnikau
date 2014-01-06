@@ -1,5 +1,7 @@
 package org.training.issuetracker.dao.interfaces;
 
+import java.util.ArrayList;
+
 import org.training.issuetracker.dao.transferObjects.Build;
 
 /**
@@ -8,6 +10,11 @@ import org.training.issuetracker.dao.transferObjects.Build;
  * @since 03.01.2013
  */
 public interface BuildDAO {
+	
+	/**
+	 * @return ArrayList of all builds for all projects
+	 */
+	public ArrayList<Build> getBuilds();
 	
 	/**
 	 * Returns Build object with stated buildId

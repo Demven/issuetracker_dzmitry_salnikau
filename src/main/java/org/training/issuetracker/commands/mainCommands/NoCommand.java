@@ -25,18 +25,18 @@ public class NoCommand implements Command {
 		response.setContentType("text/html");
 		out = response.getWriter();
 		
-		String header = ConfigurationManager.getInstance().getProperty(ConfigurationManager.MAIN_PAGE_HEADER_PATH);
+		String header = ConfigurationManager.getInstance().getProperty(ConfigurationManager.HEADER_PATH);
 		context.getRequestDispatcher(header).include(request, response);
-		
-		String body = ConfigurationManager.getInstance().getProperty(ConfigurationManager.MAIN_PAGE_BODY_PATH);
-		context.getRequestDispatcher(body).include(request, response);
 		
 		DAOFactory xmlFactory = DAOFactory.getDAOFactory(DAOFactory.XML);
 		IssueDAO issueDAO = xmlFactory.getIssueDAO(context.getRealPath("/"));
 		ArrayList<Issue> issues = issueDAO.getIssues();
 		printIssuesData(issues);
 		
-		String footer = ConfigurationManager.getInstance().getProperty(ConfigurationManager.MAIN_PAGE_FOOTER_PATH);
+		String body = ConfigurationManager.getInstance().getProperty(ConfigurationManager.MAIN_PAGE_BODY_PATH);
+		context.getRequestDispatcher(body).include(request, response);
+		
+		String footer = ConfigurationManager.getInstance().getProperty(ConfigurationManager.FOOTER_PATH);
 		context.getRequestDispatcher(footer).include(request, response);
 	} 
 	

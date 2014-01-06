@@ -19,11 +19,11 @@ public class XMLDAOFactory extends DAOFactory {
 	    return new XMLIssueDAO(rootPath);
 	}
 	
-	public ProjectDAO getProjectDAO(){
-	    return new XMLProjectDAO();
+	public ProjectDAO getProjectDAO(String rootPath){
+	    return new XMLProjectDAO(rootPath);
 	}
 	
-	public BuildDAO getBuildDAO(){
-	    return new XMLBuildDAO();
+	public BuildDAO getBuildDAO(String rootPath){
+	    return new XMLBuildDAO(rootPath);
 	}
 }
