@@ -43,9 +43,15 @@ public class XMLProjectDAO implements ProjectDAO {
 	}
 	
 	@Override
-	public Project getProjectById(String projectId) {
-		// TODO Auto-generated method stub
-		return null;
+	public Project getProjectById(int projectId) {
+		Project searchedProject = null;
+		ArrayList<Project> projects = getProjects();
+		for(Project project: projects){
+			if(project.getProjectId() == projectId){
+				searchedProject = project;
+			}
+		}
+		return searchedProject;
 	}
 
 	@Override
@@ -55,7 +61,7 @@ public class XMLProjectDAO implements ProjectDAO {
 	}
 
 	@Override
-	public boolean deleteProject(String projectId) {
+	public boolean deleteProject(int projectId) {
 		// TODO Auto-generated method stub
 		return false;
 	}

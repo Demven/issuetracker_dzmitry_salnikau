@@ -43,9 +43,15 @@ public class XMLBuildDAO implements BuildDAO{
 	}
 	
 	@Override
-	public Build getBuildById(String buildId) {
-		// TODO Auto-generated method stub
-		return null;
+	public Build getBuildById(int buildId) {
+		Build searchedBuild = null;
+		ArrayList<Build> builds = getBuilds();
+		for(Build build: builds){
+			if(build.getBuildId() == buildId){
+				searchedBuild = build;
+			}
+		}
+		return searchedBuild;
 	}
 
 	@Override
@@ -55,7 +61,7 @@ public class XMLBuildDAO implements BuildDAO{
 	}
 
 	@Override
-	public boolean deleteBuild(String buildId) {
+	public boolean deleteBuild(int buildId) {
 		// TODO Auto-generated method stub
 		return false;
 	}

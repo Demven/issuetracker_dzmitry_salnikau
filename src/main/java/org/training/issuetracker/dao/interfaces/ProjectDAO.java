@@ -21,7 +21,7 @@ public interface ProjectDAO {
 	 * @param projectId
 	 * @return Project 
 	 */
-	public Project getProjectById(String projectId);
+	public Project getProjectById(int projectId);
 	
 	/**
 	 * Adds new project in a data storage
@@ -35,7 +35,7 @@ public interface ProjectDAO {
 	 * @param projectId
 	 * @return boolean - true, if it was successful
 	 */
-	public boolean deleteProject(String projectId);
+	public boolean deleteProject(int projectId);
 	
 	/**
 	 * Update the project's data 

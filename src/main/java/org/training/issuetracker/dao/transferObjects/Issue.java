@@ -1,13 +1,19 @@
 package org.training.issuetracker.dao.transferObjects;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.Date;
+
 /**
  * Class, describing an issue
  * @author Dzmitry Salnikau
  * @since 02.01.2014
  */
-public class Issue implements java.io.Serializable {
+public class Issue implements java.io.Serializable, Comparable<Issue> {
 
 	private static final long serialVersionUID = 4377407675405841235L;
+	
+	public final static int MAX_SHOWN_NUMBER = 10;
 	
 	public final static String ELEMENT_ROOT = "issue";
 	public final static String SUBELEMENT_CREATE_DATE = "createdate";
@@ -309,5 +315,23 @@ public class Issue implements java.io.Serializable {
 		this.assignee = assignee;
 	}
 	
-	
+
+	@Override
+	public int compareTo(Issue two) {
+		String dateOne = this.getCreateDate();
+		String dateTwo = two.getCreateDate();
+		
+		DateFormat df = DateFormat.getDateInstance();
+		
+		Date d1 = null;
+		Date d2 = null;
+		try {
+			d1 = df.parse(dateOne);
+			d2 = df.parse(dateTwo);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		return d1.compareTo(d2);
+	}
 }

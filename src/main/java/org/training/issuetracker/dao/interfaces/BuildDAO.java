@@ -21,7 +21,7 @@ public interface BuildDAO {
 	 * @param buildId
 	 * @return Build 
 	 */
-	public Build getBuildById(String buildId);
+	public Build getBuildById(int buildId);
 	
 	/**
 	 * Adds new build in a data storage
@@ -35,7 +35,7 @@ public interface BuildDAO {
 	 * @param buildId
 	 * @return boolean - true, if it was successful
 	 */
-	public boolean deleteBuild(String buildId);
+	public boolean deleteBuild(int buildId);
 	
 	/**
 	 * Update the build's data 
