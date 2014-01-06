@@ -218,7 +218,7 @@
 		<modifydate>07.01.2014</modifydate>
 		<modifiedby>5</modifiedby>
 		<summary>Animation lasts too long</summary>
-		<description>Animation of the window opening lasts too long</description>
+		<description>Animation of the search-fragment opening lasts too long</description>
 		<status>assigned</status>
 		<resolution>worksforme</resolution>
 		<type>cosmetic</type>

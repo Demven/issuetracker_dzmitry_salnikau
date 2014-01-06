@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:builds xmlns:tns="http://www.issuetracker.training.org/builds" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+  xsi:schemaLocation="http://www.issuetracker.training.org/builds builds.xsd">
+	<build id = "1">
+		<project>1</project>
+		<version>0.6</version>
+	</build>
+	<build id = "2">
+		<project>2</project>
+		<version>0.4</version>
+	</build>
+	<build id = "3">
+		<project>3</project>
+		<version>1.0</version>
+	</build>
+	<build id = "4">
+		<project>4</project>
+		<version>0.8</version>
+	</build>
+	<build id = "5">
+		<project>5</project>
+		<version>0.2</version>
+	</build>
+</tns:builds>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema  xmlns="http://www.w3.org/2001/XMLSchema" 
+  targetNamespace="http://www.issuetracker.training.org/builds" 
+  xmlns:tns="http://www.issuetracker.training.org/builds">
+	<element name = "builds">
+		<complexType>
+			<sequence>
+				<element name="build" type="tns:build" minOccurs="0" maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element> 
+	
+	<complexType name="build">
+		<sequence>
+			<element name="project" type="string" />
+			<element name="version" type="string" />
+		</sequence>
+		<attribute name="id" type="integer" use="required" />
+	</complexType>
+    
+</schema>
