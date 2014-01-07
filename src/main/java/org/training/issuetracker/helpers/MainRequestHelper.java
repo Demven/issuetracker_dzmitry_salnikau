@@ -5,10 +5,10 @@ import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 
 import org.training.issuetracker.commands.Command;
+import org.training.issuetracker.commands.mainCommands.AuthCommand;
 import org.training.issuetracker.commands.mainCommands.BuildsCommand;
 import org.training.issuetracker.commands.mainCommands.NoCommand;
 import org.training.issuetracker.commands.mainCommands.ProjectsCommand;
-import org.training.issuetracker.commands.mainCommands.SignInCommand;
 
 public class MainRequestHelper { 
 	private static MainRequestHelper instance = null; 
@@ -17,7 +17,7 @@ public class MainRequestHelper {
  
 	private MainRequestHelper() { 
 		//заполнение таблицы командами 
-		commands.put("signIn", new SignInCommand());
+		commands.put("auth", new AuthCommand());
 		commands.put("projects", new ProjectsCommand());
 		commands.put("builds", new BuildsCommand());
 	}  

@@ -18,6 +18,7 @@ import org.training.issuetracker.dao.interfaces.ProjectDAO;
 import org.training.issuetracker.dao.transferObjects.Build;
 import org.training.issuetracker.dao.transferObjects.Issue;
 import org.training.issuetracker.dao.transferObjects.Project;
+import org.training.issuetracker.logic.SessionLogic;
 import org.training.issuetracker.managers.ConfigurationManager;
 
 
@@ -41,6 +42,8 @@ public class NoCommand implements Command {
 		IssueDAO issueDAO = xmlFactory.getIssueDAO(context.getRealPath("/"));
 		ArrayList<Issue> issues = issueDAO.getIssues();
 		printIssuesData(issues);
+		
+		printAuthData(request);
 		
 		String body = ConfigurationManager.getInstance().getProperty(ConfigurationManager.MAIN_PAGE_BODY_PATH);
 		context.getRequestDispatcher(body).include(request, response);
@@ -102,4 +105,18 @@ public class NoCommand implements Command {
 		return latestIssues;
 	}
 	
+	/**
+	 * Check if user is authorized and add data about user for JS on the page
+	 * @param request
+	 */
+	private void printAuthData(HttpServletRequest request){
+		SessionLogic sessionLogic = new SessionLogic();
+		String login = (String)sessionLogic.getSessionValue(request, "login");
+		
+		if(login != null && login != ""){
+			// if a user is authorized
+			out.println("<div id='user_data' style='visibility:hidden; height:0px; width:0px; overflow:hidden;'>");
+			out.println("</div>");
+		}
+	}
 }

@@ -22,7 +22,7 @@ public interface UserDAO {
 	 * @param password
 	 * @return boolean - true, if the user exists
 	 */
-	public boolean checkLogin(String email, String password);
+	public boolean checkAuth(String email, String password);
 	
 	/**
 	 * Check existing of that email address

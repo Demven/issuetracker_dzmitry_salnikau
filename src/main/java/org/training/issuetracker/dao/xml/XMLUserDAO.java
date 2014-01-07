@@ -43,9 +43,17 @@ public class XMLUserDAO implements UserDAO{
 	}
 	
 	@Override
-	public boolean checkLogin(String email, String password) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean checkAuth(String email, String password) {
+		boolean isAuth = false;
+		ArrayList<User> users = getUsers();
+		for(User user:users){
+			if(user.getEmail().equals(email)){
+				if(user.getPassword().equals(password)){
+					isAuth = true;
+				}
+			}
+		}
+		return isAuth;
 	}
 
 	@Override
