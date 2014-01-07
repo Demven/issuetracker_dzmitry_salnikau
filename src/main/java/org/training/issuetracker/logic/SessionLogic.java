@@ -34,5 +34,16 @@ public final class SessionLogic {
 		HttpSession session = request.getSession(true);
 		session.setAttribute(name, value); 
 	}
+	
+	/**
+	 * Invalidate the current session with client
+	 * @param request
+	 */
+	public void invalidateSession(HttpServletRequest request){
+		HttpSession session = request.getSession(false);
+		if(session != null){
+			session.invalidate();
+		}
+	}
 }
 

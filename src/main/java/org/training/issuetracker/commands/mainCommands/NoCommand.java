@@ -116,6 +116,7 @@ public class NoCommand implements Command {
 		if(login != null && login != ""){
 			// if a user is authorized
 			out.println("<div id='user_data' style='visibility:hidden; height:0px; width:0px; overflow:hidden;'>");
+				out.println("<div id ='login'>" + login + "</div>");
 			out.println("</div>");
 		}
 	}
