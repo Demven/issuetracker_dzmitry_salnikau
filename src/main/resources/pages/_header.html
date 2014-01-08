@@ -20,6 +20,17 @@ ul, li{
 	list-style:none;
 	display:block;
 }
+a{
+	text-decoration:none;
+	color: inherit;
+}
+a:hover{
+	text-decoration:underline;
+}
+a:visited{
+	color: inherit;
+}
+
 /* ------- */
 /* HEADER */
 .header{
@@ -53,6 +64,9 @@ ul, li{
 	font-size: 18px;
 	color: #FFFFFF;
 	box-shadow: inset 0px 5px 12px 4px #92C567;
+}
+.menu a:hover{
+	text-decoration:none;
 }
 .menu .menu_item{
 	height: 30px;
@@ -132,6 +146,7 @@ ul, li{
 	height: 70px;
 	width: 70px;
 	cursor: pointer;
+	display:none;
 	float: left;
 }
 .header #menu_btn:hover .menu{
@@ -152,6 +167,22 @@ ul, li{
 	width: 250px;
 	float: left;
 	background-image: url(./img/icons/logo.png);
+}
+
+/* user welcome */
+#user_welcome{
+	height: 70px;
+	width: 300px;
+	float: left;
+	position: absolute;
+	top: 0px;
+	left: 50%;
+	margin-left: -150px;
+	text-align: center;
+	line-height: 70px;
+	font-family: "Century Gothic";
+	font-size: 12px;
+	display:none;
 }
 
 /* Overall menu */
@@ -306,6 +337,7 @@ ul, li{
 	line-height: 40px;
 	font-family: Verdana;
 	background-color: #ddd;
+	border-radius: 6px 6px 0 0;
 	width: 1080px;
 }
 .header_line .id{
@@ -420,11 +452,11 @@ ul, li{
 }
 .issue_line .summary{
 	float: left;
-	height: 40px;
+	height: 46px;
 	width: 379px;
 	overflow: hidden;
-	line-height: 20px;
-	padding: 3px 10px;
+	line-height: 40px;
+	padding: 0 10px;
 }
 
 /* ------- */

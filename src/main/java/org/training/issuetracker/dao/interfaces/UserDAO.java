@@ -32,20 +32,19 @@ public interface UserDAO {
 	public boolean checkUserEmail(String email);
 	
 	/**
-	 * Check existing of the user's name and last name
-	 * @param firstName
-	 * @param lastName
-	 * @return boolean - true, if such name exists
-	 */
-	public boolean checkUserNick(String firstName, String lastName);
-	
-	/**
 	 * Defines the unique user's Id by the full name
 	 * @param firstName
 	 * @param lastName
 	 * @return String userId
 	 */
 	public String getUserIdByName(String firstName, String lastName);
+	
+	/**
+	 * Defines the user by the email address and returns User object
+	 * @param email
+	 * @return User
+	 */
+	public User getUserByEmail(String email);
 	
 	/**
 	 * Returns User object for user with stated userId

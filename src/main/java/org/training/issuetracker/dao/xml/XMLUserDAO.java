@@ -63,15 +63,21 @@ public class XMLUserDAO implements UserDAO{
 	}
 
 	@Override
-	public boolean checkUserNick(String firstName, String lastName) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public String getUserIdByName(String firstName, String lastName) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	@Override
+	public User getUserByEmail(String email) {
+		User searchedUser = null;
+		ArrayList<User> users = getUsers();
+		for(User user:users){
+			if(user.getEmail().equals(email)){
+				searchedUser = user;
+			}
+		}
+		return searchedUser;
 	}
 
 	@Override
