@@ -9,10 +9,23 @@ public class Build implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1064428683909095808L;
 	
+	// For xml
 	public final static String ELEMENT_ROOT = "build";
 	public final static String SUBELEMENT_PROJECT = "project";
 	public final static String SUBELEMENT_VERSION = "version";
 	
+	// For database
+	public final static String TABLE_NAME = "builds";
+	
+	public final static String COLUMN_NAME_ID = "id";
+	public final static String COLUMN_NAME_PROJECT = "project";
+	public final static String COLUMN_NAME_VERSION = "version";
+	
+	public final static int COLUMN_ID_ID = 1;
+	public final static int COLUMN_ID_PROJECT = 2;
+	public final static int COLUMN_ID_VERSION = 3;
+	
+	// For entity
 	private int buildId;
 	private int project;
 	private String version;

@@ -9,6 +9,12 @@ public class ConfigurationManager {
 	// Class gets data from config.properties 
 	private static final String BUNDLE_NAME = "config"; 
 	
+	// Database
+	public static final String DATABASE_DRIVER_NAME = "DATABASE_DRIVER_NAME"; 
+	public static final String DATABASE_URL = "DATABASE_URL"; 
+	public static final String DATABASE_USER = "DATABASE_USER"; 
+	public static final String DATABASE_PASSWORD = "DATABASE_PASSWORD"; 
+	
 	// Pages for users
 	public static final String HEADER_PATH = "HEADER_PATH";
 	public static final String FOOTER_PATH = "FOOTER_PATH";

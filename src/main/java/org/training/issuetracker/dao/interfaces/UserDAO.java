@@ -37,7 +37,7 @@ public interface UserDAO {
 	 * @param lastName
 	 * @return String userId
 	 */
-	public String getUserIdByName(String firstName, String lastName);
+	public Integer getUserIdByName(String firstName, String lastName);
 	
 	/**
 	 * Defines the user by the email address and returns User object

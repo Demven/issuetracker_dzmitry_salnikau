@@ -15,6 +15,7 @@ public class Issue implements java.io.Serializable, Comparable<Issue> {
 	
 	public final static int MAX_SHOWN_NUMBER = 10;
 	
+	// For xml
 	public final static String ELEMENT_ROOT = "issue";
 	public final static String SUBELEMENT_CREATE_DATE = "createdate";
 	public final static String SUBELEMENT_CREATED_BY = "createdby";
@@ -30,6 +31,42 @@ public class Issue implements java.io.Serializable, Comparable<Issue> {
 	public final static String SUBELEMENT_BUILD_FOUND = "buildfound";
 	public final static String SUBELEMENT_ASSIGNEE = "assignee";
 	
+	
+	// For database
+	public final static String TABLE_NAME = "issues";
+	
+	public final static String COLUMN_NAME_ID = "id";
+	public final static String COLUMN_NAME_CREATE_DATE = "createdate";
+	public final static String COLUMN_NAME_CREATED_BY = "createdby";
+	public final static String COLUMN_NAME_MODIFY_DATE = "modifydate";
+	public final static String COLUMN_NAME_MODIFIED_BY = "modifiedby";
+	public final static String COLUMN_NAME_SUMMARY = "summary";
+	public final static String COLUMN_NAME_DESCRIPTION = "description";
+	public final static String COLUMN_NAME_STATUS = "status";
+	public final static String COLUMN_NAME_RESOLUTION = "resolution";
+	public final static String COLUMN_NAME_ISSUE_TYPE = "issuetype";
+	public final static String COLUMN_NAME_PRIORITY = "priority";
+	public final static String COLUMN_NAME_PROJECT_ID = "projectid";
+	public final static String COLUMN_NAME_BUILD_FOUND = "buildfound";
+	public final static String COLUMN_NAME_ASSIGNEE = "assignee";
+	
+	public final static int COLUMN_ID_ID = 1;
+	public final static int COLUMN_ID_CREATE_DATE = 2;
+	public final static int COLUMN_ID_CREATED_BY = 3;
+	public final static int COLUMN_ID_MODIFY_DATE = 4;
+	public final static int COLUMN_ID_MODIFIED_BY = 5;
+	public final static int COLUMN_ID_SUMMARY = 6;
+	public final static int COLUMN_ID_DESCRIPTION = 7;
+	public final static int COLUMN_ID_STATUS = 8;
+	public final static int COLUMN_ID_RESOLUTION = 9;
+	public final static int COLUMN_ID_ISSUE_TYPE = 10;
+	public final static int COLUMN_ID_PRIORITY = 11;
+	public final static int COLUMN_ID_PROJECT_ID = 12;
+	public final static int COLUMN_ID_BUILD_FOUND = 13;
+	public final static int COLUMN_ID_ASSIGNEE = 14;
+	
+	
+	// For entity
 	private int issueId;
 	private String createDate;
 	private int createdBy;

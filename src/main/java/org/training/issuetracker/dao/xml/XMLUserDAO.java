@@ -63,7 +63,7 @@ public class XMLUserDAO implements UserDAO{
 	}
 
 	@Override
-	public String getUserIdByName(String firstName, String lastName) {
+	public Integer getUserIdByName(String firstName, String lastName) {
 		// TODO Auto-generated method stub
 		return null;
 	}

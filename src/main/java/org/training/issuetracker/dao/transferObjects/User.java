@@ -9,6 +9,7 @@ public class User implements java.io.Serializable {
 
 	private static final long serialVersionUID = 4249146829438242768L;
 	
+	// For xml
 	public final static String ELEMENT_ROOT = "user";
 	public final static String SUBELEMENT_FIRST_NAME = "firstname";
 	public final static String SUBELEMENT_LAST_NAME = "lastname";
@@ -16,6 +17,26 @@ public class User implements java.io.Serializable {
 	public final static String SUBELEMENT_ROLE = "role";
 	public final static String SUBELEMENT_PASSWORD = "password";
 	
+	
+	// For database
+	public final static String TABLE_NAME = "users";
+	
+	public final static String COLUMN_NAME_ID = "id";
+	public final static String COLUMN_NAME_FIRST_NAME = "firstName";
+	public final static String COLUMN_NAME_LAST_NAME = "lastName";
+	public final static String COLUMN_NAME_EMAIL = "email";
+	public final static String COLUMN_NAME_ROLE = "role";
+	public final static String COLUMN_NAME_PASSWORD = "password";
+	
+	public final static int COLUMN_ID_ID = 1;
+	public final static int COLUMN_ID_FIRST_NAME = 2;
+	public final static int COLUMN_ID_LAST_NAME = 3;
+	public final static int COLUMN_ID_EMAIL = 4;
+	public final static int COLUMN_ID_ROLE = 5;
+	public final static int COLUMN_ID_PASSWORD = 6;
+	
+	
+	// For entity
 	private int userId;
 	private String firstName;
 	private String lastName;

@@ -43,7 +43,7 @@ public class XMLIssueDAO implements IssueDAO{
 	}
 	
 	@Override
-	public Issue getIssueById(String issueId) {
+	public Issue getIssueById(Integer issueId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -55,7 +55,7 @@ public class XMLIssueDAO implements IssueDAO{
 	}
 
 	@Override
-	public boolean deleteIssue(String issueId) {
+	public boolean deleteIssue(Integer issueId) {
 		// TODO Auto-generated method stub
 		return false;
 	}

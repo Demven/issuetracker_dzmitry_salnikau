@@ -21,7 +21,7 @@ public interface IssueDAO {
 	 * @param issueId
 	 * @return Issue 
 	 */
-	public Issue getIssueById(String issueId);
+	public Issue getIssueById(Integer issueId);
 	
 	/**
 	 * Adds new issue in a data storage
@@ -35,7 +35,7 @@ public interface IssueDAO {
 	 * @param issueId
 	 * @return boolean - true, if it was successful
 	 */
-	public boolean deleteIssue(String issueId);
+	public boolean deleteIssue(Integer issueId);
 	
 	/**
 	 * Update the issue's data 
