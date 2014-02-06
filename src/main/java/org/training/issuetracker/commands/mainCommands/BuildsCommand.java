@@ -23,8 +23,8 @@ public class BuildsCommand implements Command{
 		PrintWriter out= response.getWriter();
 		out.println("This is the list of all Builds:");
 		
-		DAOFactory xmlFactory = DAOFactory.getDAOFactory(DAOFactory.XML);
-		BuildDAO buildDAO = xmlFactory.getBuildDAO(context.getRealPath("/"));
+		DAOFactory mysqlFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
+		BuildDAO buildDAO = mysqlFactory.getBuildDAO();
 		ArrayList<Build> builds = buildDAO.getBuilds();
 		
 		if(builds != null){

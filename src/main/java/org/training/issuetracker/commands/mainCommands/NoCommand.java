@@ -29,11 +29,9 @@ public class NoCommand implements Command {
 	private final String ASSIGNED = "assigned";
 	
 	private PrintWriter out;
-	private DAOFactory xmlFactory;
-	private ServletContext context;
+	private DAOFactory mysqlFactory;
 	 
 	public void execute(HttpServletRequest request, HttpServletResponse response, ServletContext context) throws ServletException, IOException { 
-		this.context = context;
 		
 		// In case of direct address to the servlet - show main page
 		response.setContentType("text/html");
@@ -42,9 +40,9 @@ public class NoCommand implements Command {
 		String header = ConfigurationManager.getInstance().getProperty(ConfigurationManager.HEADER_PATH);
 		context.getRequestDispatcher(header).include(request, response);
 		
-		xmlFactory = DAOFactory.getDAOFactory(DAOFactory.XML);
-		UserDAO userDAO = xmlFactory.getUserDAO(context.getRealPath("/"));
-		IssueDAO issueDAO = xmlFactory.getIssueDAO(context.getRealPath("/"));
+		mysqlFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
+		UserDAO userDAO = mysqlFactory.getUserDAO();
+		IssueDAO issueDAO = mysqlFactory.getIssueDAO();
 		
 		SessionLogic sessionLogic = new SessionLogic();
 		String login = (String)sessionLogic.getSessionValue(request, "login");
@@ -79,8 +77,8 @@ public class NoCommand implements Command {
 	 * @param listType - type of issues (either latest or assigned)
 	 */
 	private void printIssuesData(ArrayList<Issue> issues, String listType){
-		ProjectDAO projectDAO = xmlFactory.getProjectDAO(context.getRealPath("/"));
-		BuildDAO buildDAO = xmlFactory.getBuildDAO(context.getRealPath("/"));
+		ProjectDAO projectDAO = mysqlFactory.getProjectDAO();
+		BuildDAO buildDAO = mysqlFactory.getBuildDAO();
 		
 		out.println("<div id='issues_data' style='display:none;'>");
 		

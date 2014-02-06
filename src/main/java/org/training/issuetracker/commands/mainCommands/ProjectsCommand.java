@@ -23,8 +23,8 @@ public class ProjectsCommand implements Command{
 		PrintWriter out= response.getWriter();
 		out.println("This is the list of all Projects:");
 		
-		DAOFactory xmlFactory = DAOFactory.getDAOFactory(DAOFactory.XML);
-		ProjectDAO projectDAO = xmlFactory.getProjectDAO(context.getRealPath("/"));
+		DAOFactory mysqlFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
+		ProjectDAO projectDAO = mysqlFactory.getProjectDAO();
 		ArrayList<Project> projects = projectDAO.getProjects();
 		
 		if(projects != null){

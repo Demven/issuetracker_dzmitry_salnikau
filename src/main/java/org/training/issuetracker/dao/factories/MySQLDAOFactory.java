@@ -28,22 +28,22 @@ public class MySQLDAOFactory extends DAOFactory {
 	}
 
 	@Override
-	public UserDAO getUserDAO(String rootPath) {
+	public UserDAO getUserDAO() {
 		return new MySQLUserDAO();
 	}
 
 	@Override
-	public IssueDAO getIssueDAO(String rootPath) {
+	public IssueDAO getIssueDAO() {
 		return new MySQLIssueDAO();
 	}
 
 	@Override
-	public ProjectDAO getProjectDAO(String rootPath) {
+	public ProjectDAO getProjectDAO() {
 		return new MySQLProjectDAO();
 	}
 
 	@Override
-	public BuildDAO getBuildDAO(String rootPath) {
+	public BuildDAO getBuildDAO() {
 		return new MySQLBuildDAO();
 	}
 	
