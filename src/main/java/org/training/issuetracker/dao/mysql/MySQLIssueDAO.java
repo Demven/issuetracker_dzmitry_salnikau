@@ -11,10 +11,6 @@ import org.training.issuetracker.dao.factories.MySQLDAOFactory;
 import org.training.issuetracker.dao.interfaces.IssueDAO;
 import org.training.issuetracker.dao.mysql.builders.StatementBuilder;
 import org.training.issuetracker.dao.transferObjects.Issue;
-import org.training.issuetracker.dao.transferObjects.Issue.Priority;
-import org.training.issuetracker.dao.transferObjects.Issue.Resolution;
-import org.training.issuetracker.dao.transferObjects.Issue.Status;
-import org.training.issuetracker.dao.transferObjects.Issue.Type;
 
 public class MySQLIssueDAO implements IssueDAO{
 
@@ -49,11 +45,11 @@ public class MySQLIssueDAO implements IssueDAO{
 									rs.getInt(Issue.COLUMN_ID_MODIFIED_BY),
 									rs.getString(Issue.COLUMN_ID_SUMMARY),
 									rs.getString(Issue.COLUMN_ID_DESCRIPTION),
-									Status.valueOf(rs.getString(Issue.COLUMN_ID_STATUS).toUpperCase()),
-									Resolution.valueOf(rs.getString(Issue.COLUMN_ID_RESOLUTION).toUpperCase()),
-									Type.valueOf(rs.getString(Issue.COLUMN_ID_ISSUE_TYPE).toUpperCase()),
-									Priority.valueOf(rs.getString(Issue.COLUMN_ID_PRIORITY).toUpperCase()),
-									rs.getInt(Issue.COLUMN_ID_PROJECT_ID),
+									rs.getInt(Issue.COLUMN_ID_STATUS),
+									rs.getInt(Issue.COLUMN_ID_RESOLUTION),
+									rs.getInt(Issue.COLUMN_ID_ISSUE_TYPE),
+									rs.getInt(Issue.COLUMN_ID_PRIORITY),
+									rs.getInt(Issue.COLUMN_ID_PROJECT),
 									rs.getInt(Issue.COLUMN_ID_BUILD_FOUND),
 									rs.getInt(Issue.COLUMN_ID_ASSIGNEE))
 							);
@@ -106,11 +102,11 @@ public class MySQLIssueDAO implements IssueDAO{
 									rs.getInt(Issue.COLUMN_ID_MODIFIED_BY),
 									rs.getString(Issue.COLUMN_ID_SUMMARY),
 									rs.getString(Issue.COLUMN_ID_DESCRIPTION),
-									Status.valueOf(rs.getString(Issue.COLUMN_ID_STATUS).toUpperCase()),
-									Resolution.valueOf(rs.getString(Issue.COLUMN_ID_RESOLUTION).toUpperCase()),
-									Type.valueOf(rs.getString(Issue.COLUMN_ID_ISSUE_TYPE).toUpperCase()),
-									Priority.valueOf(rs.getString(Issue.COLUMN_ID_PRIORITY).toUpperCase()),
-									rs.getInt(Issue.COLUMN_ID_PROJECT_ID),
+									rs.getInt(Issue.COLUMN_ID_STATUS),
+									rs.getInt(Issue.COLUMN_ID_RESOLUTION),
+									rs.getInt(Issue.COLUMN_ID_ISSUE_TYPE),
+									rs.getInt(Issue.COLUMN_ID_PRIORITY),
+									rs.getInt(Issue.COLUMN_ID_PROJECT),
 									rs.getInt(Issue.COLUMN_ID_BUILD_FOUND),
 									rs.getInt(Issue.COLUMN_ID_ASSIGNEE)
 							);
@@ -156,7 +152,7 @@ public class MySQLIssueDAO implements IssueDAO{
 							Issue.COLUMN_NAME_RESOLUTION,
 							Issue.COLUMN_NAME_ISSUE_TYPE,
 							Issue.COLUMN_NAME_PRIORITY,
-							Issue.COLUMN_NAME_PROJECT_ID,
+							Issue.COLUMN_NAME_PROJECT,
 							Issue.COLUMN_NAME_BUILD_FOUND,
 							Issue.COLUMN_NAME_ASSIGNEE
 							};
@@ -167,11 +163,11 @@ public class MySQLIssueDAO implements IssueDAO{
 							issue.getModifiedBy(),
 							issue.getSummary(),
 							issue.getDescription(),
-							issue.getStatus().value(),
-							issue.getResolution().value(),
-							issue.getType().value(),
-							issue.getPriority().value(),
-							issue.getProjectId(),
+							issue.getStatus(),
+							issue.getResolution(),
+							issue.getType(),
+							issue.getPriority(),
+							issue.getProject(),
 							issue.getBuildFound(),
 							issue.getAssignee()
 							};
@@ -250,7 +246,7 @@ public class MySQLIssueDAO implements IssueDAO{
 							Issue.COLUMN_NAME_RESOLUTION,
 							Issue.COLUMN_NAME_ISSUE_TYPE,
 							Issue.COLUMN_NAME_PRIORITY,
-							Issue.COLUMN_NAME_PROJECT_ID,
+							Issue.COLUMN_NAME_PROJECT,
 							Issue.COLUMN_NAME_BUILD_FOUND,
 							Issue.COLUMN_NAME_ASSIGNEE
 							};
@@ -261,11 +257,11 @@ public class MySQLIssueDAO implements IssueDAO{
 							issue.getModifiedBy(),
 							issue.getSummary(),
 							issue.getDescription(),
-							issue.getStatus().value(),
-							issue.getResolution().value(),
-							issue.getType().value(),
-							issue.getPriority().value(),
-							issue.getProjectId(),
+							issue.getStatus(),
+							issue.getResolution(),
+							issue.getType(),
+							issue.getPriority(),
+							issue.getProject(),
 							issue.getBuildFound(),
 							issue.getAssignee()
 							};

@@ -9,15 +9,6 @@ public class User implements java.io.Serializable {
 
 	private static final long serialVersionUID = 4249146829438242768L;
 	
-	// For xml
-	public final static String ELEMENT_ROOT = "user";
-	public final static String SUBELEMENT_FIRST_NAME = "firstname";
-	public final static String SUBELEMENT_LAST_NAME = "lastname";
-	public final static String SUBELEMENT_EMAIL = "email";
-	public final static String SUBELEMENT_ROLE = "role";
-	public final static String SUBELEMENT_PASSWORD = "password";
-	
-	
 	// For database
 	public final static String TABLE_NAME = "users";
 	

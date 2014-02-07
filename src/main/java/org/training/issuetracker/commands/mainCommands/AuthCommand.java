@@ -27,7 +27,7 @@ public class AuthCommand implements Command{
 		
 		ValidationLogic validation = new ValidationLogic();
 		if(validation.isEmailValid(email) && validation.isPasswordValid(password)){
-			// if input data is valid - search in the registered users
+			// if input data is valid - search in database
 			DAOFactory mysqlFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
 			UserDAO userDAO = mysqlFactory.getUserDAO();
 			

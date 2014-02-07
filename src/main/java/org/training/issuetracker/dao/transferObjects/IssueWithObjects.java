@@ -5,49 +5,15 @@ import java.text.ParseException;
 import java.util.Date;
 
 /**
- * Class, describing an issue
+ * Class, describing an issue and contains dependent objects
  * @author Dzmitry Salnikau
- * @since 02.01.2014
+ * @since 07.02.2014
  */
-public class Issue implements java.io.Serializable, Comparable<Issue> {
+public class IssueWithObjects implements java.io.Serializable, Comparable<Issue> {
 
 	private static final long serialVersionUID = 4377407675405841235L;
 	
 	public final static int MAX_SHOWN_NUMBER = 10;
-	
-	// For database
-	public final static String TABLE_NAME = "issues";
-	
-	public final static String COLUMN_NAME_ID = "id";
-	public final static String COLUMN_NAME_CREATE_DATE = "createdate";
-	public final static String COLUMN_NAME_CREATED_BY = "createdby";
-	public final static String COLUMN_NAME_MODIFY_DATE = "modifydate";
-	public final static String COLUMN_NAME_MODIFIED_BY = "modifiedby";
-	public final static String COLUMN_NAME_SUMMARY = "summary";
-	public final static String COLUMN_NAME_DESCRIPTION = "description";
-	public final static String COLUMN_NAME_STATUS = "status";
-	public final static String COLUMN_NAME_RESOLUTION = "resolution";
-	public final static String COLUMN_NAME_ISSUE_TYPE = "issuetype";
-	public final static String COLUMN_NAME_PRIORITY = "priority";
-	public final static String COLUMN_NAME_PROJECT = "project";
-	public final static String COLUMN_NAME_BUILD_FOUND = "buildfound";
-	public final static String COLUMN_NAME_ASSIGNEE = "assignee";
-	
-	public final static int COLUMN_ID_ID = 1;
-	public final static int COLUMN_ID_CREATE_DATE = 2;
-	public final static int COLUMN_ID_CREATED_BY = 3;
-	public final static int COLUMN_ID_MODIFY_DATE = 4;
-	public final static int COLUMN_ID_MODIFIED_BY = 5;
-	public final static int COLUMN_ID_SUMMARY = 6;
-	public final static int COLUMN_ID_DESCRIPTION = 7;
-	public final static int COLUMN_ID_STATUS = 8;
-	public final static int COLUMN_ID_RESOLUTION = 9;
-	public final static int COLUMN_ID_ISSUE_TYPE = 10;
-	public final static int COLUMN_ID_PRIORITY = 11;
-	public final static int COLUMN_ID_PROJECT = 12;
-	public final static int COLUMN_ID_BUILD_FOUND = 13;
-	public final static int COLUMN_ID_ASSIGNEE = 14;
-	
 	
 	// For entity
 	private int issueId;
@@ -57,18 +23,21 @@ public class Issue implements java.io.Serializable, Comparable<Issue> {
 	private int modifiedBy;
 	private String summary;
 	private String description;
-	private int status;
-	private int resolution;
-	private int type;
-	private int priority;
-	private int project;
-	private int buildFound;
+	private Status status;
+	private Resolution resolution;
+	private Type type;
+	private Priority priority;
+	private Project project;
+	private Build buildFound;
 	private int assignee;
 	
-	public Issue(int issueId, String createDate, int createdBy,
+	public IssueWithObjects(){
+	}
+	
+	public IssueWithObjects(int issueId, String createDate, int createdBy,
 			String modifyDate, int modifiedBy, String summary,
-			String description, int status, int resolution, int type,
-			int priority, int project, int buildFound,
+			String description, Status status, Resolution resolution, Type type,
+			Priority priority, Project project, Build buildFound,
 			int assignee) {
 		this.issueId = issueId;
 		this.createDate = createDate;
@@ -86,8 +55,6 @@ public class Issue implements java.io.Serializable, Comparable<Issue> {
 		this.assignee = assignee;
 	}
 	
-	public Issue(){
-	}
 
 	public int getIssueId() {
 		return issueId;
@@ -145,51 +112,51 @@ public class Issue implements java.io.Serializable, Comparable<Issue> {
 		this.description = description;
 	}
 
-	public int getStatus() {
+	public Status getStatus() {
 		return status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(Status status) {
 		this.status = status;
 	}
 
-	public int getResolution() {
+	public Resolution getResolution() {
 		return resolution;
 	}
 
-	public void setResolution(int resolution) {
+	public void setResolution(Resolution resolution) {
 		this.resolution = resolution;
 	}
 
-	public int getType() {
+	public Type getType() {
 		return type;
 	}
 
-	public void setType(int type) {
+	public void setType(Type type) {
 		this.type = type;
 	}
 
-	public int getPriority() {
+	public Priority getPriority() {
 		return priority;
 	}
 
-	public void setPriority(int priority) {
+	public void setPriority(Priority priority) {
 		this.priority = priority;
 	}
 
-	public int getProject() {
+	public Project getProject() {
 		return project;
 	}
 
-	public void setProject(int project) {
+	public void setProject(Project project) {
 		this.project = project;
 	}
 
-	public int getBuildFound() {
+	public Build getBuildFound() {
 		return buildFound;
 	}
 
-	public void setBuildFound(int buildFound) {
+	public void setBuildFound(Build buildFound) {
 		this.buildFound = buildFound;
 	}
 

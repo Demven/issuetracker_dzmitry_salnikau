@@ -16,10 +16,7 @@ public class ConfigurationManager {
 	public static final String DATABASE_PASSWORD = "DATABASE_PASSWORD"; 
 	
 	// Pages for users
-	public static final String HEADER_PATH = "HEADER_PATH";
-	public static final String FOOTER_PATH = "FOOTER_PATH";
-	
-	public static final String MAIN_PAGE_BODY_PATH = "MAIN_PAGE_BODY_PATH";
+	public static final String MAIN_PAGE_PATH = "MAIN_PAGE_PATH";
 	
 	// XML
 	public static final String XML_USERS_PATH = "XML_USERS_PATH";
