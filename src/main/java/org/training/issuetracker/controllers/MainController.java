@@ -2,7 +2,7 @@ package org.training.issuetracker.controllers;
 
 import java.io.IOException;
 
-import javax.servlet.ServletContext;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 import org.training.issuetracker.commands.Command;
 import org.training.issuetracker.helpers.MainRequestHelper;
+import org.training.issuetracker.managers.CookieManager;
+import org.training.issuetracker.managers.SessionManager;
 
 public class MainController extends HttpServlet  implements  javax.servlet.Servlet { 
 
@@ -34,10 +36,22 @@ public class MainController extends HttpServlet  implements  javax.servlet.Servl
 	
 	private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { 
 		try { 
-	    	// Defining command from request and execution
-			ServletContext context= getServletContext();
+	    	// Defining command from request, execution and getting page to forward
 	        Command command = requestHelper.getCommand(request); 
-	        command.execute(request, response, context); 
+	        String page = command.execute(request, response); 
+
+	        if(new CookieManager().getCookieValue(request, CookieManager.NAME_LOGIN) != null){
+	        	// set session from cookies
+	        	SessionManager sessionManager = new SessionManager();
+		        if(sessionManager.getSessionValue(request, SessionManager.NAME_LOGIN_USER) == null){
+		        	sessionManager.setSessionFromCookies(request, SessionManager.TYPE_LOGIN_USER);
+		        }
+	        }
+	        
+	        // forward to the received page
+	        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page); 
+			dispatcher.forward(request, response);
+			
 		} catch (ServletException e) {
 			logger.warn(e.toString());
 		} catch (IOException e) {

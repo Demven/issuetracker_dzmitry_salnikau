@@ -15,6 +15,9 @@ public class Type implements java.io.Serializable{
 	public final static String COLUMN_NAME_ID = "id";
 	public final static String COLUMN_NAME_NAME = "name";
 	
+	public final static int COLUMN_ID_ID = 1;
+	public final static int COLUMN_ID_NAME = 2;
+	
 	// For entity
 	private int typeId;
 	private String name;

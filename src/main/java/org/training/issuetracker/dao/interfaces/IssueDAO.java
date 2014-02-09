@@ -31,17 +31,16 @@ public interface IssueDAO {
 	public boolean createIssue(Issue issue);
 	
 	/**
-	 * Delete issue from a data storage by the unique issueId
-	 * @param issueId
-	 * @return boolean - true, if it was successful
-	 */
-	public boolean deleteIssue(Integer issueId);
-	
-	/**
 	 * Update the issue's data 
 	 * @param Issue
 	 * @return boolean - true, if it was successful
 	 */
 	public boolean updateIssue(Issue issue);
 	
+	/**
+	 * Delete issue from a data storage by the unique issueId
+	 * @param issueId
+	 * @return boolean - true, if it was successful
+	 */
+	public boolean deleteIssue(Integer issueId);
 }

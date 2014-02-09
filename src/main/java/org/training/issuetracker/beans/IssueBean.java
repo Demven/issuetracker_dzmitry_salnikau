@@ -1,15 +1,24 @@
-package org.training.issuetracker.dao.transferObjects;
+package org.training.issuetracker.beans;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Date;
 
+import org.training.issuetracker.dao.transferObjects.Build;
+import org.training.issuetracker.dao.transferObjects.Issue;
+import org.training.issuetracker.dao.transferObjects.Priority;
+import org.training.issuetracker.dao.transferObjects.Project;
+import org.training.issuetracker.dao.transferObjects.Resolution;
+import org.training.issuetracker.dao.transferObjects.Status;
+import org.training.issuetracker.dao.transferObjects.Type;
+import org.training.issuetracker.dao.transferObjects.User;
+
 /**
- * Class, describing an issue and contains dependent objects
+ * Class, describing an issue. Used in JSP.
  * @author Dzmitry Salnikau
  * @since 07.02.2014
  */
-public class IssueWithObjects implements java.io.Serializable, Comparable<Issue> {
+public class IssueBean implements java.io.Serializable, Comparable<Issue> {
 
 	private static final long serialVersionUID = 4377407675405841235L;
 	
@@ -18,9 +27,9 @@ public class IssueWithObjects implements java.io.Serializable, Comparable<Issue>
 	// For entity
 	private int issueId;
 	private String createDate;
-	private int createdBy;
+	private User createdBy;
 	private String modifyDate;
-	private int modifiedBy;
+	private User modifiedBy;
 	private String summary;
 	private String description;
 	private Status status;
@@ -29,16 +38,16 @@ public class IssueWithObjects implements java.io.Serializable, Comparable<Issue>
 	private Priority priority;
 	private Project project;
 	private Build buildFound;
-	private int assignee;
+	private User assignee;
 	
-	public IssueWithObjects(){
+	public IssueBean(){
 	}
 	
-	public IssueWithObjects(int issueId, String createDate, int createdBy,
-			String modifyDate, int modifiedBy, String summary,
+	public IssueBean(int issueId, String createDate, User createdBy,
+			String modifyDate, User modifiedBy, String summary,
 			String description, Status status, Resolution resolution, Type type,
 			Priority priority, Project project, Build buildFound,
-			int assignee) {
+			User assignee) {
 		this.issueId = issueId;
 		this.createDate = createDate;
 		this.createdBy = createdBy;
@@ -72,11 +81,11 @@ public class IssueWithObjects implements java.io.Serializable, Comparable<Issue>
 		this.createDate = createDate;
 	}
 
-	public int getCreatedBy() {
+	public User getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(User createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -88,11 +97,11 @@ public class IssueWithObjects implements java.io.Serializable, Comparable<Issue>
 		this.modifyDate = modifyDate;
 	}
 
-	public int getModifiedBy() {
+	public User getModifiedBy() {
 		return modifiedBy;
 	}
 
-	public void setModifiedBy(int modifiedBy) {
+	public void setModifiedBy(User modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
 
@@ -160,11 +169,11 @@ public class IssueWithObjects implements java.io.Serializable, Comparable<Issue>
 		this.buildFound = buildFound;
 	}
 
-	public int getAssignee() {
+	public User getAssignee() {
 		return assignee;
 	}
 
-	public void setAssignee(int assignee) {
+	public void setAssignee(User assignee) {
 		this.assignee = assignee;
 	}
 	

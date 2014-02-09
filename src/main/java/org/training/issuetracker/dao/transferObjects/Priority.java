@@ -15,24 +15,27 @@ public class Priority implements java.io.Serializable{
 	public final static String COLUMN_NAME_ID = "id";
 	public final static String COLUMN_NAME_NAME = "name";
 	
+	public final static int COLUMN_ID_ID = 1;
+	public final static int COLUMN_ID_NAME = 2;
+	
 	// For entity
-	private int statusId;
+	private int priorityId;
 	private String name;
 	
-	public Priority(int statusId, String name) {
-		this.statusId = statusId;
+	public Priority(int priorityId, String name) {
+		this.priorityId = priorityId;
 		this.name = name;
 	}
 	
 	public Priority(){
 	}
 
-	public int getStatusId() {
-		return statusId;
+	public int getPriorityId() {
+		return priorityId;
 	}
 
-	public void setStatusId(int statusId) {
-		this.statusId = statusId;
+	public void setPriorityId(int priorityId) {
+		this.priorityId = priorityId;
 	}
 
 	public String getName() {

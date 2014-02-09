@@ -37,9 +37,58 @@ public class MySQLBuildDAO implements BuildDAO {
 					try {
 						rs = st.executeQuery();
 						while (rs.next()) {
-							builds.add(new Build(rs.getInt(Build.COLUMN_ID_ID),
+							builds.add(new Build(
+									rs.getInt(Build.COLUMN_ID_ID),
 									rs.getInt(Build.COLUMN_ID_PROJECT),
-									rs.getString(Build.COLUMN_ID_VERSION)));
+									rs.getString(Build.COLUMN_ID_VERSION))
+							);
+						}
+					} finally {
+						if (rs != null)
+							rs.close();
+					}
+				} finally {
+					if (st != null)
+						st.close();
+				}
+			} finally {
+				if (cn != null)
+					cn.close();
+			}
+		} catch (SQLException e) {
+			logger.warn(e.toString());
+		}
+		return builds;
+	}
+	
+	@Override
+	public ArrayList<Build> getBuildsForProject(int projectId) {
+		ArrayList<Build> builds = null;
+		try {
+			Connection cn = null;
+			try {
+				cn = MySQLDAOFactory.getConnection();
+				PreparedStatement st = null;
+				try {
+					StatementBuilder statementBuilder = new StatementBuilder(cn);
+
+					String table = Build.TABLE_NAME;
+					String columns = StatementBuilder.ALL_COLUMNS;
+					String[] selection = { Build.COLUMN_NAME_PROJECT };
+					Object[] selectionArgs = { projectId };
+
+					st = statementBuilder.getQueryPreparedStatement(table,
+							columns, selection, selectionArgs);
+					ResultSet rs = null;
+					builds = new ArrayList<Build>();
+					try {
+						rs = st.executeQuery();
+						while (rs.next()) {
+							builds.add(new Build(
+									rs.getInt(Build.COLUMN_ID_ID),
+									rs.getInt(Build.COLUMN_ID_PROJECT),
+									rs.getString(Build.COLUMN_ID_VERSION))
+							);
 						}
 					} finally {
 						if (rs != null)
@@ -138,39 +187,6 @@ public class MySQLBuildDAO implements BuildDAO {
 	}
 
 	@Override
-	public boolean deleteBuild(int buildId) {
-		boolean isSuccess = false;
-		try {
-			Connection cn = null;
-			try {
-				cn = MySQLDAOFactory.getConnection();
-				PreparedStatement st = null;
-				try {
-					StatementBuilder statementBuilder = new StatementBuilder(cn);
-
-					String table = Build.TABLE_NAME;
-					String[] selection = { Build.COLUMN_NAME_ID };
-					Object[] selectionArgs = { buildId };
-
-					st = statementBuilder.getDeletePreparedStatement(table,
-							selection, selectionArgs);
-					st.executeUpdate();
-					isSuccess = true;
-				} finally {
-					if (st != null)
-						st.close();
-				}
-			} finally {
-				if (cn != null)
-					cn.close();
-			}
-		} catch (SQLException e) {
-			logger.warn(e.toString());
-		}
-		return isSuccess;
-	}
-
-	@Override
 	public boolean updateBuild(Build build) {
 		boolean isSuccess = false;
 		try {
@@ -205,5 +221,37 @@ public class MySQLBuildDAO implements BuildDAO {
 		}
 		return isSuccess;
 	}
+	
+	@Override
+	public boolean deleteBuild(int buildId) {
+		boolean isSuccess = false;
+		try {
+			Connection cn = null;
+			try {
+				cn = MySQLDAOFactory.getConnection();
+				PreparedStatement st = null;
+				try {
+					StatementBuilder statementBuilder = new StatementBuilder(cn);
 
+					String table = Build.TABLE_NAME;
+					String[] selection = { Build.COLUMN_NAME_ID };
+					Object[] selectionArgs = { buildId };
+
+					st = statementBuilder.getDeletePreparedStatement(table,
+							selection, selectionArgs);
+					st.executeUpdate();
+					isSuccess = true;
+				} finally {
+					if (st != null)
+						st.close();
+				}
+			} finally {
+				if (cn != null)
+					cn.close();
+			}
+		} catch (SQLException e) {
+			logger.warn(e.toString());
+		}
+		return isSuccess;
+	}
 }

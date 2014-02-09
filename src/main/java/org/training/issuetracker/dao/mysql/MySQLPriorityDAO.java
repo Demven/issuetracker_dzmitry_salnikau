@@ -8,17 +8,17 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 import org.training.issuetracker.dao.factories.MySQLDAOFactory;
-import org.training.issuetracker.dao.interfaces.ProjectDAO;
+import org.training.issuetracker.dao.interfaces.PriorityDAO;
 import org.training.issuetracker.dao.mysql.builders.StatementBuilder;
-import org.training.issuetracker.dao.transferObjects.Project;
+import org.training.issuetracker.dao.transferObjects.Priority;
 
-public class MySQLProjectDAO implements ProjectDAO {
+public class MySQLPriorityDAO implements PriorityDAO{
 
-	private static final Logger logger = Logger.getLogger(MySQLProjectDAO.class);
-
+	private static final Logger logger = Logger.getLogger(MySQLPriorityDAO.class);
+	
 	@Override
-	public ArrayList<Project> getProjects() {
-		ArrayList<Project> projects = null;
+	public ArrayList<Priority> getPriorities() {
+		ArrayList<Priority> priorities = null;
 		try {
 			Connection cn = null;
 			try {
@@ -27,20 +27,20 @@ public class MySQLProjectDAO implements ProjectDAO {
 				try {
 					StatementBuilder statementBuilder = new StatementBuilder(cn);
 
-					String table = Project.TABLE_NAME;
+					String table = Priority.TABLE_NAME;
 					String columns = StatementBuilder.ALL_COLUMNS;
 
 					st = statementBuilder.getQueryPreparedStatement(table,
 							columns, null, null);
 					ResultSet rs = null;
-					projects = new ArrayList<Project>();
+					priorities = new ArrayList<Priority>();
 					try {
 						rs = st.executeQuery();
 						while (rs.next()) {
-							projects.add(new Project(rs.getInt(Project.COLUMN_ID_ID),
-									rs.getString(Project.COLUMN_ID_NAME),
-									rs.getString(Project.COLUMN_ID_DESCRIPTION),
-									rs.getInt(Project.COLUMN_ID_MANAGER)));
+							priorities.add(new Priority(
+									rs.getInt(Priority.COLUMN_ID_ID),
+									rs.getString(Priority.COLUMN_ID_NAME))
+							);
 						}
 					} finally {
 						if (rs != null)
@@ -57,12 +57,12 @@ public class MySQLProjectDAO implements ProjectDAO {
 		} catch (SQLException e) {
 			logger.warn(e.toString());
 		}
-		return projects;
+		return priorities;
 	}
 
 	@Override
-	public Project getProjectById(int projectId) {
-		Project project = null;
+	public Priority getPriorityById(int priorityId) {
+		Priority priority = null;
 		try {
 			Connection cn = null;
 			try {
@@ -71,10 +71,10 @@ public class MySQLProjectDAO implements ProjectDAO {
 				try {
 					StatementBuilder statementBuilder = new StatementBuilder(cn);
 
-					String table = Project.TABLE_NAME;
+					String table = Priority.TABLE_NAME;
 					String columns = StatementBuilder.ALL_COLUMNS;
-					String[] selection = { Project.COLUMN_NAME_ID };
-					Object[] selectionArgs = { projectId };
+					String[] selection = { Priority.COLUMN_NAME_ID };
+					Object[] selectionArgs = { priorityId };
 
 					st = statementBuilder.getQueryPreparedStatement(table,
 							columns, selection, selectionArgs);
@@ -82,10 +82,10 @@ public class MySQLProjectDAO implements ProjectDAO {
 					try {
 						rs = st.executeQuery();
 						if (rs.next()) {
-							project = new Project(rs.getInt(Project.COLUMN_ID_ID),
-									rs.getString(Project.COLUMN_ID_NAME),
-									rs.getString(Project.COLUMN_ID_DESCRIPTION),
-									rs.getInt(Project.COLUMN_ID_MANAGER));
+							priority = new Priority(
+									rs.getInt(Priority.COLUMN_ID_ID),
+									rs.getString(Priority.COLUMN_ID_NAME)
+									);
 						}
 					} finally {
 						if (rs != null)
@@ -102,53 +102,11 @@ public class MySQLProjectDAO implements ProjectDAO {
 		} catch (SQLException e) {
 			logger.warn(e.toString());
 		}
-		return project;
-	}
-	
-	@Override
-	public Integer getProjectIdByName(String name) {
-		Integer projectId = null;
-		try {
-			Connection cn = null;
-			try {
-				cn = MySQLDAOFactory.getConnection();
-				PreparedStatement st = null;
-				try {
-					StatementBuilder statementBuilder = new StatementBuilder(cn);
-
-					String table = Project.TABLE_NAME;
-					String columns = StatementBuilder.ALL_COLUMNS;
-					String[] selection = { Project.COLUMN_NAME_NAME};
-					Object[] selectionArgs = { name};
-
-					st = statementBuilder.getQueryPreparedStatement(table,
-							columns, selection, selectionArgs);
-					ResultSet rs = null;
-					try {
-						rs = st.executeQuery();
-						if (rs.next()) {
-							projectId = rs.getInt(Project.COLUMN_ID_ID);
-						}
-					} finally {
-						if (rs != null)
-							rs.close();
-					}
-				} finally {
-					if (st != null)
-						st.close();
-				}
-			} finally {
-				if (cn != null)
-					cn.close();
-			}
-		} catch (SQLException e) {
-			logger.warn(e.toString());
-		}
-		return projectId;
+		return priority;
 	}
 
 	@Override
-	public boolean createProject(Project project) {
+	public boolean createPriority(Priority priority) {
 		boolean isSuccess = false;
 		try {
 			Connection cn = null;
@@ -158,17 +116,9 @@ public class MySQLProjectDAO implements ProjectDAO {
 				try {
 					StatementBuilder statementBuilder = new StatementBuilder(cn);
 
-					String table = Project.TABLE_NAME;
-					String[] columns = {
-							Project.COLUMN_NAME_NAME,
-							Project.COLUMN_NAME_DESCRIPTION ,
-							Project.COLUMN_NAME_MANAGER
-							};
-					Object[] values = {
-							project.getName(),
-							project.getDescription(),
-							project.getManager()
-							};
+					String table = Priority.TABLE_NAME;
+					String[] columns = { Priority.COLUMN_NAME_NAME };
+					Object[] values = { priority.getName() };
 
 					st = statementBuilder.getInsertPreparedStatement(table,
 							columns, values);
@@ -189,7 +139,7 @@ public class MySQLProjectDAO implements ProjectDAO {
 	}
 
 	@Override
-	public boolean updateProject(Project project) {
+	public boolean updatePriority(Priority priority) {
 		boolean isSuccess = false;
 		try {
 			Connection cn = null;
@@ -199,19 +149,11 @@ public class MySQLProjectDAO implements ProjectDAO {
 				try {
 					StatementBuilder statementBuilder = new StatementBuilder(cn);
 
-					String table = Project.TABLE_NAME;
-					String[] columns = {
-							Project.COLUMN_NAME_NAME,
-							Project.COLUMN_NAME_DESCRIPTION ,
-							Project.COLUMN_NAME_MANAGER
-							};
-					Object[] values = {
-							project.getName(),
-							project.getDescription(),
-							project.getManager()
-							};
-					String[] selection = { Project.COLUMN_NAME_ID };
-					Object[] selectionArgs = { project.getProjectId() };
+					String table = Priority.TABLE_NAME;
+					String[] columns = { Priority.COLUMN_NAME_NAME };
+					Object[] values = { priority.getName() };
+					String[] selection = { Priority.COLUMN_NAME_ID };
+					Object[] selectionArgs = { priority.getPriorityId() };
 
 					st = statementBuilder.getUpdatePreparedStatement(table,
 							columns, values, selection, selectionArgs);
@@ -230,9 +172,9 @@ public class MySQLProjectDAO implements ProjectDAO {
 		}
 		return isSuccess;
 	}
-	
+
 	@Override
-	public boolean deleteProject(int projectId) {
+	public boolean deletePriority(int priorityId) {
 		boolean isSuccess = false;
 		try {
 			Connection cn = null;
@@ -242,9 +184,9 @@ public class MySQLProjectDAO implements ProjectDAO {
 				try {
 					StatementBuilder statementBuilder = new StatementBuilder(cn);
 
-					String table = Project.TABLE_NAME;
-					String[] selection = { Project.COLUMN_NAME_ID };
-					Object[] selectionArgs = { projectId };
+					String table = Priority.TABLE_NAME;
+					String[] selection = { Priority.COLUMN_NAME_ID };
+					Object[] selectionArgs = { priorityId };
 
 					st = statementBuilder.getDeletePreparedStatement(table,
 							selection, selectionArgs);
@@ -263,4 +205,5 @@ public class MySQLProjectDAO implements ProjectDAO {
 		}
 		return isSuccess;
 	}
+
 }

@@ -51,7 +51,7 @@ public interface UserDAO {
 	 * @param userId
 	 * @return User 
 	 */
-	public User getUserById(String userId);
+	public User getUserById(Integer userId);
 	
 	/**
 	 * Adds new user in a data storage
@@ -61,17 +61,16 @@ public interface UserDAO {
 	public boolean createUser(User user);
 	
 	/**
-	 * Delete user from a data storage by the unique userId
-	 * @param userId
-	 * @return boolean - true, if it was successful
-	 */
-	public boolean deleteUser(String userId);
-	
-	/**
 	 * Update the user's data 
 	 * @param user
 	 * @return boolean - true, if it was successful
 	 */
 	public boolean updateUser(User user);
 	
+	/**
+	 * Delete user from a data storage by the unique userId
+	 * @param userId
+	 * @return boolean - true, if it was successful
+	 */
+	public boolean deleteUser(String userId);
 }

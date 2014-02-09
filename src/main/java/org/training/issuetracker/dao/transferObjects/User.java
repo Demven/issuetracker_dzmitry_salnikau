@@ -9,6 +9,8 @@ public class User implements java.io.Serializable {
 
 	private static final long serialVersionUID = 4249146829438242768L;
 	
+	public final static String NAME_PLACEHOLDER = "-"; 
+	
 	// For database
 	public final static String TABLE_NAME = "users";
 	
@@ -25,7 +27,6 @@ public class User implements java.io.Serializable {
 	public final static int COLUMN_ID_EMAIL = 4;
 	public final static int COLUMN_ID_ROLE = 5;
 	public final static int COLUMN_ID_PASSWORD = 6;
-	
 	
 	// For entity
 	private int userId;
@@ -46,6 +47,7 @@ public class User implements java.io.Serializable {
 	}
 	
 	public User(){
+		this.firstName = NAME_PLACEHOLDER;
 	}
 	
 	/**

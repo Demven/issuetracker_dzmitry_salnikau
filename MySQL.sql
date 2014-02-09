@@ -117,12 +117,12 @@ CREATE  TABLE `issuetracker`.`statuses` (
   `name` VARCHAR(45) NULL ,
   PRIMARY KEY (`id`) );
 
-INSERT INTO `issuetracker`.`statuses` (`id`, `name`) VALUES ('1', 'new');
-INSERT INTO `issuetracker`.`statuses` (`id`, `name`) VALUES ('2', 'assigned');
-INSERT INTO `issuetracker`.`statuses` (`id`, `name`) VALUES ('3', 'in progress');
-INSERT INTO `issuetracker`.`statuses` (`id`, `name`) VALUES ('4', 'resolved');
-INSERT INTO `issuetracker`.`statuses` (`id`, `name`) VALUES ('5', 'closed');
-INSERT INTO `issuetracker`.`statuses` (`id`, `name`) VALUES ('6', 'reopened');
+INSERT INTO `issuetracker`.`statuses` (`id`, `name`) VALUES ('1', 'New');
+INSERT INTO `issuetracker`.`statuses` (`id`, `name`) VALUES ('2', 'Assigned');
+INSERT INTO `issuetracker`.`statuses` (`id`, `name`) VALUES ('3', 'In progress');
+INSERT INTO `issuetracker`.`statuses` (`id`, `name`) VALUES ('4', 'Resolved');
+INSERT INTO `issuetracker`.`statuses` (`id`, `name`) VALUES ('5', 'Closed');
+INSERT INTO `issuetracker`.`statuses` (`id`, `name`) VALUES ('6', 'Reopened');
 
 
 CREATE  TABLE `issuetracker`.`resolutions` (
@@ -130,10 +130,10 @@ CREATE  TABLE `issuetracker`.`resolutions` (
   `name` VARCHAR(45) NULL ,
   PRIMARY KEY (`id`) );
 
-INSERT INTO `issuetracker`.`resolutions` (`id`, `name`) VALUES ('1', 'fixed');
-INSERT INTO `issuetracker`.`resolutions` (`id`, `name`) VALUES ('2', 'invalid');
-INSERT INTO `issuetracker`.`resolutions` (`id`, `name`) VALUES ('3', 'wontfix');
-INSERT INTO `issuetracker`.`resolutions` (`id`, `name`) VALUES ('4', 'worksforme');
+INSERT INTO `issuetracker`.`resolutions` (`id`, `name`) VALUES ('1', 'Fixed');
+INSERT INTO `issuetracker`.`resolutions` (`id`, `name`) VALUES ('2', 'Invalid');
+INSERT INTO `issuetracker`.`resolutions` (`id`, `name`) VALUES ('3', 'Wontfix');
+INSERT INTO `issuetracker`.`resolutions` (`id`, `name`) VALUES ('4', 'Worksforme');
 
 
 CREATE  TABLE `issuetracker`.`priorities` (
@@ -141,10 +141,10 @@ CREATE  TABLE `issuetracker`.`priorities` (
   `name` VARCHAR(45) NULL ,
   PRIMARY KEY (`id`) );
   
-INSERT INTO `issuetracker`.`priorities` (`id`, `name`) VALUES ('1', 'critical');
-INSERT INTO `issuetracker`.`priorities` (`id`, `name`) VALUES ('2', 'major');
-INSERT INTO `issuetracker`.`priorities` (`id`, `name`) VALUES ('3', 'important');
-INSERT INTO `issuetracker`.`priorities` (`id`, `name`) VALUES ('4', 'minor');
+INSERT INTO `issuetracker`.`priorities` (`id`, `name`) VALUES ('1', 'Critical');
+INSERT INTO `issuetracker`.`priorities` (`id`, `name`) VALUES ('2', 'Major');
+INSERT INTO `issuetracker`.`priorities` (`id`, `name`) VALUES ('3', 'Important');
+INSERT INTO `issuetracker`.`priorities` (`id`, `name`) VALUES ('4', 'Minor');
 
 
 CREATE  TABLE `issuetracker`.`types` (
@@ -152,7 +152,7 @@ CREATE  TABLE `issuetracker`.`types` (
   `name` VARCHAR(45) NULL ,
   PRIMARY KEY (`id`) );
   
-INSERT INTO `issuetracker`.`types` (`id`, `name`) VALUES ('1', 'cosmetic');
-INSERT INTO `issuetracker`.`types` (`id`, `name`) VALUES ('2', 'bug');
-INSERT INTO `issuetracker`.`types` (`id`, `name`) VALUES ('3', 'feature');
-INSERT INTO `issuetracker`.`types` (`id`, `name`) VALUES ('4', 'performance');
+INSERT INTO `issuetracker`.`types` (`id`, `name`) VALUES ('1', 'Cosmetic');
+INSERT INTO `issuetracker`.`types` (`id`, `name`) VALUES ('2', 'Bug');
+INSERT INTO `issuetracker`.`types` (`id`, `name`) VALUES ('3', 'Feature');
+INSERT INTO `issuetracker`.`types` (`id`, `name`) VALUES ('4', 'Performance');

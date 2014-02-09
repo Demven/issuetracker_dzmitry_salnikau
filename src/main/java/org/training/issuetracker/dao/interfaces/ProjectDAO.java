@@ -24,18 +24,18 @@ public interface ProjectDAO {
 	public Project getProjectById(int projectId);
 	
 	/**
+	 * Defines the unique project's Id by the name
+	 * @param firstName
+	 * @return String projectId
+	 */
+	public Integer getProjectIdByName(String name);
+	
+	/**
 	 * Adds new project in a data storage
 	 * @param Project
 	 * @return boolean - true, if it was successful
 	 */
 	public boolean createProject(Project project);
-	
-	/**
-	 * Delete project from a data storage by the unique projectId
-	 * @param projectId
-	 * @return boolean - true, if it was successful
-	 */
-	public boolean deleteProject(int projectId);
 	
 	/**
 	 * Update the project's data 
@@ -44,4 +44,10 @@ public interface ProjectDAO {
 	 */
 	public boolean updateProject(Project project);
 	
+	/**
+	 * Delete project from a data storage by the unique projectId
+	 * @param projectId
+	 * @return boolean - true, if it was successful
+	 */
+	public boolean deleteProject(int projectId);
 }

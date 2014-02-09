@@ -239,7 +239,7 @@ public class MySQLUserDAO implements UserDAO{
 	}
 
 	@Override
-	public User getUserById(String userId) {
+	public User getUserById(Integer userId) {
 		User user = null;
 		try {
 			Connection cn = null;
@@ -332,39 +332,6 @@ public class MySQLUserDAO implements UserDAO{
 	}
 
 	@Override
-	public boolean deleteUser(String userId) {
-		boolean isSuccess = false;
-		try {
-			Connection cn = null;
-			try {
-				cn = MySQLDAOFactory.getConnection();
-				PreparedStatement st = null;
-				try {
-					StatementBuilder statementBuilder = new StatementBuilder(cn);
-
-					String table = User.TABLE_NAME;
-					String[] selection = { User.COLUMN_NAME_ID };
-					Object[] selectionArgs = { userId };
-
-					st = statementBuilder.getDeletePreparedStatement(table,
-							selection, selectionArgs);
-					st.executeUpdate();
-					isSuccess = true;
-				} finally {
-					if (st != null)
-						st.close();
-				}
-			} finally {
-				if (cn != null)
-					cn.close();
-			}
-		} catch (SQLException e) {
-			logger.warn(e.toString());
-		}
-		return isSuccess;
-	}
-
-	@Override
 	public boolean updateUser(User user) {
 		boolean isSuccess = false;
 		try {
@@ -395,6 +362,39 @@ public class MySQLUserDAO implements UserDAO{
 
 					st = statementBuilder.getUpdatePreparedStatement(table,
 							columns, values, selection, selectionArgs);
+					st.executeUpdate();
+					isSuccess = true;
+				} finally {
+					if (st != null)
+						st.close();
+				}
+			} finally {
+				if (cn != null)
+					cn.close();
+			}
+		} catch (SQLException e) {
+			logger.warn(e.toString());
+		}
+		return isSuccess;
+	}
+	
+	@Override
+	public boolean deleteUser(String userId) {
+		boolean isSuccess = false;
+		try {
+			Connection cn = null;
+			try {
+				cn = MySQLDAOFactory.getConnection();
+				PreparedStatement st = null;
+				try {
+					StatementBuilder statementBuilder = new StatementBuilder(cn);
+
+					String table = User.TABLE_NAME;
+					String[] selection = { User.COLUMN_NAME_ID };
+					Object[] selectionArgs = { userId };
+
+					st = statementBuilder.getDeletePreparedStatement(table,
+							selection, selectionArgs);
 					st.executeUpdate();
 					isSuccess = true;
 				} finally {

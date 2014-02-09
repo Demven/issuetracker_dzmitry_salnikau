@@ -6,10 +6,14 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.training.issuetracker.commands.Command;
 import org.training.issuetracker.commands.mainCommands.AuthCommand;
-import org.training.issuetracker.commands.mainCommands.BuildsCommand;
 import org.training.issuetracker.commands.mainCommands.LogOutCommand;
 import org.training.issuetracker.commands.mainCommands.NoCommand;
-import org.training.issuetracker.commands.mainCommands.ProjectsCommand;
+import org.training.issuetracker.commands.mainCommands.create.CreateProjectCommand;
+import org.training.issuetracker.commands.mainCommands.edit.EditProjectCommand;
+import org.training.issuetracker.commands.mainCommands.view.ViewPrioritiesCommand;
+import org.training.issuetracker.commands.mainCommands.view.ViewProjectsCommand;
+import org.training.issuetracker.commands.mainCommands.view.ViewResolutionsCommand;
+import org.training.issuetracker.commands.mainCommands.view.ViewStatusesCommand;
 
 public class MainRequestHelper { 
 	private static MainRequestHelper instance = null; 
@@ -20,8 +24,18 @@ public class MainRequestHelper {
 		//заполнение таблицы командами 
 		commands.put("auth", new AuthCommand());
 		commands.put("logout", new LogOutCommand());
-		commands.put("projects", new ProjectsCommand());
-		commands.put("builds", new BuildsCommand());
+		
+		// --> EDIT
+		commands.put("editProject", new EditProjectCommand());
+		
+		// --> CREATE
+		commands.put("createProject", new CreateProjectCommand());
+		
+		// --> VIEW
+		commands.put("viewProjects", new ViewProjectsCommand());
+		commands.put("viewStatuses", new ViewStatusesCommand());
+		commands.put("viewResolutions", new ViewResolutionsCommand());
+		commands.put("viewPriorities", new ViewPrioritiesCommand());
 	}  
  
 	public Command getCommand(HttpServletRequest request) { 

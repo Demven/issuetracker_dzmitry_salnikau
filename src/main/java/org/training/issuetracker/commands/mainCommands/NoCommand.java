@@ -4,55 +4,56 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.training.issuetracker.beans.IssueBean;
 import org.training.issuetracker.commands.Command;
 import org.training.issuetracker.dao.factories.DAOFactory;
 import org.training.issuetracker.dao.interfaces.IssueDAO;
+import org.training.issuetracker.dao.interfaces.PriorityDAO;
+import org.training.issuetracker.dao.interfaces.StatusDAO;
+import org.training.issuetracker.dao.interfaces.TypeDAO;
 import org.training.issuetracker.dao.interfaces.UserDAO;
 import org.training.issuetracker.dao.transferObjects.Issue;
+import org.training.issuetracker.dao.transferObjects.Priority;
+import org.training.issuetracker.dao.transferObjects.Status;
+import org.training.issuetracker.dao.transferObjects.Type;
 import org.training.issuetracker.dao.transferObjects.User;
-import org.training.issuetracker.logic.SessionLogic;
 import org.training.issuetracker.managers.ConfigurationManager;
+import org.training.issuetracker.managers.SessionManager;
 
 public class NoCommand implements Command { 
-
-	private static final String PARAM_NAME_LOGIN = "login"; 
 	
-	public void execute(HttpServletRequest request, HttpServletResponse response, ServletContext context) throws ServletException, IOException { 
-		
+	private DAOFactory mysqlFactory;
+	
+	public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { 
+
 		// In case of direct address to the servlet - show main page
 		String page = ConfigurationManager.getInstance().getProperty(ConfigurationManager.MAIN_PAGE_PATH);
 		
-		DAOFactory mysqlFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
-		UserDAO userDAO = mysqlFactory.getUserDAO();
+		mysqlFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
 		IssueDAO issueDAO = mysqlFactory.getIssueDAO();
 		
-		SessionLogic sessionLogic = new SessionLogic();
-		String login = (String) sessionLogic.getSessionValue(request, PARAM_NAME_LOGIN);
 		ArrayList<Issue> allIssues = issueDAO.getIssues();
 		
-		if(login != null && login != ""){
-			// if a user is authorized
-			User loginUser = userDAO.getUserByEmail(login);
-			request.setAttribute("loginUser", loginUser);
-			// show him assigned issues
-			ArrayList<Issue> assignedIssues = getAssignedIssues(allIssues, loginUser.getUserId());
+		SessionManager sessionManager = new SessionManager();
+		User loginUser = (User) sessionManager.getSessionValue(request, SessionManager.NAME_LOGIN_USER);
+		
+		if(loginUser != null){
+			// if a user is authorized - show him assigned issues
+			ArrayList<IssueBean> assignedIssues = getAssignedIssues(allIssues, loginUser.getUserId());
 			request.setAttribute("assignedIssues", assignedIssues);		
+			request.setAttribute("pageTitle", "Assigned issues");	
 		} else{
 			// show the latest issues
-			ArrayList<Issue> latestIssues = getLatestIssues(allIssues);
-			ArrayList<User> assignees = userDAO.getUsers();
-			request.setAttribute("assignees", assignees);
+			ArrayList<IssueBean> latestIssues = getLatestIssues(allIssues);
 			request.setAttribute("latestIssues", latestIssues);
+			request.setAttribute("pageTitle", "Latest issues");	
 		}
-		
-		RequestDispatcher dispatcher = context.getRequestDispatcher(page); 
-		dispatcher.forward(request, response);
+
+		return page;
 	} 
 
 	/**
@@ -60,7 +61,7 @@ public class NoCommand implements Command {
 	 * @param allIssues - list of issues
 	 * @return ArrayList<Issue> - list of N latest issues
 	 */
-	private ArrayList<Issue> getLatestIssues(ArrayList<Issue> allIssues){
+	private ArrayList<IssueBean> getLatestIssues(ArrayList<Issue> allIssues){
 		Collections.sort(allIssues);
 		ArrayList<Issue> latestIssues = new ArrayList<Issue>();
 		
@@ -73,7 +74,7 @@ public class NoCommand implements Command {
 			latestIssues.add(allIssues.get(i));
 		}
 		
-		return latestIssues;
+		return convertIdsToObjects(latestIssues);
 	}
 	
 	/**
@@ -82,7 +83,7 @@ public class NoCommand implements Command {
 	 * @param userId - unique ID of a user
 	 * @return ArrayList<Issue> - list of N assigned issues for the user
 	 */
-	private ArrayList<Issue> getAssignedIssues(ArrayList<Issue> allIssues, int userId){
+	private ArrayList<IssueBean> getAssignedIssues(ArrayList<Issue> allIssues, int userId){
 		Collections.sort(allIssues);
 		ArrayList<Issue> assignedIssues = new ArrayList<Issue>();
 		
@@ -98,6 +99,81 @@ public class NoCommand implements Command {
 			}
 		}
 		
-		return assignedIssues;
+		return convertIdsToObjects(assignedIssues);
+	}
+	
+	/**
+	 * Use received list of issues to create new list of IssueWithObjects-objects
+	 * for convenient use in JSP-pages
+	 * @param issuesWithIds - ArrayList<Issue> - list, where all issue-objects
+	 * have id-links to the according objects in the database
+	 * @return ArrayList<IssueBean> - list, where all issue-objects
+	 * contain dependent objects instead of ids.
+	 */
+	private ArrayList<IssueBean> convertIdsToObjects(ArrayList<Issue> issuesWithIds){
+		ArrayList<IssueBean> issuesWithObjects = new ArrayList<IssueBean>();
+		
+		UserDAO userDAO = mysqlFactory.getUserDAO();
+		PriorityDAO priorityDAO = mysqlFactory.getPriorityDAO();
+		TypeDAO typeDAO = mysqlFactory.getTypeDAO();
+		StatusDAO statusDAO = mysqlFactory.getStatusDAO();
+		
+		ArrayList<User> users = userDAO.getUsers();
+		ArrayList<Priority> priorities = priorityDAO.getPriorities();
+		ArrayList<Type> types = typeDAO.getTypes();
+		ArrayList<Status> statuses = statusDAO.getStatuses();
+		
+		for(Issue issue : issuesWithIds){
+			// find assignee
+			User assignee = new User();
+			for(User user : users){
+				if(issue.getAssignee() == user.getUserId()){
+					assignee = user;
+				}
+			}
+			
+			// find priority
+			Priority priority = null;
+			for(Priority p : priorities){
+				if(issue.getPriority() == p.getPriorityId()){
+					priority = p;
+				}
+			}
+			
+			// find type
+			Type type = null;
+			for(Type t : types){
+				if(issue.getType() == t.getTypeId()){
+					type = t;
+				}
+			}
+			
+			// find status
+			Status status = null;
+			for(Status s : statuses){
+				if(issue.getStatus() == s.getStatusId()){
+					status = s;
+				}
+			}
+			
+			issuesWithObjects.add(new IssueBean(
+					issue.getIssueId(),
+					issue.getCreateDate(),
+					null,
+					issue.getModifyDate(),
+					null,
+					issue.getSummary(),
+					issue.getDescription(),
+					status,
+					null,
+					type,
+					priority,
+					null,
+					null,
+					assignee)
+			);
+		}
+		
+		return issuesWithObjects;
 	}
 }

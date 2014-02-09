@@ -15,14 +15,16 @@ public class ConfigurationManager {
 	public static final String DATABASE_USER = "DATABASE_USER"; 
 	public static final String DATABASE_PASSWORD = "DATABASE_PASSWORD"; 
 	
-	// Pages for users
-	public static final String MAIN_PAGE_PATH = "MAIN_PAGE_PATH";
+	//Cookies
+	public static final String COOKIE_LIFE_TIME = "COOKIE_LIFE_TIME";
 	
-	// XML
-	public static final String XML_USERS_PATH = "XML_USERS_PATH";
-	public static final String XML_ISSUES_PATH = "XML_ISSUES_PATH";
-	public static final String XML_PROJECTS_PATH = "XML_PROJECTS_PATH";
-	public static final String XML_BUILDS_PATH = "XML_BUILDS_PATH";
+	// Pages
+	public static final String MAIN_PAGE_PATH = "MAIN_PAGE_PATH";
+	public static final String PROJECT_PAGE_PATH = "PROJECT_PAGE_PATH";
+	public static final String PROJECTS_PAGE_PATH = "PROJECTS_PAGE_PATH";
+	public static final String STATUSES_PAGE_PATH = "STATUSES_PAGE_PATH";
+	public static final String PRIORITIES_PAGE_PATH = "PRIORITIES_PAGE_PATH";
+	public static final String RESOLUTIONS_PAGE_PATH = "RESOLUTIONS_PAGE_PATH";
 	
 	public static ConfigurationManager getInstance() { 
 		if (instance == null) { 

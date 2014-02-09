@@ -8,17 +8,17 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 import org.training.issuetracker.dao.factories.MySQLDAOFactory;
-import org.training.issuetracker.dao.interfaces.ProjectDAO;
+import org.training.issuetracker.dao.interfaces.StatusDAO;
 import org.training.issuetracker.dao.mysql.builders.StatementBuilder;
-import org.training.issuetracker.dao.transferObjects.Project;
+import org.training.issuetracker.dao.transferObjects.Status;
 
-public class MySQLProjectDAO implements ProjectDAO {
+public class MySQLStatusDAO implements StatusDAO{
 
-	private static final Logger logger = Logger.getLogger(MySQLProjectDAO.class);
-
+	private static final Logger logger = Logger.getLogger(MySQLStatusDAO.class);
+	
 	@Override
-	public ArrayList<Project> getProjects() {
-		ArrayList<Project> projects = null;
+	public ArrayList<Status> getStatuses() {
+		ArrayList<Status> statuses = null;
 		try {
 			Connection cn = null;
 			try {
@@ -27,20 +27,20 @@ public class MySQLProjectDAO implements ProjectDAO {
 				try {
 					StatementBuilder statementBuilder = new StatementBuilder(cn);
 
-					String table = Project.TABLE_NAME;
+					String table = Status.TABLE_NAME;
 					String columns = StatementBuilder.ALL_COLUMNS;
 
 					st = statementBuilder.getQueryPreparedStatement(table,
 							columns, null, null);
 					ResultSet rs = null;
-					projects = new ArrayList<Project>();
+					statuses = new ArrayList<Status>();
 					try {
 						rs = st.executeQuery();
 						while (rs.next()) {
-							projects.add(new Project(rs.getInt(Project.COLUMN_ID_ID),
-									rs.getString(Project.COLUMN_ID_NAME),
-									rs.getString(Project.COLUMN_ID_DESCRIPTION),
-									rs.getInt(Project.COLUMN_ID_MANAGER)));
+							statuses.add(new Status(
+									rs.getInt(Status.COLUMN_ID_ID),
+									rs.getString(Status.COLUMN_ID_NAME))
+							);
 						}
 					} finally {
 						if (rs != null)
@@ -57,12 +57,12 @@ public class MySQLProjectDAO implements ProjectDAO {
 		} catch (SQLException e) {
 			logger.warn(e.toString());
 		}
-		return projects;
+		return statuses;
 	}
 
 	@Override
-	public Project getProjectById(int projectId) {
-		Project project = null;
+	public Status getStatusById(int statusId) {
+		Status status = null;
 		try {
 			Connection cn = null;
 			try {
@@ -71,10 +71,10 @@ public class MySQLProjectDAO implements ProjectDAO {
 				try {
 					StatementBuilder statementBuilder = new StatementBuilder(cn);
 
-					String table = Project.TABLE_NAME;
+					String table = Status.TABLE_NAME;
 					String columns = StatementBuilder.ALL_COLUMNS;
-					String[] selection = { Project.COLUMN_NAME_ID };
-					Object[] selectionArgs = { projectId };
+					String[] selection = { Status.COLUMN_NAME_ID };
+					Object[] selectionArgs = { statusId };
 
 					st = statementBuilder.getQueryPreparedStatement(table,
 							columns, selection, selectionArgs);
@@ -82,10 +82,10 @@ public class MySQLProjectDAO implements ProjectDAO {
 					try {
 						rs = st.executeQuery();
 						if (rs.next()) {
-							project = new Project(rs.getInt(Project.COLUMN_ID_ID),
-									rs.getString(Project.COLUMN_ID_NAME),
-									rs.getString(Project.COLUMN_ID_DESCRIPTION),
-									rs.getInt(Project.COLUMN_ID_MANAGER));
+							status = new Status(
+									rs.getInt(Status.COLUMN_ID_ID),
+									rs.getString(Status.COLUMN_ID_NAME)
+									);
 						}
 					} finally {
 						if (rs != null)
@@ -102,53 +102,11 @@ public class MySQLProjectDAO implements ProjectDAO {
 		} catch (SQLException e) {
 			logger.warn(e.toString());
 		}
-		return project;
-	}
-	
-	@Override
-	public Integer getProjectIdByName(String name) {
-		Integer projectId = null;
-		try {
-			Connection cn = null;
-			try {
-				cn = MySQLDAOFactory.getConnection();
-				PreparedStatement st = null;
-				try {
-					StatementBuilder statementBuilder = new StatementBuilder(cn);
-
-					String table = Project.TABLE_NAME;
-					String columns = StatementBuilder.ALL_COLUMNS;
-					String[] selection = { Project.COLUMN_NAME_NAME};
-					Object[] selectionArgs = { name};
-
-					st = statementBuilder.getQueryPreparedStatement(table,
-							columns, selection, selectionArgs);
-					ResultSet rs = null;
-					try {
-						rs = st.executeQuery();
-						if (rs.next()) {
-							projectId = rs.getInt(Project.COLUMN_ID_ID);
-						}
-					} finally {
-						if (rs != null)
-							rs.close();
-					}
-				} finally {
-					if (st != null)
-						st.close();
-				}
-			} finally {
-				if (cn != null)
-					cn.close();
-			}
-		} catch (SQLException e) {
-			logger.warn(e.toString());
-		}
-		return projectId;
+		return status;
 	}
 
 	@Override
-	public boolean createProject(Project project) {
+	public boolean createStatus(Status status) {
 		boolean isSuccess = false;
 		try {
 			Connection cn = null;
@@ -158,17 +116,9 @@ public class MySQLProjectDAO implements ProjectDAO {
 				try {
 					StatementBuilder statementBuilder = new StatementBuilder(cn);
 
-					String table = Project.TABLE_NAME;
-					String[] columns = {
-							Project.COLUMN_NAME_NAME,
-							Project.COLUMN_NAME_DESCRIPTION ,
-							Project.COLUMN_NAME_MANAGER
-							};
-					Object[] values = {
-							project.getName(),
-							project.getDescription(),
-							project.getManager()
-							};
+					String table = Status.TABLE_NAME;
+					String[] columns = { Status.COLUMN_NAME_NAME };
+					Object[] values = { status.getName() };
 
 					st = statementBuilder.getInsertPreparedStatement(table,
 							columns, values);
@@ -189,7 +139,7 @@ public class MySQLProjectDAO implements ProjectDAO {
 	}
 
 	@Override
-	public boolean updateProject(Project project) {
+	public boolean updateStatus(Status status) {
 		boolean isSuccess = false;
 		try {
 			Connection cn = null;
@@ -199,19 +149,11 @@ public class MySQLProjectDAO implements ProjectDAO {
 				try {
 					StatementBuilder statementBuilder = new StatementBuilder(cn);
 
-					String table = Project.TABLE_NAME;
-					String[] columns = {
-							Project.COLUMN_NAME_NAME,
-							Project.COLUMN_NAME_DESCRIPTION ,
-							Project.COLUMN_NAME_MANAGER
-							};
-					Object[] values = {
-							project.getName(),
-							project.getDescription(),
-							project.getManager()
-							};
-					String[] selection = { Project.COLUMN_NAME_ID };
-					Object[] selectionArgs = { project.getProjectId() };
+					String table = Status.TABLE_NAME;
+					String[] columns = { Status.COLUMN_NAME_NAME };
+					Object[] values = { status.getName() };
+					String[] selection = { Status.COLUMN_NAME_ID };
+					Object[] selectionArgs = { status.getStatusId() };
 
 					st = statementBuilder.getUpdatePreparedStatement(table,
 							columns, values, selection, selectionArgs);
@@ -230,9 +172,9 @@ public class MySQLProjectDAO implements ProjectDAO {
 		}
 		return isSuccess;
 	}
-	
+
 	@Override
-	public boolean deleteProject(int projectId) {
+	public boolean deleteStatus(int statusId) {
 		boolean isSuccess = false;
 		try {
 			Connection cn = null;
@@ -242,9 +184,9 @@ public class MySQLProjectDAO implements ProjectDAO {
 				try {
 					StatementBuilder statementBuilder = new StatementBuilder(cn);
 
-					String table = Project.TABLE_NAME;
-					String[] selection = { Project.COLUMN_NAME_ID };
-					Object[] selectionArgs = { projectId };
+					String table = Status.TABLE_NAME;
+					String[] selection = { Status.COLUMN_NAME_ID };
+					Object[] selectionArgs = { statusId };
 
 					st = statementBuilder.getDeletePreparedStatement(table,
 							selection, selectionArgs);
@@ -263,4 +205,5 @@ public class MySQLProjectDAO implements ProjectDAO {
 		}
 		return isSuccess;
 	}
+
 }
