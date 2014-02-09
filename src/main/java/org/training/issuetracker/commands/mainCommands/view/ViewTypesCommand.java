@@ -10,25 +10,26 @@ import javax.servlet.http.HttpServletResponse;
 import org.training.issuetracker.commands.Command;
 import org.training.issuetracker.commands.mainCommands.NoCommand;
 import org.training.issuetracker.dao.factories.DAOFactory;
-import org.training.issuetracker.dao.interfaces.PriorityDAO;
-import org.training.issuetracker.dao.transferObjects.Priority;
+import org.training.issuetracker.dao.interfaces.TypeDAO;
+import org.training.issuetracker.dao.transferObjects.Type;
 import org.training.issuetracker.managers.ConfigurationManager;
 
-public class ViewPrioritiesCommand implements Command{
+public class ViewTypesCommand implements Command{
 	
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		String page = ConfigurationManager.getInstance().getProperty(ConfigurationManager.PRIORITIES_PAGE_PATH);
-		request.setAttribute("pageTitle", "Priorities");
+		
+		String page = ConfigurationManager.getInstance().getProperty(
+				ConfigurationManager.TYPES_PAGE_PATH);
+		request.setAttribute("pageTitle", "Types");
 
 		DAOFactory mysqlFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
-		PriorityDAO priorityDAO = mysqlFactory.getPriorityDAO();
-		ArrayList<Priority> priorities = priorityDAO.getPriorities();
-		
-		if(priorities != null){
-			request.setAttribute("priorities", priorities);
+		TypeDAO typeDAO = mysqlFactory.getTypeDAO();
+		ArrayList<Type> types = typeDAO.getTypes();
+
+		if(types != null){
+			request.setAttribute("types", types);
 		} else{
 			// There was some error, so as we can not show blank page
 			// - simply show main page

@@ -35,6 +35,7 @@
                              <a href="main?command=viewStatuses"><li class="menu_item">Statuses</li></a>
                              <a href="main?command=viewResolutions"><li class="menu_item">Resolutions</li></a>
                              <a href="main?command=viewPriorities"><li class="menu_item">Priorities</li></a>
+                             <a href="main?command=viewTypes"><li class="menu_item">Types</li></a>
                         </ul>
                     </li>
               </div>

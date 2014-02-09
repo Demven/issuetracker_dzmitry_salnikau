@@ -16,15 +16,12 @@ public class LogOutCommand implements Command{
 	public String execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		// Invalidate session
-		new SessionManager().invalidateSession(request);
-		
+		// Delete loginUser from the session
+		new SessionManager().removeSessionValue(request, SessionManager.NAME_LOGIN_USER);
+
 		// Delete cookie
 		new CookieManager().removeCookieValue(response, CookieManager.NAME_LOGIN);
-		
-		// Forward to the main page
-		String page = new NoCommand().execute(request, response);
-		return page;
-	}
 
+		return null;
+	}
 }

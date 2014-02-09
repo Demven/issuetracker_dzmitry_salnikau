@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.training.issuetracker.commands.Command;
+import org.training.issuetracker.commands.mainCommands.NoCommand;
 import org.training.issuetracker.helpers.MainRequestHelper;
 import org.training.issuetracker.managers.CookieManager;
 import org.training.issuetracker.managers.SessionManager;
@@ -40,12 +41,16 @@ public class MainController extends HttpServlet  implements  javax.servlet.Servl
 	        Command command = requestHelper.getCommand(request); 
 	        String page = command.execute(request, response); 
 
-	        if(new CookieManager().getCookieValue(request, CookieManager.NAME_LOGIN) != null){
-	        	// set session from cookies
-	        	SessionManager sessionManager = new SessionManager();
-		        if(sessionManager.getSessionValue(request, SessionManager.NAME_LOGIN_USER) == null){
-		        	sessionManager.setSessionFromCookies(request, SessionManager.TYPE_LOGIN_USER);
+	        if(page != null){
+	        	if(new CookieManager().getCookieValue(request, CookieManager.NAME_LOGIN) != null){
+		        	// set session from cookies
+		        	SessionManager sessionManager = new SessionManager();
+			        if(sessionManager.getSessionValue(request, SessionManager.NAME_LOGIN_USER) == null){
+			        	sessionManager.setSessionFromCookies(request, SessionManager.TYPE_LOGIN_USER);
+			        }
 		        }
+	        } else{
+	        	page = new NoCommand().execute(request, response);
 	        }
 	        
 	        // forward to the received page

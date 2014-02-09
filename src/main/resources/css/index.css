@@ -151,15 +151,3 @@
 	line-height: 40px;
 	padding: 0 10px;
 }
-
-/* ------- */
-/* FOOTER */
-.footer{
-	height: 50px;
-	background-color: #FFFFFF;
-	position: fixed;
-	bottom: 0px;
-	z-index: 999;
-	width: 100%;
-	border-top: 1px solid #ccc;
-}

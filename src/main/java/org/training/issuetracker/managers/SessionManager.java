@@ -25,19 +25,22 @@ public final class SessionManager {
 	 * Returns the value of variable from the session
 	 * @param request
 	 * @param name - name of a variable
-	 * @return the specified variable stored in session
+	 * @return the specified variable stored in session or null
 	 */
 	public Object getSessionValue(HttpServletRequest request, String name) { 
-		HttpSession session = request.getSession();
-		Object sessionValue = session.getAttribute(name);
+		HttpSession session = request.getSession(false);
+		Object sessionValue = null;
+		if(session != null){
+			sessionValue = session.getAttribute(name);
+		}
 		return sessionValue;
 	}
 
 	/**
 	 * Sets the value of the new variable in the session
 	 * @param request
-	 * @param name 
-	 * @param value
+	 * @param name - key for an attribute
+	 * @param value - value for an attribute
 	 */
 	public void setSessionValue(HttpServletRequest request, String name, Object value) { 
 		HttpSession session = request.getSession(true);
@@ -45,8 +48,20 @@ public final class SessionManager {
 	}
 	
 	/**
+	 * Removes the value with a specified name
+	 * @param request - HttpServletRequest
+	 * @param name - key for an attribute
+	 */
+	public void removeSessionValue(HttpServletRequest request, String name){
+		HttpSession session = request.getSession(false);
+		if(session != null){
+			session.removeAttribute(name);
+		}
+	}
+	
+	/**
 	 * Invalidate the current session with client
-	 * @param request
+	 * @param request - HttpServletRequest
 	 */
 	public void invalidateSession(HttpServletRequest request){
 		HttpSession session = request.getSession(false);

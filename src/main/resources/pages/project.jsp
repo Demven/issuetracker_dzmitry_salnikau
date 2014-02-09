@@ -7,6 +7,7 @@
 <title><c:out value="${pageTitle}"/></title>
 <link rel="stylesheet" href="./css/_header.css" type="text/css" />
 <link rel="stylesheet" href="./css/project.css" type="text/css" />
+<link rel="stylesheet" href="./css/_footer.css" type="text/css" />
 </head>
 
 <body>
@@ -29,7 +30,7 @@
                         <option value="${manager.userId}"><c:out value="${manager.firstName}"/> <c:out value="${manager.lastName}"/></option>
                     </c:forEach>
                 </select>
-                <input id="project_submit" type="submit" name="submit" value="Done">
+                <input id="project_submit" type="submit" name="submit" value="Create">
             </form>
         </c:when>
        	<c:when test="${not empty editProject}">

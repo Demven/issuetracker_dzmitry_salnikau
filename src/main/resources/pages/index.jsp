@@ -9,6 +9,7 @@
 
 <link rel="stylesheet" href="./css/_header.css" type="text/css" />
 <link rel="stylesheet" href="./css/index.css" type="text/css" />
+<link rel="stylesheet" href="./css/_footer.css" type="text/css" />
 </head>
 
 <body>
