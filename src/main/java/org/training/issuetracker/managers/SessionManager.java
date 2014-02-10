@@ -4,9 +4,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;  
 
 import org.apache.log4j.Logger;
+import org.training.issuetracker.beans.UserBean;
+import org.training.issuetracker.beans.converters.BeanConverter;
 import org.training.issuetracker.dao.factories.DAOFactory;
 import org.training.issuetracker.dao.interfaces.UserDAO;
-import org.training.issuetracker.dao.transferObjects.User;
  
 /**
  * Class that manages sessions
@@ -92,7 +93,8 @@ public final class SessionManager {
 		        	if(getSessionValue(request, NAME_LOGIN_USER) == null){
 		        		DAOFactory mysqlFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
 		        		UserDAO userDAO = mysqlFactory.getUserDAO();
-		        		User loginUser = userDAO.getUserByEmail(login);
+		        		UserBean loginUser = BeanConverter.convertToUserBean(
+		        				userDAO.getUserByEmail(login));
 		        		// set this object of the authorized user into the session
 		        		setSessionValue(request, NAME_LOGIN_USER, loginUser);
 		        	}

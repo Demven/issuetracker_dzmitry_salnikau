@@ -42,7 +42,7 @@ public class MySQLUserDAO implements UserDAO{
 									rs.getString(User.COLUMN_ID_FIRST_NAME),
 									rs.getString(User.COLUMN_ID_LAST_NAME),
 									rs.getString(User.COLUMN_ID_EMAIL),
-									User.Role.valueOf(rs.getString(User.COLUMN_ID_ROLE).toUpperCase()),
+									rs.getInt(User.COLUMN_ID_ROLE),
 									rs.getString(User.COLUMN_ID_PASSWORD))
 							);
 						}
@@ -217,7 +217,7 @@ public class MySQLUserDAO implements UserDAO{
 									rs.getString(User.COLUMN_ID_FIRST_NAME),
 									rs.getString(User.COLUMN_ID_LAST_NAME),
 									rs.getString(User.COLUMN_ID_EMAIL),
-									User.Role.valueOf(rs.getString(User.COLUMN_ID_ROLE).toUpperCase()),
+									rs.getInt(User.COLUMN_ID_ROLE),
 									rs.getString(User.COLUMN_ID_PASSWORD));
 						}
 					} finally {
@@ -265,7 +265,7 @@ public class MySQLUserDAO implements UserDAO{
 									rs.getString(User.COLUMN_ID_FIRST_NAME),
 									rs.getString(User.COLUMN_ID_LAST_NAME),
 									rs.getString(User.COLUMN_ID_EMAIL),
-									User.Role.valueOf(rs.getString(User.COLUMN_ID_ROLE).toUpperCase()),
+									rs.getInt(User.COLUMN_ID_ROLE),
 									rs.getString(User.COLUMN_ID_PASSWORD));
 						}
 					} finally {
@@ -309,7 +309,7 @@ public class MySQLUserDAO implements UserDAO{
 							user.getFirstName(),
 							user.getLastName(),
 							user.getEmail(),
-							user.getRole().value(),
+							user.getRoleId(),
 							user.getPassword()
 							};
 
@@ -354,7 +354,7 @@ public class MySQLUserDAO implements UserDAO{
 							user.getFirstName(),
 							user.getLastName(),
 							user.getEmail(),
-							user.getRole().value(),
+							user.getRoleId(),
 							user.getPassword()
 							};
 					String[] selection = { User.COLUMN_NAME_ID };

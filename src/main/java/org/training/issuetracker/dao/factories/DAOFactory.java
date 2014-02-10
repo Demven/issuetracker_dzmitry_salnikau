@@ -8,6 +8,7 @@ import org.training.issuetracker.dao.interfaces.ResolutionDAO;
 import org.training.issuetracker.dao.interfaces.StatusDAO;
 import org.training.issuetracker.dao.interfaces.TypeDAO;
 import org.training.issuetracker.dao.interfaces.UserDAO;
+import org.training.issuetracker.dao.interfaces.RoleDAO;
 
 public abstract class DAOFactory {
 
@@ -23,6 +24,7 @@ public abstract class DAOFactory {
 	  public abstract ResolutionDAO getResolutionDAO();
 	  public abstract PriorityDAO getPriorityDAO();
 	  public abstract TypeDAO getTypeDAO();
+	  public abstract RoleDAO getRoleDAO();
 
 	  public static DAOFactory getDAOFactory(int whichFactory) {
 	    switch (whichFactory){

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.training.issuetracker.commands.Command;
-import org.training.issuetracker.commands.mainCommands.NoCommand;
+import org.training.issuetracker.commands.main.NoCommand;
 import org.training.issuetracker.helpers.MainRequestHelper;
 import org.training.issuetracker.managers.CookieManager;
 import org.training.issuetracker.managers.SessionManager;

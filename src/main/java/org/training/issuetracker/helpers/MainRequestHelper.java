@@ -5,23 +5,24 @@ import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 
 import org.training.issuetracker.commands.Command;
-import org.training.issuetracker.commands.mainCommands.AuthCommand;
-import org.training.issuetracker.commands.mainCommands.LogOutCommand;
-import org.training.issuetracker.commands.mainCommands.NoCommand;
-import org.training.issuetracker.commands.mainCommands.create.CreatePriorityCommand;
-import org.training.issuetracker.commands.mainCommands.create.CreateProjectCommand;
-import org.training.issuetracker.commands.mainCommands.create.CreateResolutionCommand;
-import org.training.issuetracker.commands.mainCommands.create.CreateTypeCommand;
-import org.training.issuetracker.commands.mainCommands.edit.EditPriorityCommand;
-import org.training.issuetracker.commands.mainCommands.edit.EditProjectCommand;
-import org.training.issuetracker.commands.mainCommands.edit.EditResolutionCommand;
-import org.training.issuetracker.commands.mainCommands.edit.EditStatusCommand;
-import org.training.issuetracker.commands.mainCommands.edit.EditTypeCommand;
-import org.training.issuetracker.commands.mainCommands.view.ViewPrioritiesCommand;
-import org.training.issuetracker.commands.mainCommands.view.ViewProjectsCommand;
-import org.training.issuetracker.commands.mainCommands.view.ViewResolutionsCommand;
-import org.training.issuetracker.commands.mainCommands.view.ViewStatusesCommand;
-import org.training.issuetracker.commands.mainCommands.view.ViewTypesCommand;
+import org.training.issuetracker.commands.create.CreatePriorityCommand;
+import org.training.issuetracker.commands.create.CreateProjectCommand;
+import org.training.issuetracker.commands.create.CreateResolutionCommand;
+import org.training.issuetracker.commands.create.CreateTypeCommand;
+import org.training.issuetracker.commands.create.CreateUserCommand;
+import org.training.issuetracker.commands.edit.EditPriorityCommand;
+import org.training.issuetracker.commands.edit.EditProjectCommand;
+import org.training.issuetracker.commands.edit.EditResolutionCommand;
+import org.training.issuetracker.commands.edit.EditStatusCommand;
+import org.training.issuetracker.commands.edit.EditTypeCommand;
+import org.training.issuetracker.commands.main.AuthCommand;
+import org.training.issuetracker.commands.main.LogOutCommand;
+import org.training.issuetracker.commands.main.NoCommand;
+import org.training.issuetracker.commands.view.ViewPrioritiesCommand;
+import org.training.issuetracker.commands.view.ViewProjectsCommand;
+import org.training.issuetracker.commands.view.ViewResolutionsCommand;
+import org.training.issuetracker.commands.view.ViewStatusesCommand;
+import org.training.issuetracker.commands.view.ViewTypesCommand;
 
 public class MainRequestHelper { 
 	private static MainRequestHelper instance = null; 
@@ -32,6 +33,9 @@ public class MainRequestHelper {
 		//заполнение таблицы командами 
 		commands.put("auth", new AuthCommand());
 		commands.put("logout", new LogOutCommand());
+		
+		// --> USER
+		commands.put("createUser", new CreateUserCommand());
 		
 		// --> EDIT
 		commands.put("editProject", new EditProjectCommand());

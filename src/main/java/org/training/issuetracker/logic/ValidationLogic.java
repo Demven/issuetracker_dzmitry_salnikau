@@ -11,6 +11,58 @@ import java.util.regex.Pattern;
 public class ValidationLogic {
 	
 	/**
+	 * Checks the first name is correct
+	 * @param firstName
+	 * @return boolean isFirstNameValid
+	 */
+	public boolean isFirstNameValid(String firstName){
+		boolean isFirstNameValid = true;
+
+		if(firstName != null && !firstName.equals("")){
+			firstName = firstName.trim();
+			String regexp_forbidden = "\\!|\\@|\\#|\\№|\\$|\\%|\\ |\\^|\\&|\\*|\\(|\\)|\\-|\\_|\\=|\\+|\\?|\\'|\\;|\\<|\\>|\\,|\\.|\\`|\\~";
+			Pattern pattern_forbidden = Pattern.compile(regexp_forbidden);
+			Matcher matcher_forbidden = pattern_forbidden.matcher(firstName);
+			if(firstName.length() < 2){
+				isFirstNameValid = false;
+			} else if(firstName.length() > 20){
+				isFirstNameValid = false;
+			} else if(matcher_forbidden.find()){
+				isFirstNameValid = false;
+			}
+		} else{
+			isFirstNameValid = false;
+		}
+		return isFirstNameValid;
+	}
+	
+	/**
+	 * Checks the last name is correct
+	 * @param lastName
+	 * @return boolean isLastNameValid
+	 */
+	public boolean isLastNameValid(String lastName){
+		boolean isLastNameValid = true;
+
+		if(lastName != null && !lastName.equals("")){
+			lastName = lastName.trim();
+			String regexp_forbidden = "\\!|\\@|\\#|\\№|\\$|\\%|\\ |\\^|\\&|\\*|\\(|\\)|\\-|\\_|\\=|\\+|\\?|\\'|\\;|\\<|\\>|\\,|\\.|\\`|\\~";
+			Pattern pattern_forbidden = Pattern.compile(regexp_forbidden);
+			Matcher matcher_forbidden = pattern_forbidden.matcher(lastName);
+			if(lastName.length() < 2){
+				isLastNameValid = false;
+			} else if(lastName.length() > 40){
+				isLastNameValid = false;
+			} else if(matcher_forbidden.find()){
+				isLastNameValid = false;
+			}
+		} else{
+			isLastNameValid = false;
+		}
+		return isLastNameValid;
+	}
+	
+	/**
 	 * Verifies the correctness of email address
 	 * @param email
 	 * @return boolean
@@ -21,7 +73,7 @@ public class ValidationLogic {
 		String regexp = "[a-z0-9]+[\\_]?[a-z0-9]*@[a-z0-9]+\\.[a-z0-9]+[\\.[a-z0-9]*]*";
 		Pattern pattern = Pattern.compile(regexp);
 		Matcher matcher = pattern.matcher(email);
-		if(email != "" && email != null){
+		if(!email.equals("") && email != null){
 			if(matcher.matches()){
 				isEmailValid = true;
 			}
@@ -36,21 +88,21 @@ public class ValidationLogic {
 	 */
 	public boolean isPasswordValid(String password){
 		boolean isPasswordValid = true;
-		if(password != "" && password != null){
+		if(!password.equals("") && password != null){
 			password = password.trim().toLowerCase();
-			String regexp = "/[a-z0-9]{6,30}/i";
-			String regexp_depricated = "\\!|\\@|\\#|\\�|\\$|\\%|\\^|\\&|\\*|\\(|\\)|\\-|\\_|\\=|\\+|\\?|\\'|\\;|\\<|\\>|\\,|\\.|\\`|\\~";
+			String regexp = "/[a-z0-9]{5,40}/i";
+			String regexp_forbidden = "\\#|\\�|\\^|\\&|\\*|\\(|\\)|\\=|\\+|\\'|\\<|\\>|\\`|\\~";
 			Pattern pattern = Pattern.compile(regexp);
 			Matcher matcher = pattern.matcher(password);
-			Pattern pattern_depricated = Pattern.compile(regexp_depricated);
-			Matcher matcher_depricated = pattern_depricated.matcher(password);
+			Pattern pattern_forbidden = Pattern.compile(regexp_forbidden);
+			Matcher matcher_forbidden = pattern_forbidden.matcher(password);
 			if(password.length() < 6){
 				isPasswordValid = false;
 			} else if(password.length() > 30){
 				isPasswordValid = false;
 			} else if(matcher.matches()){
 				isPasswordValid = false;
-			} else if(matcher_depricated.find()){
+			} else if(matcher_forbidden.find()){
 				isPasswordValid = false;
 			}
 		} else {

@@ -18,49 +18,51 @@
 <div class="content">
     <div id="content_title"><c:out value="${pageTitle}"/></div>
     
-    <div class="issue_table">
-    	<div class="header_line">
-       	  	<div class="id">Id</div>
-            <div class="priority">Priority</div>
-            <div class="assignee">Assignee</div>
-          	<div class="type">Type</div>
-       	  	<div class="status">Status</div>
-       	  	<div class="summary">Summary</div>
+    <c:if test="${not empty latestIssues or not empty assignedIssues}">
+        <div class="issue_table">
+            <div class="header_line">
+                <div class="id">Id</div>
+                <div class="priority">Priority</div>
+                <div class="assignee">Assignee</div>
+                <div class="type">Type</div>
+                <div class="status">Status</div>
+                <div class="summary">Summary</div>
+            </div>
+            <div id="issue_lines">
+                <c:choose>
+                    <c:when test="${not empty latestIssues}">
+                        <c:forEach items="${latestIssues}" var="issue">
+                            <!-- issue-line (for a guest, with latest issue) -->
+                            <div class="issue_line">
+                                <div class="id"><c:out value="${issue.issueId}"/></div>
+                                <div class="priority" id="${fn:toLowerCase(issue.priority.name)}"><c:out value="${issue.priority.name}"/></div>
+                                <div class="assignee"><c:out value="${issue.assignee.firstName}"/> <c:out value="${issue.assignee.lastName}"/></div>
+                                <div class="type"><c:out value="${issue.type.name}"/></div>
+                                <div class="status"><c:out value="${issue.status.name}"/></div>
+                                <div class="summary"><c:out value="${issue.summary}"/></div>
+                            </div>
+                        </c:forEach>
+                    </c:when>
+                    <c:when test="${not empty assignedIssues}">
+                        <c:forEach items="${assignedIssues}" var="issue">
+                            <!-- issue-line (for an authorized user, with assigned issue) -->
+                            <div class="issue_line">
+                                <div class="id"><c:out value="${issue.issueId}"/></div>
+                                <div class="priority" id="${fn:toLowerCase(issue.priority.name)}"><c:out value="${issue.priority.name}"/></div>
+                                <div class="assignee"><c:out value="${issue.assignee.firstName}"/> <c:out value="${issue.assignee.lastName}"/></div>
+                                <div class="type"><c:out value="${issue.type.name}"/></div>
+                                <div class="status"><c:out value="${issue.status.name}"/></div>
+                                <div class="summary"><c:out value="${issue.summary}"/></div>
+                            </div>
+                        </c:forEach>
+                    </c:when>
+                </c:choose>    
+            </div>
         </div>
-        <div id="issue_lines">
-            <c:choose>
-                <c:when test="${not empty latestIssues}">
-                    <c:forEach items="${latestIssues}" var="issue">
-                        <!-- issue-line (for a guest, with latest issue) -->
-                        <div class="issue_line">
-                            <div class="id"><c:out value="${issue.issueId}"/></div>
-                            <div class="priority" id="${fn:toLowerCase(issue.priority.name)}"><c:out value="${issue.priority.name}"/></div>
-                            <div class="assignee"><c:out value="${issue.assignee.firstName}"/> <c:out value="${issue.assignee.lastName}"/></div>
-                            <div class="type"><c:out value="${issue.type.name}"/></div>
-                            <div class="status"><c:out value="${issue.status.name}"/></div>
-                            <div class="summary"><c:out value="${issue.summary}"/></div>
-                        </div>
-                    </c:forEach>
-                </c:when>
-                <c:when test="${not empty assignedIssues}">
-                	<c:forEach items="${assignedIssues}" var="issue">
-                        <!-- issue-line (for an authorized user, with assigned issue) -->
-                        <div class="issue_line">
-                            <div class="id"><c:out value="${issue.issueId}"/></div>
-                            <div class="priority" id="${fn:toLowerCase(issue.priority.name)}"><c:out value="${issue.priority.name}"/></div>
-                            <div class="assignee"><c:out value="${issue.assignee.firstName}"/> <c:out value="${issue.assignee.lastName}"/></div>
-                            <div class="type"><c:out value="${issue.type.name}"/></div>
-                            <div class="status"><c:out value="${issue.status.name}"/></div>
-                            <div class="summary"><c:out value="${issue.summary}"/></div>
-                        </div>
-                    </c:forEach>
-                </c:when>
-            </c:choose>    
-		</div>
-    </div>
+	</c:if>
 </div>
 	
-<div class="footer"></div>
+<%@ include file="_footer.jsp" %>
 
 </body>
 </html>

@@ -100,17 +100,18 @@ CREATE  TABLE `issuetracker`.`users` (
   `password` VARCHAR(45) NULL ,
   PRIMARY KEY (`id`) );
   
-INSERT INTO `issuetracker`.`users` (`id`, `firstName`, `lastName`, `email`, `role`, `password`) VALUES ('1', 'Dzmitry', 'Salnikau', 'dzmitry_salnikau@epam.com', 'administrator', '123456');
-INSERT INTO `issuetracker`.`users` (`id`, `firstName`, `lastName`, `email`, `role`, `password`) VALUES ('2', 'Sergey', 'German', 'sergey_german@epam.com', 'user', '222222');
-INSERT INTO `issuetracker`.`users` (`id`, `firstName`, `lastName`, `email`, `role`, `password`) VALUES ('3', 'Viktor', 'Potko', 'viktor_potko@epam.com', 'user', '333333');
-INSERT INTO `issuetracker`.`users` (`id`, `firstName`, `lastName`, `email`, `role`, `password`) VALUES ('4', 'Robin', 'Loowert', 'robin_loowert@epam.com', 'user', '444444');
-INSERT INTO `issuetracker`.`users` (`id`, `firstName`, `lastName`, `email`, `role`, `password`) VALUES ('5', 'Kyle', 'Foster', 'kyle_foster@epam.com', 'user', '555555');
-INSERT INTO `issuetracker`.`users` (`id`, `firstName`, `lastName`, `email`, `role`, `password`) VALUES ('6', 'Bob', 'Hunington', 'bob_hunington@epam.com', 'user', '666666');
-INSERT INTO `issuetracker`.`users` (`id`, `firstName`, `lastName`, `email`, `role`, `password`) VALUES ('7', 'Fred', 'Ostins', 'fred_ostins@epam.com', 'user', '777777');
-INSERT INTO `issuetracker`.`users` (`id`, `firstName`, `lastName`, `email`, `role`, `password`) VALUES ('8', 'Samuele', 'Dopez', 'samuele_dopez@epam.com', 'user', '888888');
-INSERT INTO `issuetracker`.`users` (`id`, `firstName`, `lastName`, `email`, `role`, `password`) VALUES ('9', 'George', 'Sallivan', 'george_sallivan@epam.com', 'user', '999999');
-INSERT INTO `issuetracker`.`users` (`id`, `firstName`, `lastName`, `email`, `role`, `password`) VALUES ('10', 'Ruslan', 'Trotsky', 'ruslan_trotsky@epam.com', 'user', '101010');
+INSERT INTO `issuetracker`.`users` (`id`, `firstName`, `lastName`, `email`, `role`, `password`) VALUES ('1', 'Dzmitry', 'Salnikau', 'dzmitry_salnikau@epam.com', '2', '123456');
+INSERT INTO `issuetracker`.`users` (`id`, `firstName`, `lastName`, `email`, `role`, `password`) VALUES ('2', 'Sergey', 'German', 'sergey_german@epam.com', '1', '222222');
+INSERT INTO `issuetracker`.`users` (`id`, `firstName`, `lastName`, `email`, `role`, `password`) VALUES ('3', 'Viktor', 'Potko', 'viktor_potko@epam.com', '1', '333333');
+INSERT INTO `issuetracker`.`users` (`id`, `firstName`, `lastName`, `email`, `role`, `password`) VALUES ('4', 'Robin', 'Loowert', 'robin_loowert@epam.com', '1', '444444');
+INSERT INTO `issuetracker`.`users` (`id`, `firstName`, `lastName`, `email`, `role`, `password`) VALUES ('5', 'Kyle', 'Foster', 'kyle_foster@epam.com', '1', '555555');
+INSERT INTO `issuetracker`.`users` (`id`, `firstName`, `lastName`, `email`, `role`, `password`) VALUES ('6', 'Bob', 'Hunington', 'bob_hunington@epam.com', '1', '666666');
+INSERT INTO `issuetracker`.`users` (`id`, `firstName`, `lastName`, `email`, `role`, `password`) VALUES ('7', 'Fred', 'Ostins', 'fred_ostins@epam.com', '1', '777777');
+INSERT INTO `issuetracker`.`users` (`id`, `firstName`, `lastName`, `email`, `role`, `password`) VALUES ('8', 'Samuele', 'Dopez', 'samuele_dopez@epam.com', '1', '888888');
+INSERT INTO `issuetracker`.`users` (`id`, `firstName`, `lastName`, `email`, `role`, `password`) VALUES ('9', 'George', 'Sallivan', 'george_sallivan@epam.com', '1', '999999');
+INSERT INTO `issuetracker`.`users` (`id`, `firstName`, `lastName`, `email`, `role`, `password`) VALUES ('10', 'Ruslan', 'Trotsky', 'ruslan_trotsky@epam.com', '1', '101010');
 
+ALTER TABLE `issuetracker`.`users` CHANGE COLUMN `role` `role` INT NULL DEFAULT NULL  ;
 
 CREATE  TABLE `issuetracker`.`statuses` (
   `id` INT NOT NULL AUTO_INCREMENT ,
@@ -156,3 +157,13 @@ INSERT INTO `issuetracker`.`types` (`id`, `name`) VALUES ('1', 'Cosmetic');
 INSERT INTO `issuetracker`.`types` (`id`, `name`) VALUES ('2', 'Bug');
 INSERT INTO `issuetracker`.`types` (`id`, `name`) VALUES ('3', 'Feature');
 INSERT INTO `issuetracker`.`types` (`id`, `name`) VALUES ('4', 'Performance');
+
+CREATE  TABLE `issuetracker`.`roles` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `name` VARCHAR(45) NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) );
+
+INSERT INTO `issuetracker`.`roles` (`id`, `name`) VALUES ('1', 'User');
+INSERT INTO `issuetracker`.`roles` (`id`, `name`) VALUES ('2', 'Administrator');

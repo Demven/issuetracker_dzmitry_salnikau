@@ -33,52 +33,21 @@ public class User implements java.io.Serializable {
 	private String firstName;
 	private String lastName;
 	private String email;
-	private Role role;
+	private int roleId;
 	private String password;
 	
 	public User(int userId, String firstName, String lastName, String email,
-			Role role, String password) {
+			int roleId, String password) {
 		this.userId = userId;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.role = role;
+		this.roleId = roleId;
 		this.password = password;
 	}
 	
 	public User(){
 		this.firstName = NAME_PLACEHOLDER;
-	}
-	
-	/**
-	 * Enumeration of user's roles
-	 * @author Dzmitry Salnikau
-	 * @since 04.01.2014
-	 */
-	public static enum Role {
-
-	    ADMINISTRATOR("administrator"),
-	    USER("user");
-	    
-	    private final String value;
-
-	    Role(String v) {
-	        value = v;
-	    }
-
-	    public String value() {
-	        return value;
-	    }
-
-	    public static Role fromValue(String v) {
-	    	Role role = null;
-	        for (Role r: Role.values()) {
-	            if (r.value.equals(v)) {
-	                role = r;
-	            }
-	        }
-	        return role;
-	    }
 	}
 
 	public int getUserId() {
@@ -113,11 +82,11 @@ public class User implements java.io.Serializable {
 	}
 
 	
-	public Role getRole() {
-		return role;
+	public int getRoleId() {
+		return roleId;
 	}
-	public void setRole(Role role) {
-		this.role = role;
+	public void setRoleId(int roleId) {
+		this.roleId = roleId;
 	}
 
 	

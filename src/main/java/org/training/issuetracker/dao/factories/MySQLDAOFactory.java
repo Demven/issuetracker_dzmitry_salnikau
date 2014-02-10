@@ -12,6 +12,7 @@ import org.training.issuetracker.dao.interfaces.ResolutionDAO;
 import org.training.issuetracker.dao.interfaces.StatusDAO;
 import org.training.issuetracker.dao.interfaces.TypeDAO;
 import org.training.issuetracker.dao.interfaces.UserDAO;
+import org.training.issuetracker.dao.interfaces.RoleDAO;
 import org.training.issuetracker.dao.mysql.MySQLBuildDAO;
 import org.training.issuetracker.dao.mysql.MySQLIssueDAO;
 import org.training.issuetracker.dao.mysql.MySQLPriorityDAO;
@@ -20,6 +21,7 @@ import org.training.issuetracker.dao.mysql.MySQLResolutionDAO;
 import org.training.issuetracker.dao.mysql.MySQLStatusDAO;
 import org.training.issuetracker.dao.mysql.MySQLTypeDAO;
 import org.training.issuetracker.dao.mysql.MySQLUserDAO;
+import org.training.issuetracker.dao.mysql.MySQLRoleDAO;
 
 
 public class MySQLDAOFactory extends DAOFactory {
@@ -73,6 +75,11 @@ public class MySQLDAOFactory extends DAOFactory {
 	@Override
 	public TypeDAO getTypeDAO() {
 		return new MySQLTypeDAO();
+	}
+
+	@Override
+	public RoleDAO getRoleDAO() {
+		return new MySQLRoleDAO();
 	}
 	
 }

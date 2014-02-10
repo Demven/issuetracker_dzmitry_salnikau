@@ -14,31 +14,34 @@
                     <li class="menu_item">Submit issue</li>
                     <a href="main?command=logout"><li class="menu_item">Log out</li></a>
               </div>
-                <div id="admin_menu">
-                  <li class="menu_item" id="create">&#9654; Create
-                        <ul class="create_menu">
-                             <a href="main?command=createProject"><li class="menu_item">Project</li></a>
-                             <a href="main?command=createResolution"><li class="menu_item">Resolution</li></a>
-                             <a href="main?command=createPriority"><li class="menu_item">Priority</li></a>
-                             <a href="main?command=createType"><li class="menu_item">Type</li></a>
-                      </ul>
-                  </li>
-                    <li class="menu_item" id="users">&#9654; Users
-                        <ul class="users_menu">
-                             <li class="menu_item">Find user</li>
-                             <li class="menu_item">Add user</li>
-                        </ul>
-                    </li>
-                    <li class="menu_item" id="view">&#9654; View
-                        <ul class="view_menu">
-                             <a href="main?command=viewProjects"><li class="menu_item">Projects</li></a>
-                             <a href="main?command=viewStatuses"><li class="menu_item">Statuses</li></a>
-                             <a href="main?command=viewResolutions"><li class="menu_item">Resolutions</li></a>
-                             <a href="main?command=viewPriorities"><li class="menu_item">Priorities</li></a>
-                             <a href="main?command=viewTypes"><li class="menu_item">Types</li></a>
-                        </ul>
-                    </li>
-              </div>
+              
+              <c:if test="${sessionScope.loginUser.role.name eq 'Administrator'}">
+              	   <div id="admin_menu">
+                      <li class="menu_item" id="create">&#9654; Create
+                            <ul class="create_menu">
+                                 <a href="main?command=createProject"><li class="menu_item">Project</li></a>
+                                 <a href="main?command=createResolution"><li class="menu_item">Resolution</li></a>
+                                 <a href="main?command=createPriority"><li class="menu_item">Priority</li></a>
+                                 <a href="main?command=createType"><li class="menu_item">Type</li></a>
+                          </ul>
+                      </li>
+                        <li class="menu_item" id="users">&#9654; Users
+                            <ul class="users_menu">
+                                 <li class="menu_item">Find user</li>
+                                 <a href="main?command=createUser"><li class="menu_item">Add user</li></a>
+                            </ul>
+                        </li>
+                        <li class="menu_item" id="view">&#9654; View
+                            <ul class="view_menu">
+                                 <a href="main?command=viewProjects"><li class="menu_item">Projects</li></a>
+                                 <a href="main?command=viewStatuses"><li class="menu_item">Statuses</li></a>
+                                 <a href="main?command=viewResolutions"><li class="menu_item">Resolutions</li></a>
+                                 <a href="main?command=viewPriorities"><li class="menu_item">Priorities</li></a>
+                                 <a href="main?command=viewTypes"><li class="menu_item">Types</li></a>
+                            </ul>
+                        </li>
+                    </div>
+				</c:if>
             </ul>
         </div>
     </c:if>
