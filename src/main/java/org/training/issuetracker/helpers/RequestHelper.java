@@ -11,6 +11,7 @@ import org.training.issuetracker.commands.create.CreateResolutionCommand;
 import org.training.issuetracker.commands.create.CreateTypeCommand;
 import org.training.issuetracker.commands.create.CreateUserCommand;
 import org.training.issuetracker.commands.edit.EditPriorityCommand;
+import org.training.issuetracker.commands.edit.EditProfileCommand;
 import org.training.issuetracker.commands.edit.EditProjectCommand;
 import org.training.issuetracker.commands.edit.EditResolutionCommand;
 import org.training.issuetracker.commands.edit.EditStatusCommand;
@@ -40,6 +41,7 @@ public class RequestHelper {
 		
 		// --> EDIT
 		commands.put("editUser", new EditUserCommand());
+		commands.put("editProfile", new EditProfileCommand());
 		commands.put("editProject", new EditProjectCommand());
 		commands.put("editStatus", new EditStatusCommand());
 		commands.put("editResolution", new EditResolutionCommand());

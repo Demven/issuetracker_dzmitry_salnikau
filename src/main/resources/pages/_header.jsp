@@ -10,21 +10,25 @@
             <div class="menu_btn_icon"></div>
             <ul class="menu">
               <div id="user_menu">
-                    <li class="menu_item">Profile</li>
+                    <a href="main?command=editProfile&userId=${sessionScope.loginUser.userId}">
+                    	<li class="menu_item">Profile</li>
+                    </a>
                     <li class="menu_item">Submit issue</li>
                     <a href="main?command=logout"><li class="menu_item">Log out</li></a>
               </div>
               
               <c:if test="${sessionScope.loginUser.role.name eq 'Administrator'}">
-              	   <div id="admin_menu">
-                      <li class="menu_item" id="create">&#9654; Create
+              	   	<div id="admin_menu">
+						<div class="top_line"></div>
+            			<div class="bottom_line"></div>
+                      	<li class="menu_item" id="create">&#9654; Create
                             <ul class="create_menu">
                                  <a href="main?command=createProject"><li class="menu_item">Project</li></a>
                                  <a href="main?command=createResolution"><li class="menu_item">Resolution</li></a>
                                  <a href="main?command=createPriority"><li class="menu_item">Priority</li></a>
                                  <a href="main?command=createType"><li class="menu_item">Type</li></a>
                           </ul>
-                      </li>
+                      	</li>
                         <li class="menu_item" id="users">&#9654; Users
                             <ul class="users_menu">
                                  <a href="main?command=viewUsers"><li class="menu_item">Find user</li></a>
@@ -52,7 +56,9 @@
     <c:if test="${not empty sessionScope.loginUser}">
         <div id="user_welcome">
             <a href=""><span id="submit_issue">Submit issue</span></a> | 
-            <a href=""><span id="user_login"><c:out value="${sessionScope.loginUser.firstName}"/> <c:out value="${sessionScope.loginUser.lastName}"/></span></a> | 
+            <a href="main?command=editProfile&userId=${sessionScope.loginUser.userId}">
+            	<span id="user_login"><c:out value="${sessionScope.loginUser.firstName}"/> <c:out value="${sessionScope.loginUser.lastName}"/></span>
+            </a> | 
             <a href="main?command=logout"><span id="log_out">Log out</span></a>
         </div>
     </c:if>
