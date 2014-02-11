@@ -16,29 +16,22 @@
 <div class="content">
 	<div id="content_title"><c:out value="${pageTitle}"/></div>
     
-    <c:choose>
-        <c:when test="${empty editUser}">
-            <!-- Create user -->
-            <form id="user_form" name="user_form" action="main">
-                <input type="hidden" name="command" value="createUser"/>
-                <input id="user_first_name" name="firstName" type="text" maxlength="45" placeholder="First name"/>
-                <input id="user_last_name" name="lastName" type="text" maxlength="45" placeholder="Last name"/>
-                <input id="user_email" name="email" type="email" maxlength="45" placeholder="Email address"/>
-                <select id="user_role" name="roleId" size="1">
-                  	<option selected disabled value="0">Role</option>
-                  	<c:forEach items="${roles}" var="role">
-                        <option value="${role.roleId}"><c:out value="${role.name}"/></option>
-                    </c:forEach>
-                </select>
-                <input id="user_password" name="password" type="password" maxlength="45" placeholder="Password"/>
-                <input id="user_repeat_password" name="repeatPassword" type="password" maxlength="45" placeholder="Repeat password"/>
-                <input id="user_submit" type="button" onClick="trySubmit();" value="Create">
-            </form>
-        </c:when>
-       	<c:when test="${not empty editUser}">
-        	<!-- Edit project -->
-       	</c:when>
-	</c:choose>
+    <!-- Create user -->
+    <form id="user_form" name="user_form" action="main">
+        <input type="hidden" name="command" value="createUser"/>
+        <input id="user_first_name" name="firstName" type="text" maxlength="45" placeholder="First name"/>
+        <input id="user_last_name" name="lastName" type="text" maxlength="45" placeholder="Last name"/>
+        <input id="user_email" name="email" type="email" maxlength="45" placeholder="Email address"/>
+        <select id="user_role" name="roleId" size="1">
+            <option selected disabled value="0">Role</option>
+            <c:forEach items="${roles}" var="role">
+                <option value="${role.roleId}"><c:out value="${role.name}"/></option>
+            </c:forEach>
+        </select>
+        <input id="user_password" name="password" type="password" maxlength="45" placeholder="Password"/>
+        <input id="user_repeat_password" name="repeatPassword" type="password" maxlength="45" placeholder="Repeat password"/>
+        <input id="user_submit" type="button" onClick="trySubmit();" value="Create">
+    </form>
     
     <script type="text/javascript" language="javascript">
 		// Check all fields and if all is fine - submit 

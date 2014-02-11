@@ -15,6 +15,7 @@ import org.training.issuetracker.commands.edit.EditProjectCommand;
 import org.training.issuetracker.commands.edit.EditResolutionCommand;
 import org.training.issuetracker.commands.edit.EditStatusCommand;
 import org.training.issuetracker.commands.edit.EditTypeCommand;
+import org.training.issuetracker.commands.edit.EditUserCommand;
 import org.training.issuetracker.commands.main.AuthCommand;
 import org.training.issuetracker.commands.main.LogOutCommand;
 import org.training.issuetracker.commands.main.NoCommand;
@@ -38,6 +39,7 @@ public class RequestHelper {
 		commands.put("logout", new LogOutCommand());		
 		
 		// --> EDIT
+		commands.put("editUser", new EditUserCommand());
 		commands.put("editProject", new EditProjectCommand());
 		commands.put("editStatus", new EditStatusCommand());
 		commands.put("editResolution", new EditResolutionCommand());
