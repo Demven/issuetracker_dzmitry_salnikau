@@ -25,8 +25,8 @@ public class AuthCommand implements Command{
 			throws ServletException, IOException {
 		String email = request.getParameter(PARAM_NAME_EMAIL);
 		String password = request.getParameter(PARAM_NAME_PASSWORD);
-		
-		String page = "";
+
+		boolean success = false;
 		
 		ValidationLogic validation = new ValidationLogic();
 		if(validation.isEmailValid(email) && validation.isPasswordValid(password)){
@@ -47,10 +47,17 @@ public class AuthCommand implements Command{
 				CookieManager cookieManager = new CookieManager();
 				cookieManager.setCookieValue(response, CookieManager.NAME_LOGIN, email);
 				
-				// Forward to the main page
-				page = new NoCommand().execute(request, response);
+				success = true;
 			}
 		}
+			
+		if(!success){
+			request.setAttribute("errorMessage", "Not correct login or password! Try again please.");
+		}
+		
+		// Forward to the main page
+		String page = new NoCommand().execute(request, response);
+		
 		return page;
 	}
 

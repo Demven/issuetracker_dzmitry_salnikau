@@ -27,7 +27,7 @@
                       </li>
                         <li class="menu_item" id="users">&#9654; Users
                             <ul class="users_menu">
-                                 <li class="menu_item">Find user</li>
+                                 <a href="main?command=viewUsers"><li class="menu_item">Find user</li></a>
                                  <a href="main?command=createUser"><li class="menu_item">Add user</li></a>
                             </ul>
                         </li>

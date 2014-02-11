@@ -23,19 +23,19 @@ import org.training.issuetracker.commands.view.ViewProjectsCommand;
 import org.training.issuetracker.commands.view.ViewResolutionsCommand;
 import org.training.issuetracker.commands.view.ViewStatusesCommand;
 import org.training.issuetracker.commands.view.ViewTypesCommand;
+import org.training.issuetracker.commands.view.ViewUsersCommand;
 
-public class MainRequestHelper { 
-	private static MainRequestHelper instance = null; 
+public class RequestHelper { 
+	private static RequestHelper instance = null; 
 	
 	HashMap<String, Command> commands = new HashMap<String, Command>(); 
  
-	private MainRequestHelper() { 
+	private RequestHelper() { 
 		//заполнение таблицы командами 
-		commands.put("auth", new AuthCommand());
-		commands.put("logout", new LogOutCommand());
 		
-		// --> USER
-		commands.put("createUser", new CreateUserCommand());
+		// MAIN
+		commands.put("auth", new AuthCommand());
+		commands.put("logout", new LogOutCommand());		
 		
 		// --> EDIT
 		commands.put("editProject", new EditProjectCommand());
@@ -45,12 +45,14 @@ public class MainRequestHelper {
 		commands.put("editType", new EditTypeCommand());
 		
 		// --> CREATE
+		commands.put("createUser", new CreateUserCommand());
 		commands.put("createProject", new CreateProjectCommand());
 		commands.put("createResolution", new CreateResolutionCommand());
 		commands.put("createPriority", new CreatePriorityCommand());
 		commands.put("createType", new CreateTypeCommand());
 		
 		// --> VIEW
+		commands.put("viewUsers", new ViewUsersCommand());
 		commands.put("viewProjects", new ViewProjectsCommand());
 		commands.put("viewStatuses", new ViewStatusesCommand());
 		commands.put("viewResolutions", new ViewResolutionsCommand());
@@ -71,9 +73,9 @@ public class MainRequestHelper {
 	}
    
 	//создание единственного объекта по шаблону Singleton 
-	public static MainRequestHelper getInstance() { 
+	public static RequestHelper getInstance() { 
 		if (instance == null) { 
-			instance = new MainRequestHelper(); 
+			instance = new RequestHelper(); 
 		} 
 		return instance; 
 	} 

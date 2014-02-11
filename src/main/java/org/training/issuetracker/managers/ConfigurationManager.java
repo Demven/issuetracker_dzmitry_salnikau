@@ -39,6 +39,7 @@ public class ConfigurationManager {
 	public static final String TYPES_PAGE_PATH = "TYPES_PAGE_PATH";
 	
 	public static final String USER_PAGE_PATH = "USER_PAGE_PATH";
+	public static final String USERS_PAGE_PATH = "USERS_PAGE_PATH";
 	
 	
 	public static ConfigurationManager getInstance() { 

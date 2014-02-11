@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 import org.training.issuetracker.commands.Command;
 import org.training.issuetracker.commands.main.NoCommand;
-import org.training.issuetracker.helpers.MainRequestHelper;
+import org.training.issuetracker.helpers.RequestHelper;
 import org.training.issuetracker.managers.CookieManager;
 import org.training.issuetracker.managers.SessionManager;
 
@@ -21,7 +21,7 @@ public class MainController extends HttpServlet  implements  javax.servlet.Servl
 	
 	private static final long serialVersionUID = 1325729119279553468L;
 	// Object, containing list of all possible commands for this servlet
-	MainRequestHelper requestHelper = MainRequestHelper.getInstance();
+	RequestHelper requestHelper = RequestHelper.getInstance();
 	
 	public MainController() { 
 		super(); 
