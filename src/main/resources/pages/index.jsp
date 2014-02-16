@@ -47,7 +47,7 @@
                         <c:forEach items="${assignedIssues}" var="issue">
                             <!-- issue-line (for an authorized user, with assigned issue) -->
                             <div class="issue_line">
-                                <div class="id"><c:out value="${issue.issueId}"/></div>
+                                <div class="id"><a href="main?command=editIssue&issueId=${issue.issueId}"><c:out value="${issue.issueId}"/></a></div>
                                 <div class="priority" id="${fn:toLowerCase(issue.priority.name)}"><c:out value="${issue.priority.name}"/></div>
                                 <div class="assignee"><c:out value="${issue.assignee.firstName}"/> <c:out value="${issue.assignee.lastName}"/></div>
                                 <div class="type"><c:out value="${issue.type.name}"/></div>

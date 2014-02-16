@@ -76,6 +76,24 @@ UPDATE `issuetracker`.`issues` SET `status`='6', `resolution`='4', `issuetype`='
 
 ALTER TABLE `issuetracker`.`issues` CHANGE COLUMN `status` `status` INT NULL DEFAULT NULL  , CHANGE COLUMN `resolution` `resolution` INT NULL DEFAULT NULL  , CHANGE COLUMN `issuetype` `issuetype` INT NULL DEFAULT NULL  , CHANGE COLUMN `priority` `priority` INT NULL DEFAULT NULL  , CHANGE COLUMN `projectid` `project` INT(11) NULL DEFAULT NULL  ;
 
+UPDATE `issuetracker`.`issues` SET `resolution`=NULL WHERE `id`='1';
+UPDATE `issuetracker`.`issues` SET `resolution`=NULL WHERE `id`='2';
+UPDATE `issuetracker`.`issues` SET `resolution`=NULL WHERE `id`='3';
+UPDATE `issuetracker`.`issues` SET `resolution`=NULL WHERE `id`='4';
+UPDATE `issuetracker`.`issues` SET `resolution`=NULL WHERE `id`='6';
+UPDATE `issuetracker`.`issues` SET `resolution`=NULL WHERE `id`='7';
+UPDATE `issuetracker`.`issues` SET `resolution`=NULL WHERE `id`='8';
+UPDATE `issuetracker`.`issues` SET `resolution`=NULL WHERE `id`='9';
+UPDATE `issuetracker`.`issues` SET `resolution`=NULL WHERE `id`='11';
+UPDATE `issuetracker`.`issues` SET `resolution`=NULL WHERE `id`='12';
+UPDATE `issuetracker`.`issues` SET `resolution`=NULL WHERE `id`='13';
+UPDATE `issuetracker`.`issues` SET `resolution`=NULL WHERE `id`='14';
+UPDATE `issuetracker`.`issues` SET `resolution`=NULL WHERE `id`='15';
+UPDATE `issuetracker`.`issues` SET `resolution`=NULL WHERE `id`='16';
+UPDATE `issuetracker`.`issues` SET `resolution`=NULL WHERE `id`='18';
+UPDATE `issuetracker`.`issues` SET `resolution`=NULL WHERE `id`='19';
+UPDATE `issuetracker`.`issues` SET `resolution`=NULL WHERE `id`='20';
+
 
 CREATE  TABLE `issuetracker`.`projects` (
   `id` INT NOT NULL AUTO_INCREMENT ,

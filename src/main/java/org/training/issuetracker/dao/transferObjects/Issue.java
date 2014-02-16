@@ -50,26 +50,26 @@ public class Issue implements java.io.Serializable, Comparable<Issue> {
 	
 	
 	// For entity
-	private int issueId;
+	private Integer issueId;
 	private String createDate;
-	private int createdBy;
+	private Integer createdBy;
 	private String modifyDate;
-	private int modifiedBy;
+	private Integer modifiedBy;
 	private String summary;
 	private String description;
-	private int status;
-	private int resolution;
-	private int type;
-	private int priority;
-	private int project;
-	private int buildFound;
-	private int assignee;
+	private Integer status;
+	private Integer resolution;
+	private Integer type;
+	private Integer priority;
+	private Integer project;
+	private Integer buildFound;
+	private Integer assignee;
 	
-	public Issue(int issueId, String createDate, int createdBy,
-			String modifyDate, int modifiedBy, String summary,
-			String description, int status, int resolution, int type,
-			int priority, int project, int buildFound,
-			int assignee) {
+	public Issue(Integer issueId, String createDate, Integer createdBy,
+			String modifyDate, Integer modifiedBy, String summary,
+			String description, Integer status, Integer resolution, Integer type,
+			Integer priority, Integer project, Integer buildFound,
+			Integer assignee) {
 		this.issueId = issueId;
 		this.createDate = createDate;
 		this.createdBy = createdBy;
@@ -89,11 +89,11 @@ public class Issue implements java.io.Serializable, Comparable<Issue> {
 	public Issue(){
 	}
 
-	public int getIssueId() {
+	public Integer getIssueId() {
 		return issueId;
 	}
 
-	public void setIssueId(int issueId) {
+	public void setIssueId(Integer issueId) {
 		this.issueId = issueId;
 	}
 
@@ -105,11 +105,11 @@ public class Issue implements java.io.Serializable, Comparable<Issue> {
 		this.createDate = createDate;
 	}
 
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -121,11 +121,11 @@ public class Issue implements java.io.Serializable, Comparable<Issue> {
 		this.modifyDate = modifyDate;
 	}
 
-	public int getModifiedBy() {
+	public Integer getModifiedBy() {
 		return modifiedBy;
 	}
 
-	public void setModifiedBy(int modifiedBy) {
+	public void setModifiedBy(Integer modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
 
@@ -145,59 +145,59 @@ public class Issue implements java.io.Serializable, Comparable<Issue> {
 		this.description = description;
 	}
 
-	public int getStatus() {
+	public Integer getStatus() {
 		return status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 
-	public int getResolution() {
+	public Integer getResolution() {
 		return resolution;
 	}
 
-	public void setResolution(int resolution) {
+	public void setResolution(Integer resolution) {
 		this.resolution = resolution;
 	}
 
-	public int getType() {
+	public Integer getType() {
 		return type;
 	}
 
-	public void setType(int type) {
+	public void setType(Integer type) {
 		this.type = type;
 	}
 
-	public int getPriority() {
+	public Integer getPriority() {
 		return priority;
 	}
 
-	public void setPriority(int priority) {
+	public void setPriority(Integer priority) {
 		this.priority = priority;
 	}
 
-	public int getProject() {
+	public Integer getProject() {
 		return project;
 	}
 
-	public void setProject(int project) {
+	public void setProject(Integer project) {
 		this.project = project;
 	}
 
-	public int getBuildFound() {
+	public Integer getBuildFound() {
 		return buildFound;
 	}
 
-	public void setBuildFound(int buildFound) {
+	public void setBuildFound(Integer buildFound) {
 		this.buildFound = buildFound;
 	}
 
-	public int getAssignee() {
+	public Integer getAssignee() {
 		return assignee;
 	}
 
-	public void setAssignee(int assignee) {
+	public void setAssignee(Integer assignee) {
 		this.assignee = assignee;
 	}
 	

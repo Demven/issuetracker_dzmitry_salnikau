@@ -5,11 +5,13 @@ import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 
 import org.training.issuetracker.commands.Command;
+import org.training.issuetracker.commands.create.CreateIssueCommand;
 import org.training.issuetracker.commands.create.CreatePriorityCommand;
 import org.training.issuetracker.commands.create.CreateProjectCommand;
 import org.training.issuetracker.commands.create.CreateResolutionCommand;
 import org.training.issuetracker.commands.create.CreateTypeCommand;
 import org.training.issuetracker.commands.create.CreateUserCommand;
+import org.training.issuetracker.commands.edit.EditIssueCommand;
 import org.training.issuetracker.commands.edit.EditPriorityCommand;
 import org.training.issuetracker.commands.edit.EditProfileCommand;
 import org.training.issuetracker.commands.edit.EditProjectCommand;
@@ -40,6 +42,7 @@ public class RequestHelper {
 		commands.put("logout", new LogOutCommand());		
 		
 		// --> EDIT
+		commands.put("editIssue", new EditIssueCommand());
 		commands.put("editUser", new EditUserCommand());
 		commands.put("editProfile", new EditProfileCommand());
 		commands.put("editProject", new EditProjectCommand());
@@ -49,6 +52,7 @@ public class RequestHelper {
 		commands.put("editType", new EditTypeCommand());
 		
 		// --> CREATE
+		commands.put("createIssue", new CreateIssueCommand());
 		commands.put("createUser", new CreateUserCommand());
 		commands.put("createProject", new CreateProjectCommand());
 		commands.put("createResolution", new CreateResolutionCommand());

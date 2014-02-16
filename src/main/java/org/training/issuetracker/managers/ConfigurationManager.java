@@ -43,6 +43,8 @@ public class ConfigurationManager {
 	
 	public static final String PROFILE_PAGE_PATH = "PROFILE_PAGE_PATH";
 	
+	public static final String ISSUE_PAGE_PATH = "ISSUE_PAGE_PATH";
+	
 	
 	public static ConfigurationManager getInstance() { 
 		if (instance == null) { 

@@ -13,7 +13,7 @@
                     <a href="main?command=editProfile&userId=${sessionScope.loginUser.userId}">
                     	<li class="menu_item">Profile</li>
                     </a>
-                    <li class="menu_item">Submit issue</li>
+                    <a href="main?command=createIssue"><li class="menu_item">Submit issue</li></a>
                     <a href="main?command=logout"><li class="menu_item">Log out</li></a>
               </div>
               
@@ -50,12 +50,14 @@
         </div>
     </c:if>
  
-    <div class="logo"></div>
+    <a href="main">
+    	<div class="logo" title="To main page"></div>
+    </a>
     
     <!-- If loginUser variable exists - we have to show this greeting block-->
     <c:if test="${not empty sessionScope.loginUser}">
         <div id="user_welcome">
-            <a href=""><span id="submit_issue">Submit issue</span></a> | 
+            <a href="main?command=createIssue"><span id="submit_issue">Submit issue</span></a> | 
             <a href="main?command=editProfile&userId=${sessionScope.loginUser.userId}">
             	<span id="user_login"><c:out value="${sessionScope.loginUser.firstName}"/> <c:out value="${sessionScope.loginUser.lastName}"/></span>
             </a> | 

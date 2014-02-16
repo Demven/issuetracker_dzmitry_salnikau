@@ -3,6 +3,7 @@ package org.training.issuetracker.dao.mysql.builders;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Types;
 
 /**
  * Class that create SQL statements with queries to MySQL database
@@ -139,7 +140,9 @@ public class StatementBuilder {
 						statement.setInt(i + 1, (Integer)arg);
 					} else if(arg instanceof Boolean){
 						statement.setBoolean(i + 1, (Boolean)arg);
-					}  
+					} else if(arg == null){
+						statement.setNull(i + 1, Types.VARCHAR);
+					}   
 				}
 			}
 		}
@@ -203,7 +206,9 @@ public class StatementBuilder {
 					statement.setInt(i + 1, (Integer)arg);
 				} else if(arg instanceof Boolean){
 					statement.setBoolean(i + 1, (Boolean)arg);
-				}  
+				} else if(arg == null){
+					statement.setNull(i + 1, Types.VARCHAR);
+				}   
 			}
 		}
 		
@@ -250,7 +255,9 @@ public class StatementBuilder {
 						statement.setInt(i + 1, (Integer)arg);
 					} else if(arg instanceof Boolean){
 						statement.setBoolean(i + 1, (Boolean)arg);
-					}  
+					} else if(arg == null){
+						statement.setNull(i + 1, Types.VARCHAR);
+					} 
 				}
 			}
 		}

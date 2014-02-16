@@ -170,6 +170,9 @@ a:visited{
 	float: left;
 	background-image: url(../img/icons/logo.png);
 }
+.header .logo:hover{
+	background-image: url(../img/icons/logo_hover.png);
+}
 
 /* user welcome */
 #user_welcome{

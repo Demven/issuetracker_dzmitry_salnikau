@@ -235,6 +235,8 @@ public class MySQLIssueDAO implements IssueDAO{
 					String[] selection = { Issue.COLUMN_NAME_ID };
 					Object[] selectionArgs = { issue.getIssueId() };
 
+					logger.warn("Trying to update issueId=" + issue.getIssueId());
+					
 					st = statementBuilder.getUpdatePreparedStatement(table,
 							columns, values, selection, selectionArgs);
 					st.executeUpdate();
