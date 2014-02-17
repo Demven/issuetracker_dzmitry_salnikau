@@ -305,7 +305,7 @@
                     <input id="issue_summary" class="text_field" name="summary" type="text" maxlength="45" value="${editIssue.summary}" placeholder="Summary">
                     <div id="issue_subtitle">Description:</div>
                     <textarea id="issue_description" name="description" rows="4" placeholder="Description"><c:out value="${editIssue.description}"/></textarea>
-                    <select id="issue_status" class="drop_list" name="status" size="1" onChange="setStatusChanged();">
+                    <select id="issue_status" class="drop_list" name="statusIndex" size="1" onChange="setStatusChanged();">
                         <option selected disabled value="0">Status</option>
                         <c:forEach items="${statuses}" var="status">
                             <c:choose>
@@ -318,7 +318,7 @@
                             </c:choose>
                         </c:forEach>
                     </select>
-                    <select id="issue_resolution" class="drop_list" name="resolution" size="1">
+                    <select id="issue_resolution" class="drop_list" name="resolutionId" size="1">
                         <option selected disabled value="0">Resolution</option>
                         <c:forEach items="${resolutions}" var="resolution">
                             <c:choose>
@@ -331,7 +331,7 @@
                             </c:choose>
                         </c:forEach>
                     </select>
-                    <select id="issue_type" class="drop_list" name="type" size="1">
+                    <select id="issue_type" class="drop_list" name="typeId" size="1">
                         <option selected disabled value="0">Type</option>
                         <c:forEach items="${types}" var="type">
                             <c:choose>
@@ -344,7 +344,7 @@
                             </c:choose>
                         </c:forEach>
                     </select>
-                    <select id="issue_priority" class="drop_list" name="priority" size="1">
+                    <select id="issue_priority" class="drop_list" name="priorityId" size="1">
                         <option selected disabled value="0">Priority</option>
                         <c:forEach items="${priorities}" var="priority">
                             <c:choose>
@@ -357,7 +357,7 @@
                             </c:choose>
                         </c:forEach>
                     </select>
-                    <select id="issue_project" class="drop_list" name="project" size="1" onChange="setProjectChanged();">
+                    <select id="issue_project" class="drop_list" name="projectId" size="1" onChange="setProjectChanged();">
                         <option selected disabled value="0">Project</option>
                         <c:forEach items="${projects}" var="project">
                             <c:choose>
@@ -370,11 +370,11 @@
                             </c:choose>
                         </c:forEach>
                     </select>
-                    <select id="issue_build" class="drop_list" name="build" size="1">
+                    <select id="issue_build" class="drop_list" name="buildId" size="1">
                         <option selected disabled value="0">Build</option>
                         <option value="${editIssue.buildFound.buildId}"><c:out value="${editIssue.buildFound.version}"/></option>
                     </select>
-                    <select id="issue_assignee" class="drop_list" name="assignee" size="1">
+                    <select id="issue_assignee" class="drop_list" name="assigneeId" size="1">
                         <option selected disabled value="0">Assignee</option>
                         <c:forEach items="${users}" var="user">
                             <c:choose>

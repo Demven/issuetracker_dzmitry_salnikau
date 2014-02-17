@@ -146,10 +146,10 @@ public class EditIssueCommand implements Command{
 				if(isSuccess){
 					// All data saved succesfully
 					// Show user popup-window with this message
-					request.setAttribute("successMessage", "Issue created successfully!");
+					request.setAttribute("successMessage", "Changes saved successfully!");
 				} else{
 					// Show user popup-window with error
-					request.setAttribute("errorMessage", "Failed to save new issue!");
+					request.setAttribute("errorMessage", "Failed to save changes!");
 				}
 			}
 			

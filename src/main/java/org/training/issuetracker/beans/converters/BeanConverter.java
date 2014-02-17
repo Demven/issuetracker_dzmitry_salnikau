@@ -60,12 +60,18 @@ public class BeanConverter {
 		User createdBy = userDAO.getUserById(issue.getCreatedBy());
 		User modifiedBy = userDAO.getUserById(issue.getModifiedBy()); 
 		Status status = statusDAO.getStatusById(issue.getStatus());
-		Resolution resolution = resolutionDAO.getResolutionById(issue.getResolution());
+		Resolution resolution = null;
+		if(issue.getResolution() != null){
+			resolution = resolutionDAO.getResolutionById(issue.getResolution());
+		}
 		Type type = typeDAO.getTypeById(issue.getType());
 		Priority priority = priorityDAO.getPriorityById(issue.getPriority());
 		Project project = projectDAO.getProjectById(issue.getProject());
 		Build buildFound = buildDAO.getBuildById(issue.getBuildFound());
-		User assignee = userDAO.getUserById(issue.getAssignee());
+		User assignee = null;
+		if(issue.getAssignee() != null){
+			assignee = userDAO.getUserById(issue.getAssignee());
+		}
 		
 		issueBean.setIssueId(issue.getIssueId());
 		issueBean.setCreateDate(issue.getCreateDate());

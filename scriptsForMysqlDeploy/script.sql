@@ -1,11 +1,14 @@
-CREATE SCHEMA `issuetracker` DEFAULT CHARACTER SET utf8 ;
+DROP SCHEMA IF EXISTS issuetracker;
+CREATE SCHEMA issuetracker DEFAULT CHARACTER SET utf8;
 
-CREATE  TABLE `issuetracker`.`builds` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `project` INT NULL ,
-  `version` VARCHAR(45) NULL ,
-  PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) );
+DROP TABLE IF EXISTS issuetracker.builds;
+CREATE TABLE issuetracker.builds (
+	id INT NOT NULL AUTO_INCREMENT ,
+	project INT NULL,
+	version VARCHAR(45) NULL,
+	PRIMARY KEY (id),
+	UNIQUE INDEX id_UNIQUE (id ASC)
+);
 
 INSERT INTO `issuetracker`.`builds` (`id`, `project`, `version`) VALUES ('1', '1', '0.6');
 INSERT INTO `issuetracker`.`builds` (`id`, `project`, `version`) VALUES ('2', '2', '0.4');
@@ -14,23 +17,25 @@ INSERT INTO `issuetracker`.`builds` (`id`, `project`, `version`) VALUES ('4', '4
 INSERT INTO `issuetracker`.`builds` (`id`, `project`, `version`) VALUES ('5', '5', '0.2');
 
 
-CREATE  TABLE `issuetracker`.`issues` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `createdate` VARCHAR(45) NULL ,
-  `createdby` INT NULL ,
-  `modifydate` VARCHAR(45) NULL ,
-  `modifiedby` INT NULL ,
-  `summary` TEXT NULL ,
-  `description` TEXT NULL ,
-  `status` VARCHAR(45) NULL ,
-  `resolution` VARCHAR(45) NULL ,
-  `issuetype` VARCHAR(45) NULL ,
-  `priority` VARCHAR(45) NULL ,
-  `projectid` INT NULL ,
-  `buildfound` INT NULL ,
-  `assignee` INT NULL ,
-  PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) );
+DROP TABLE IF EXISTS issuetracker.issues;
+CREATE TABLE issuetracker.issues (
+	id INT NOT NULL AUTO_INCREMENT,
+	createdate VARCHAR(45) NULL,
+	createdby INT NULL,
+	modifydate VARCHAR(45) NULL,
+	modifiedby INT NULL,
+	summary TEXT NULL,
+	description TEXT NULL,
+	status VARCHAR(45) NULL,
+	resolution VARCHAR(45) NULL,
+	issuetype VARCHAR(45) NULL,
+	priority VARCHAR(45) NULL,
+	projectid INT NULL,
+	buildfound INT NULL,
+	assignee INT NULL,
+	PRIMARY KEY (id),
+	UNIQUE INDEX id_UNIQUE (id ASC)
+);
   
 INSERT INTO `issuetracker`.`issues` (`id`, `createdate`, `createdby`, `summary`, `description`, `status`, `resolution`, `issuetype`, `priority`, `projectid`, `buildfound`, `assignee`) VALUES ('1', '01.01.2014', '3', 'Progress bar is blinking', 'When a user tries to download a file, the progress bar is blinking for some strange reason.', 'assigned', 'worksforme', 'cosmetic', 'important', '1', '1', '5');
 INSERT INTO `issuetracker`.`issues` (`id`, `createdate`, `createdby`, `modifydate`, `modifiedby`, `summary`, `description`, `status`, `resolution`, `issuetype`, `priority`, `projectid`, `buildfound`, `assignee`) VALUES ('2', '01.01.2014', '4', '02.01.2014', '5', 'Incorrect title on the main page', 'The title in the main page should be exactly as in the requirements of the customer.', 'in_progress', 'worksforme', 'cosmetic', 'major', '2', '2', '5');
@@ -74,7 +79,12 @@ UPDATE `issuetracker`.`issues` SET `status`='5', `resolution`='1', `issuetype`='
 UPDATE `issuetracker`.`issues` SET `status`='5', `resolution`='2', `issuetype`='2', `priority`='4' WHERE `id`='17';
 UPDATE `issuetracker`.`issues` SET `status`='6', `resolution`='4', `issuetype`='2', `priority`='4' WHERE `id`='9';
 
-ALTER TABLE `issuetracker`.`issues` CHANGE COLUMN `status` `status` INT NULL DEFAULT NULL  , CHANGE COLUMN `resolution` `resolution` INT NULL DEFAULT NULL  , CHANGE COLUMN `issuetype` `issuetype` INT NULL DEFAULT NULL  , CHANGE COLUMN `priority` `priority` INT NULL DEFAULT NULL  , CHANGE COLUMN `projectid` `project` INT(11) NULL DEFAULT NULL  ;
+ALTER TABLE issuetracker.issues
+	CHANGE COLUMN status status INT NULL DEFAULT NULL,
+	CHANGE COLUMN resolution resolution INT NULL DEFAULT NULL,
+	CHANGE COLUMN issuetype issuetype INT NULL DEFAULT NULL,
+	CHANGE COLUMN priority priority INT NULL DEFAULT NULL,
+	CHANGE COLUMN projectid project INT(11) NULL DEFAULT NULL;
 
 UPDATE `issuetracker`.`issues` SET `resolution`=NULL WHERE `id`='1';
 UPDATE `issuetracker`.`issues` SET `resolution`=NULL WHERE `id`='2';
@@ -95,12 +105,14 @@ UPDATE `issuetracker`.`issues` SET `resolution`=NULL WHERE `id`='19';
 UPDATE `issuetracker`.`issues` SET `resolution`=NULL WHERE `id`='20';
 
 
-CREATE  TABLE `issuetracker`.`projects` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `name` VARCHAR(45) NULL ,
-  `description` TEXT NULL ,
-  `manager` INT NULL ,
-  PRIMARY KEY (`id`) );
+DROP TABLE IF EXISTS issuetracker.projects;
+CREATE TABLE issuetracker.projects (
+	id INT NOT NULL AUTO_INCREMENT,
+	name VARCHAR(45) NULL,
+	description TEXT NULL,
+	manager INT NULL,
+	PRIMARY KEY (id)
+);
   
 INSERT INTO `issuetracker`.`projects` (`id`, `name`, `description`, `manager`) VALUES ('1', 'IMAGEnarium', 'Web-application for upload and processing photos in a great variety of ways.', '3');
 INSERT INTO `issuetracker`.`projects` (`id`, `name`, `description`, `manager`) VALUES ('2', 'MTBank Linux-client', 'Java application for Linux to interact with MTBank server', '4');
@@ -109,14 +121,16 @@ INSERT INTO `issuetracker`.`projects` (`id`, `name`, `description`, `manager`) V
 INSERT INTO `issuetracker`.`projects` (`id`, `name`, `description`, `manager`) VALUES ('5', 'EYEkey', 'Application for using eye-movements for typing without keyboard or mouse.', '8');
 
 
-CREATE  TABLE `issuetracker`.`users` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `firstName` VARCHAR(45) NULL ,
-  `lastName` VARCHAR(45) NULL ,
-  `email` VARCHAR(45) NULL ,
-  `role` VARCHAR(45) NULL ,
-  `password` VARCHAR(45) NULL ,
-  PRIMARY KEY (`id`) );
+DROP TABLE IF EXISTS issuetracker.users;
+CREATE TABLE issuetracker.users (
+	id INT NOT NULL AUTO_INCREMENT,
+	firstName VARCHAR(45) NULL,
+	lastName VARCHAR(45) NULL,
+	email VARCHAR(45) NULL,
+	role VARCHAR(45) NULL,
+	password VARCHAR(45) NULL,
+	PRIMARY KEY (id)
+);
   
 INSERT INTO `issuetracker`.`users` (`id`, `firstName`, `lastName`, `email`, `role`, `password`) VALUES ('1', 'Dzmitry', 'Salnikau', 'dzmitry_salnikau@epam.com', '2', '123456');
 INSERT INTO `issuetracker`.`users` (`id`, `firstName`, `lastName`, `email`, `role`, `password`) VALUES ('2', 'Sergey', 'German', 'sergey_german@epam.com', '1', '222222');
@@ -129,12 +143,14 @@ INSERT INTO `issuetracker`.`users` (`id`, `firstName`, `lastName`, `email`, `rol
 INSERT INTO `issuetracker`.`users` (`id`, `firstName`, `lastName`, `email`, `role`, `password`) VALUES ('9', 'George', 'Sallivan', 'george_sallivan@epam.com', '1', '999999');
 INSERT INTO `issuetracker`.`users` (`id`, `firstName`, `lastName`, `email`, `role`, `password`) VALUES ('10', 'Ruslan', 'Trotsky', 'ruslan_trotsky@epam.com', '1', '101010');
 
-ALTER TABLE `issuetracker`.`users` CHANGE COLUMN `role` `role` INT NULL DEFAULT NULL  ;
+ALTER TABLE issuetracker.users CHANGE COLUMN role role INT NULL DEFAULT NULL;
 
-CREATE  TABLE `issuetracker`.`statuses` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `name` VARCHAR(45) NULL ,
-  PRIMARY KEY (`id`) );
+DROP TABLE IF EXISTS issuetracker.statuses;
+CREATE TABLE issuetracker.statuses (
+	id INT NOT NULL AUTO_INCREMENT,
+	name VARCHAR(45) NULL,
+	PRIMARY KEY (id)
+);
 
 INSERT INTO `issuetracker`.`statuses` (`id`, `name`) VALUES ('1', 'New');
 INSERT INTO `issuetracker`.`statuses` (`id`, `name`) VALUES ('2', 'Assigned');
@@ -144,10 +160,12 @@ INSERT INTO `issuetracker`.`statuses` (`id`, `name`) VALUES ('5', 'Closed');
 INSERT INTO `issuetracker`.`statuses` (`id`, `name`) VALUES ('6', 'Reopened');
 
 
-CREATE  TABLE `issuetracker`.`resolutions` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `name` VARCHAR(45) NULL ,
-  PRIMARY KEY (`id`) );
+DROP TABLE IF EXISTS issuetracker.resolutions;
+CREATE TABLE issuetracker.resolutions (
+	id INT NOT NULL AUTO_INCREMENT,
+	name VARCHAR(45) NULL,
+	PRIMARY KEY (id)
+);
 
 INSERT INTO `issuetracker`.`resolutions` (`id`, `name`) VALUES ('1', 'Fixed');
 INSERT INTO `issuetracker`.`resolutions` (`id`, `name`) VALUES ('2', 'Invalid');
@@ -155,10 +173,12 @@ INSERT INTO `issuetracker`.`resolutions` (`id`, `name`) VALUES ('3', 'Wontfix');
 INSERT INTO `issuetracker`.`resolutions` (`id`, `name`) VALUES ('4', 'Worksforme');
 
 
-CREATE  TABLE `issuetracker`.`priorities` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `name` VARCHAR(45) NULL ,
-  PRIMARY KEY (`id`) );
+DROP TABLE IF EXISTS issuetracker.priorities;
+CREATE TABLE issuetracker.priorities (
+	id INT NOT NULL AUTO_INCREMENT,
+	name VARCHAR(45) NULL,
+	PRIMARY KEY (id)
+);
   
 INSERT INTO `issuetracker`.`priorities` (`id`, `name`) VALUES ('1', 'Critical');
 INSERT INTO `issuetracker`.`priorities` (`id`, `name`) VALUES ('2', 'Major');
@@ -166,22 +186,28 @@ INSERT INTO `issuetracker`.`priorities` (`id`, `name`) VALUES ('3', 'Important')
 INSERT INTO `issuetracker`.`priorities` (`id`, `name`) VALUES ('4', 'Minor');
 
 
-CREATE  TABLE `issuetracker`.`types` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `name` VARCHAR(45) NULL ,
-  PRIMARY KEY (`id`) );
+DROP TABLE IF EXISTS issuetracker.types;
+CREATE TABLE issuetracker.types (
+	id INT NOT NULL AUTO_INCREMENT,
+	name VARCHAR(45) NULL,
+	PRIMARY KEY (id)
+);
   
 INSERT INTO `issuetracker`.`types` (`id`, `name`) VALUES ('1', 'Cosmetic');
 INSERT INTO `issuetracker`.`types` (`id`, `name`) VALUES ('2', 'Bug');
 INSERT INTO `issuetracker`.`types` (`id`, `name`) VALUES ('3', 'Feature');
 INSERT INTO `issuetracker`.`types` (`id`, `name`) VALUES ('4', 'Performance');
 
-CREATE  TABLE `issuetracker`.`roles` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `name` VARCHAR(45) NULL ,
-  PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `name_UNIQUE` (`name` ASC) ,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) );
+DROP TABLE IF EXISTS issuetracker.roles;
+CREATE TABLE issuetracker.roles (
+	id INT NOT NULL AUTO_INCREMENT,
+	name VARCHAR(45) NULL,
+	PRIMARY KEY (id),
+	UNIQUE INDEX name_UNIQUE (name ASC),
+	UNIQUE INDEX id_UNIQUE (id ASC)
+);
 
 INSERT INTO `issuetracker`.`roles` (`id`, `name`) VALUES ('1', 'User');
 INSERT INTO `issuetracker`.`roles` (`id`, `name`) VALUES ('2', 'Administrator');
+
+commit;
