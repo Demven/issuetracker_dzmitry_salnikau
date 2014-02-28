@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC   
+	"-//Hibernate/Hibernate Coniguration DTD 3.0//EN"   
+	"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd"> 
+ 
+<hibernate-configuration>
+ 
+    <session-factory>
+ 
+      <!-- Database connection settings -->
+        <property name="connection.driver_class">org.gjt.mm.mysql.Driver</property>
+        <property name="connection.url">jdbc:mysql://localhost:3306/issuetracker</property>
+        <property name="connection.username">root</property>
+        <property name="connection.password">041291</property>
+ 
+      <!-- SQL dialect -->
+        <property name="dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>
+ 
+      <!-- JDBC connection pool (use the built-in) -->
+        <property name="connection.pool_size">1</property>
+ 
+      <!-- Enable Hibernate's automatic session context management -->
+        <property name="current_session_context_class">thread</property>
+ 
+      <!-- Echo all executed SQL to stdout -->
+        <property name="show_sql">true</property>
+ 
+      <!-- Mapping files -->
+      <mapping class="org.training.issuetracker.dao.hibernate.entities.Build"/>
+      <mapping class="org.training.issuetracker.dao.hibernate.entities.Priority"/>
+      <mapping class="org.training.issuetracker.dao.hibernate.entities.Project"/>
+      <mapping class="org.training.issuetracker.dao.hibernate.entities.Resolution"/>
+      <mapping class="org.training.issuetracker.dao.hibernate.entities.Role"/>
+      <mapping class="org.training.issuetracker.dao.hibernate.entities.Status"/>
+      <mapping class="org.training.issuetracker.dao.hibernate.entities.Type"/>
+      <mapping class="org.training.issuetracker.dao.hibernate.entities.User"/>
+ 
+    </session-factory>
+ 
+</hibernate-configuration>

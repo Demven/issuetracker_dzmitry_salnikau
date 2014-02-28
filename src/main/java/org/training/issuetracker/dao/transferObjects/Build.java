@@ -21,11 +21,11 @@ public class Build implements java.io.Serializable {
 	public final static int COLUMN_ID_VERSION = 3;
 	
 	// For entity
-	private int buildId;
-	private int project;
+	private Integer buildId;
+	private Integer project;
 	private String version;
 	
-	public Build(int buildId, int project,
+	public Build(Integer buildId, Integer project,
 			String version) {
 		this.buildId = buildId;
 		this.project = project;
@@ -35,18 +35,18 @@ public class Build implements java.io.Serializable {
 	public Build(){
 	}
 	
-	public int getBuildId() {
+	public Integer getBuildId() {
 		return buildId;
 	}
-	public void setBuildId(int buildId) {
+	public void setBuildId(Integer buildId) {
 		this.buildId = buildId;
 	}
 
 	
-	public int getProject() {
+	public Integer getProject() {
 		return project;
 	}
-	public void setProject(int project) {
+	public void setProject(Integer project) {
 		this.project = project;
 	}
 

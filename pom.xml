@@ -18,11 +18,13 @@
 			<artifactId>slf4j-api</artifactId>
 			<version>1.6.4</version>
 		</dependency>
+		<!-- Logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>1.6.4</version>
 		</dependency>
+		<!-- For db and pool -->
 		<dependency>
 			<groupId>commons-pool</groupId>
   			<artifactId>commons-pool</artifactId>
@@ -38,15 +40,23 @@
 	        <artifactId>mysql-connector-java</artifactId>
 	        <version>5.1.6</version>
 	    </dependency>
+	    <!-- JSTL -->
 	    <dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
+		<!-- For JSON -->
 		<dependency>
 			<groupId>com.googlecode.json-simple</groupId>
 			<artifactId>json-simple</artifactId>
 			<version>1.1.1</version>
+		</dependency>
+		<!-- Hibernate -->
+		<dependency>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-core</artifactId>
+		    <version>4.3.1.Final</version>
 		</dependency>
 	</dependencies>
 	<build>

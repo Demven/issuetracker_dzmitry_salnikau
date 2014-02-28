@@ -2,23 +2,31 @@ package org.training.issuetracker.commands.main;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.training.issuetracker.beans.IssueBean;
 import org.training.issuetracker.beans.UserBean;
 import org.training.issuetracker.commands.Command;
 import org.training.issuetracker.dao.factories.DAOFactory;
+import org.training.issuetracker.dao.interfaces.BuildDAO;
 import org.training.issuetracker.dao.interfaces.IssueDAO;
 import org.training.issuetracker.dao.interfaces.PriorityDAO;
+import org.training.issuetracker.dao.interfaces.ProjectDAO;
+import org.training.issuetracker.dao.interfaces.ResolutionDAO;
+import org.training.issuetracker.dao.interfaces.RoleDAO;
 import org.training.issuetracker.dao.interfaces.StatusDAO;
 import org.training.issuetracker.dao.interfaces.TypeDAO;
 import org.training.issuetracker.dao.interfaces.UserDAO;
+import org.training.issuetracker.dao.transferObjects.Build;
 import org.training.issuetracker.dao.transferObjects.Issue;
 import org.training.issuetracker.dao.transferObjects.Priority;
+import org.training.issuetracker.dao.transferObjects.Project;
+import org.training.issuetracker.dao.transferObjects.Resolution;
+import org.training.issuetracker.dao.transferObjects.Role;
 import org.training.issuetracker.dao.transferObjects.Status;
 import org.training.issuetracker.dao.transferObjects.Type;
 import org.training.issuetracker.dao.transferObjects.User;
@@ -28,6 +36,8 @@ import org.training.issuetracker.managers.SessionManager;
 public class NoCommand implements Command { 
 	
 	private DAOFactory mysqlFactory;
+	
+	private static final Logger logger = Logger.getLogger(NoCommand.class);
 	
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { 
 
@@ -58,6 +68,37 @@ public class NoCommand implements Command {
 			request.setAttribute("pageTitle", "Latest issues");	
 		}
 
+		// hibernate test
+		DAOFactory hibernatefactory = DAOFactory.getDAOFactory(DAOFactory.HYBERNATE);
+		TypeDAO typeDAO = hibernatefactory.getTypeDAO();
+		
+		/*
+		logger.warn("---------------------------------");
+		logger.warn("ALL TYPes");
+		typeDAO.getTypes();
+		logger.warn("---------------------------------");
+		logger.warn("TYPE by ID");
+		typeDAO.getTypeById(1);
+		
+	
+		logger.warn("---------------------------------");
+		logger.warn("PROJECT ID by NAME");
+		priorityDAO.getProjectIdByName("EYEkey");
+		
+		logger.warn("*********************************");
+		logger.warn("CREATING TYPE");
+		logger.warn(typeDAO.createType(new Type(0, "Some name")));
+		
+		
+		logger.warn("*********************************");
+		logger.warn("UPDATING Type");
+		logger.warn(typeDAO.updateType(new Type(5, "Updated name")));
+		
+		
+		logger.warn("*********************************");
+		logger.warn("DELETING TYPE");
+		logger.warn(typeDAO.deleteType(5));
+		*/
 		return page;
 	} 
 
@@ -67,7 +108,6 @@ public class NoCommand implements Command {
 	 * @return ArrayList<Issue> - list of N latest issues
 	 */
 	private ArrayList<IssueBean> getLatestIssues(ArrayList<Issue> allIssues){
-		Collections.sort(allIssues);
 		ArrayList<Issue> latestIssues = new ArrayList<Issue>();
 		
 		int number = Issue.MAX_SHOWN_NUMBER;
@@ -89,7 +129,6 @@ public class NoCommand implements Command {
 	 * @return ArrayList<Issue> - list of N assigned issues for the user
 	 */
 	private ArrayList<IssueBean> getAssignedIssues(ArrayList<Issue> allIssues, int userId){
-		Collections.sort(allIssues);
 		ArrayList<Issue> assignedIssues = new ArrayList<Issue>();
 		
 		int number = 0;
