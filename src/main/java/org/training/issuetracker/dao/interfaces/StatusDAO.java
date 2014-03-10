@@ -1,8 +1,8 @@
 package org.training.issuetracker.dao.interfaces;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import org.training.issuetracker.dao.transferObjects.Status;
+import org.training.issuetracker.dao.hibernate.entities.Status;
 
 /**
  * Interface, providing access to the statuses and their data
@@ -12,9 +12,9 @@ import org.training.issuetracker.dao.transferObjects.Status;
 public interface StatusDAO {
 
 	/**
-	 * @return ArrayList of all issues' statuses
+	 * @return List of all issues' statuses
 	 */
-	public ArrayList<Status> getStatuses();
+	public List<Status> getStatuses();
 	
 	/**
 	 * Returns Status object with stated statusId

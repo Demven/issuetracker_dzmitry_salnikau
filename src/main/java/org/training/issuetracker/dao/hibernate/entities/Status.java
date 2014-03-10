@@ -22,19 +22,22 @@ public class Status implements Serializable{
 
 	public static final String TABLE_NAME = "statuses";
 	
+	public static final String COLUMN_ID = "id";
+	public static final String COLUMN_NAME = "name";
+	
 	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name="id")
-	private int statusId;
+    @Column(name=COLUMN_ID)
+	private Integer statusId;
 	
-	@Column(name="name")
+	@Column(name=COLUMN_NAME)
 	private String name;
 
 	
-	public int getStatusId() {
+	public Integer getStatusId() {
 		return statusId;
 	}
-	public void setStatusId(int statusId) {
+	public void setStatusId(Integer statusId) {
 		this.statusId = statusId;
 	}
 

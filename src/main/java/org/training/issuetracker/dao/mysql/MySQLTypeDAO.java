@@ -12,11 +12,17 @@ import org.training.issuetracker.dao.interfaces.TypeDAO;
 import org.training.issuetracker.dao.mysql.builders.StatementBuilder;
 import org.training.issuetracker.dao.transferObjects.Type;
 
-public class MySQLTypeDAO implements TypeDAO{
+/**
+ * !!! This class is not used.
+ * Maybe it will be useful someday in the future in an other project.
+ * @author Dzmitry_Salnikau
+ * @deprecated
+ */
+public class MySQLTypeDAO /*implements TypeDAO */ {
 
 	private static final Logger logger = Logger.getLogger(MySQLTypeDAO.class);
 	
-	@Override
+	//@Override
 	public ArrayList<Type> getTypes() {
 		ArrayList<Type> types = null;
 		try {
@@ -60,7 +66,7 @@ public class MySQLTypeDAO implements TypeDAO{
 		return types;
 	}
 
-	@Override
+	//@Override
 	public Type getTypeById(int typeId) {
 		Type type = null;
 		try {
@@ -105,7 +111,7 @@ public class MySQLTypeDAO implements TypeDAO{
 		return type;
 	}
 
-	@Override
+	//@Override
 	public boolean createType(Type type) {
 		boolean isSuccess = false;
 		try {
@@ -138,7 +144,7 @@ public class MySQLTypeDAO implements TypeDAO{
 		return isSuccess;
 	}
 
-	@Override
+	//@Override
 	public boolean updateType(Type type) {
 		boolean isSuccess = false;
 		try {
@@ -173,7 +179,7 @@ public class MySQLTypeDAO implements TypeDAO{
 		return isSuccess;
 	}
 
-	@Override
+	//@Override
 	public boolean deleteType(int typeId) {
 		boolean isSuccess = false;
 		try {

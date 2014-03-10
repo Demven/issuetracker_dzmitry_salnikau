@@ -4,6 +4,7 @@ package org.training.issuetracker.dao.transferObjects;
  * Class, describing a user
  * @author Dzmitry Salnikau
  * @since 02.01.2014
+ * @deprecated
  */
 public class User implements java.io.Serializable {
 

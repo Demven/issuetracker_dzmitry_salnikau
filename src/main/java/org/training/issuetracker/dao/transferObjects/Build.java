@@ -4,6 +4,7 @@ package org.training.issuetracker.dao.transferObjects;
  * Class, describing a project's build
  * @author Dzmitry Salnikau
  * @since 02.01.2014
+ * @deprecated
  */
 public class Build implements java.io.Serializable {
 

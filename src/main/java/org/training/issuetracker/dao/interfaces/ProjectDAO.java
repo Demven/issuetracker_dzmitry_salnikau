@@ -1,8 +1,10 @@
 package org.training.issuetracker.dao.interfaces;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import org.training.issuetracker.dao.transferObjects.Project;
+import org.training.issuetracker.dao.hibernate.entities.Project;
+
 
 /**
  * Interface, providing access to the projects and their data
@@ -12,9 +14,9 @@ import org.training.issuetracker.dao.transferObjects.Project;
 public interface ProjectDAO {
 	
 	/**
-	 * @return ArrayList of all projects
+	 * @return List of all projects
 	 */
-	public ArrayList<Project> getProjects();
+	public List<Project> getProjects();
 	
 	/**
 	 * Returns Project object with stated projectId

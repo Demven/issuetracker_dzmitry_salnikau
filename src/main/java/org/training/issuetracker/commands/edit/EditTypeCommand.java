@@ -10,8 +10,8 @@ import org.apache.log4j.Logger;
 import org.training.issuetracker.commands.Command;
 import org.training.issuetracker.commands.view.ViewTypesCommand;
 import org.training.issuetracker.dao.factories.DAOFactory;
+import org.training.issuetracker.dao.hibernate.entities.Type;
 import org.training.issuetracker.dao.interfaces.TypeDAO;
-import org.training.issuetracker.dao.transferObjects.Type;
 import org.training.issuetracker.managers.ConfigurationManager;
 
 public class EditTypeCommand implements Command{
@@ -21,7 +21,7 @@ public class EditTypeCommand implements Command{
 	
 	private static final Logger logger = Logger.getLogger(EditTypeCommand.class);
 	
-	private DAOFactory mysqlFactory;
+	private DAOFactory hibernateFactory;
 	private TypeDAO typeDAO;
 
 	@Override
@@ -29,8 +29,8 @@ public class EditTypeCommand implements Command{
 			throws ServletException, IOException {
 		
 		String page;
-		mysqlFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
-		typeDAO = mysqlFactory.getTypeDAO();
+		hibernateFactory = DAOFactory.getDAOFactory(DAOFactory.HYBERNATE);
+		typeDAO = hibernateFactory.getTypeDAO();
 		
 		Type editType = getEditType(request.getParameter(PARAM_TYPE_ID));
 		if(editType != null){

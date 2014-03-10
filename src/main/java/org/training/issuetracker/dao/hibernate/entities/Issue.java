@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -15,56 +17,82 @@ import javax.persistence.Table;
  * @since 24.02.2014
  */
 @Entity
-@Table(name="issues")
+@Table(name=Issue.TABLE_NAME)
 public class Issue implements Serializable{
 
 	private static final long serialVersionUID = 6068007459467779588L;
 
 	public final static int MAX_SHOWN_NUMBER = 10;
 	
+	public static final String TABLE_NAME = "issues";
+	
+	public static final String COLUMN_ID = "id";
+	public static final String COLUMN_CREATE_DATE = "createdate";
+	public static final String COLUMN_CREATED_BY= "createdby";
+	public static final String COLUMN_MODIFY_DATE= "modifydate";
+	public static final String COLUMN_MODIFIED_BY= "modifiedby";
+	public static final String COLUMN_SUMMARY= "summary";
+	public static final String COLUMN_DESCRIPTION= "description";
+	public static final String COLUMN_STATUS= "status";
+	public static final String COLUMN_RESOLUTION= "resolution";
+	public static final String COLUMN_TYPE= "issuetype";
+	public static final String COLUMN_PRIORITY = "priority";
+	public static final String COLUMN_PROJECT = "project";
+	public static final String COLUMN_BUILD_FOUND = "buildfound";
+	public static final String COLUMN_ASSIGNEE = "assignee";
+	
 	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name="id")
+    @Column(name=COLUMN_ID)
 	private Integer issueId;
 	
-	@Column(name="createdate")
+	@Column(name=COLUMN_CREATE_DATE)
 	private String createDate;
 	
-	@Column(name="createdby")
-	private Integer createdBy;
+	@ManyToOne
+    @JoinColumn(name=COLUMN_CREATED_BY)
+	private User createdBy;
 	
-	@Column(name="modifydate")
+	@Column(name=COLUMN_MODIFY_DATE)
 	private String modifyDate;
 	
-	@Column(name="modifiedby")
-	private Integer modifiedBy;
+	@ManyToOne
+    @JoinColumn(name=COLUMN_MODIFIED_BY)
+	private User modifiedBy;
 	
-	@Column(name="summary")
+	@Column(name=COLUMN_SUMMARY)
 	private String summary;
 	
-	@Column(name="description")
+	@Column(name=COLUMN_DESCRIPTION)
 	private String description;
 	
-	@Column(name="status")
-	private Integer status;
+	@ManyToOne
+    @JoinColumn(name=COLUMN_STATUS)
+	private Status status;
 	
-	@Column(name="resolution")
-	private Integer resolution;
+	@ManyToOne
+    @JoinColumn(name=COLUMN_RESOLUTION)
+	private Resolution resolution;
 	
-	@Column(name="issuetype")
-	private Integer type;
+	@ManyToOne
+    @JoinColumn(name=COLUMN_TYPE)
+	private Type type;
 	
-	@Column(name="priority")
-	private Integer priority;
+	@ManyToOne
+    @JoinColumn(name=COLUMN_PRIORITY)
+	private Priority priority;
 	
-	@Column(name="project")
-	private Integer project;
+	@ManyToOne
+    @JoinColumn(name=COLUMN_PROJECT)
+	private Project project;
 	
-	@Column(name="buildfound")
-	private Integer buildFound;
+	@ManyToOne
+    @JoinColumn(name=COLUMN_BUILD_FOUND)
+	private Build buildFound;
 	
-	@Column(name="assignee")
-	private Integer assignee;
+	@ManyToOne
+    @JoinColumn(name=COLUMN_ASSIGNEE)
+	private User assignee;
 	
 
 	public Integer getIssueId() {
@@ -83,10 +111,10 @@ public class Issue implements Serializable{
 	}
 	
 
-	public Integer getCreatedBy() {
+	public User getCreatedBy() {
 		return createdBy;
 	}
-	public void setCreatedBy(Integer createdBy) {
+	public void setCreatedBy(User createdBy) {
 		this.createdBy = createdBy;
 	}
 	
@@ -99,10 +127,10 @@ public class Issue implements Serializable{
 	}
 	
 
-	public Integer getModifiedBy() {
+	public User getModifiedBy() {
 		return modifiedBy;
 	}
-	public void setModifiedBy(Integer modifiedBy) {
+	public void setModifiedBy(User modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
 	
@@ -123,58 +151,58 @@ public class Issue implements Serializable{
 	}
 	
 
-	public Integer getStatus() {
+	public Status getStatus() {
 		return status;
 	}
-	public void setStatus(Integer status) {
+	public void setStatus(Status status) {
 		this.status = status;
 	}
 	
 
-	public Integer getResolution() {
+	public Resolution getResolution() {
 		return resolution;
 	}
-	public void setResolution(Integer resolution) {
+	public void setResolution(Resolution resolution) {
 		this.resolution = resolution;
 	}
 	
 
-	public Integer getType() {
+	public Type getType() {
 		return type;
 	}
-	public void setType(Integer type) {
+	public void setType(Type type) {
 		this.type = type;
 	}
 	
 
-	public Integer getPriority() {
+	public Priority getPriority() {
 		return priority;
 	}
-	public void setPriority(Integer priority) {
+	public void setPriority(Priority priority) {
 		this.priority = priority;
 	}
 	
 
-	public Integer getProject() {
+	public Project getProject() {
 		return project;
 	}
-	public void setProject(Integer project) {
+	public void setProject(Project project) {
 		this.project = project;
 	}
 	
 
-	public Integer getBuildFound() {
+	public Build getBuildFound() {
 		return buildFound;
 	}
-	public void setBuildFound(Integer buildFound) {
+	public void setBuildFound(Build buildFound) {
 		this.buildFound = buildFound;
 	}
 
 	
-	public Integer getAssignee() {
+	public User getAssignee() {
 		return assignee;
 	}
-	public void setAssignee(Integer assignee) {
+	public void setAssignee(User assignee) {
 		this.assignee = assignee;
 	}
 }

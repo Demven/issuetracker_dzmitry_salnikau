@@ -1,8 +1,8 @@
 package org.training.issuetracker.dao.interfaces;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import org.training.issuetracker.dao.transferObjects.Priority;
+import org.training.issuetracker.dao.hibernate.entities.Priority;
 
 /**
  * Interface, providing access to the priorities and their data
@@ -14,7 +14,7 @@ public interface PriorityDAO {
 	/**
 	 * @return ArrayList of all issues' priorities
 	 */
-	public ArrayList<Priority> getPriorities();
+	public List<Priority> getPriorities();
 	
 	/**
 	 * Returns Priority object with stated priorityId

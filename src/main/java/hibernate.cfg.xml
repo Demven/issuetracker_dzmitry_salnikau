@@ -27,6 +27,7 @@
  
       <!-- Mapping files -->
       <mapping class="org.training.issuetracker.dao.hibernate.entities.Build"/>
+      <mapping class="org.training.issuetracker.dao.hibernate.entities.Issue"/>
       <mapping class="org.training.issuetracker.dao.hibernate.entities.Priority"/>
       <mapping class="org.training.issuetracker.dao.hibernate.entities.Project"/>
       <mapping class="org.training.issuetracker.dao.hibernate.entities.Resolution"/>

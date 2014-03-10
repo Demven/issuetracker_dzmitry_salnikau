@@ -10,8 +10,8 @@ import org.apache.log4j.Logger;
 import org.training.issuetracker.commands.Command;
 import org.training.issuetracker.commands.main.NoCommand;
 import org.training.issuetracker.dao.factories.DAOFactory;
+import org.training.issuetracker.dao.hibernate.entities.User;
 import org.training.issuetracker.dao.interfaces.UserDAO;
-import org.training.issuetracker.dao.transferObjects.User;
 import org.training.issuetracker.logic.ValidationLogic;
 import org.training.issuetracker.managers.ConfigurationManager;
 
@@ -38,8 +38,8 @@ public class EditProfileCommand implements Command{
 	public String execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		DAOFactory mysqlFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
-		userDAO = mysqlFactory.getUserDAO();
+		DAOFactory hibernateFactory = DAOFactory.getDAOFactory(DAOFactory.HYBERNATE);
+		userDAO = hibernateFactory.getUserDAO();
 		
 		User editProfile = getEditUser(request.getParameter(PARAM_USER_ID));
 		

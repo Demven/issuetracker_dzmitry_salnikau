@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.training.issuetracker.commands.Command;
 import org.training.issuetracker.dao.factories.DAOFactory;
+import org.training.issuetracker.dao.hibernate.entities.Type;
 import org.training.issuetracker.dao.interfaces.TypeDAO;
-import org.training.issuetracker.dao.transferObjects.Type;
 import org.training.issuetracker.managers.ConfigurationManager;
 
 public class CreateTypeCommand implements Command{
@@ -24,13 +24,17 @@ public class CreateTypeCommand implements Command{
 				ConfigurationManager.TYPE_PAGE_PATH);
 		request.setAttribute("pageTitle", "New type");
 		
-		DAOFactory mysqlFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
-		TypeDAO typeDAO = mysqlFactory.getTypeDAO();
+		DAOFactory hibernateFactory = DAOFactory.getDAOFactory(DAOFactory.HYBERNATE);
+		TypeDAO typeDAO = hibernateFactory.getTypeDAO();
 		
 		String name = request.getParameter(PARAM_NAME);
 		if(name != null && !name.equals("")){
 			// It is request to save new type
-			boolean typeSuccess = typeDAO.createType(new Type(0, name));
+			Type newType = new Type();
+			newType.setTypeId(0);
+			newType.setName(name);
+			
+			boolean typeSuccess = typeDAO.createType(newType);
 			
 			if(typeSuccess){
 				// Data saved succesfully

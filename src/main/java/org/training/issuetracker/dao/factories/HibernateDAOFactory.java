@@ -1,12 +1,14 @@
 package org.training.issuetracker.dao.factories;
 
 import org.training.issuetracker.dao.hibernate.HibernateBuildDAO;
+import org.training.issuetracker.dao.hibernate.HibernateIssueDAO;
 import org.training.issuetracker.dao.hibernate.HibernatePriorityDAO;
 import org.training.issuetracker.dao.hibernate.HibernateProjectDAO;
 import org.training.issuetracker.dao.hibernate.HibernateResolutionDAO;
 import org.training.issuetracker.dao.hibernate.HibernateRoleDAO;
 import org.training.issuetracker.dao.hibernate.HibernateStatusDAO;
 import org.training.issuetracker.dao.hibernate.HibernateTypeDAO;
+import org.training.issuetracker.dao.hibernate.HibernateUserDAO;
 import org.training.issuetracker.dao.interfaces.BuildDAO;
 import org.training.issuetracker.dao.interfaces.IssueDAO;
 import org.training.issuetracker.dao.interfaces.PriorityDAO;
@@ -21,12 +23,12 @@ public class HibernateDAOFactory extends DAOFactory {
 
 	@Override
 	public UserDAO getUserDAO() {
-		return null;
+		return new HibernateUserDAO();
 	}
 
 	@Override
 	public IssueDAO getIssueDAO() {
-		return null;
+		return new HibernateIssueDAO();
 	}
 
 	@Override

@@ -1,8 +1,8 @@
 package org.training.issuetracker.dao.interfaces;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import org.training.issuetracker.dao.transferObjects.Type;
+import org.training.issuetracker.dao.hibernate.entities.Type;
 
 /**
  * Interface, providing access to the types and their data
@@ -12,9 +12,9 @@ import org.training.issuetracker.dao.transferObjects.Type;
 public interface TypeDAO {
 
 	/**
-	 * @return ArrayList of all issues' types
+	 * @return List of all issues' types
 	 */
-	public ArrayList<Type> getTypes();
+	public List<Type> getTypes();
 	
 	/**
 	 * Returns Type object with stated typeId

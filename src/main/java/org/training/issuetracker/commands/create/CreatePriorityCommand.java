@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.training.issuetracker.commands.Command;
 import org.training.issuetracker.dao.factories.DAOFactory;
+import org.training.issuetracker.dao.hibernate.entities.Priority;
 import org.training.issuetracker.dao.interfaces.PriorityDAO;
-import org.training.issuetracker.dao.transferObjects.Priority;
 import org.training.issuetracker.managers.ConfigurationManager;
 
 public class CreatePriorityCommand implements Command{
@@ -24,13 +24,16 @@ public class CreatePriorityCommand implements Command{
 				ConfigurationManager.PRIORITY_PAGE_PATH);
 		request.setAttribute("pageTitle", "New priority");
 		
-		DAOFactory mysqlFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
-		PriorityDAO priorityDAO = mysqlFactory.getPriorityDAO();
+		DAOFactory hibernateFactory = DAOFactory.getDAOFactory(DAOFactory.HYBERNATE);
+		PriorityDAO priorityDAO = hibernateFactory.getPriorityDAO();
 		
 		String name = request.getParameter(PARAM_NAME);
 		if(name != null && !name.equals("")){
 			// It is request to save new priority
-			boolean prioritySuccess = priorityDAO.createPriority(new Priority(0, name));
+			Priority newPriority = new Priority();
+			newPriority.setPriorityId(0);
+			newPriority.setName(name);
+			boolean prioritySuccess = priorityDAO.createPriority(newPriority);
 			
 			if(prioritySuccess){
 				// Data saved succesfully

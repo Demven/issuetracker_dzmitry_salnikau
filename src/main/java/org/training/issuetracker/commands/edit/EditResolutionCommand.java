@@ -10,8 +10,8 @@ import org.apache.log4j.Logger;
 import org.training.issuetracker.commands.Command;
 import org.training.issuetracker.commands.view.ViewResolutionsCommand;
 import org.training.issuetracker.dao.factories.DAOFactory;
+import org.training.issuetracker.dao.hibernate.entities.Resolution;
 import org.training.issuetracker.dao.interfaces.ResolutionDAO;
-import org.training.issuetracker.dao.transferObjects.Resolution;
 import org.training.issuetracker.managers.ConfigurationManager;
 
 public class EditResolutionCommand implements Command{
@@ -21,7 +21,7 @@ public class EditResolutionCommand implements Command{
 	
 	private static final Logger logger = Logger.getLogger(EditResolutionCommand.class);
 	
-	private DAOFactory mysqlFactory;
+	private DAOFactory hibernateFactory;
 	private ResolutionDAO resolutionDAO;
 
 	@Override
@@ -29,8 +29,8 @@ public class EditResolutionCommand implements Command{
 			throws ServletException, IOException {
 		
 		String page;
-		mysqlFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
-		resolutionDAO = mysqlFactory.getResolutionDAO();
+		hibernateFactory = DAOFactory.getDAOFactory(DAOFactory.HYBERNATE);
+		resolutionDAO = hibernateFactory.getResolutionDAO();
 		
 		Resolution editResolution = getEditResolution(request.getParameter(PARAM_RESOLUTION_ID));
 		if(editResolution != null){

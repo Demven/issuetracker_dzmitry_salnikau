@@ -4,6 +4,7 @@ package org.training.issuetracker.dao.transferObjects;
  * Class, describing a user's role
  * @author Dzmitry Salnikau
  * @since 07.02.2014
+ * @deprecated
  */
 public class Role implements java.io.Serializable{
 

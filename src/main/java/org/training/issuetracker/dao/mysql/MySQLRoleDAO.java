@@ -12,11 +12,17 @@ import org.training.issuetracker.dao.interfaces.RoleDAO;
 import org.training.issuetracker.dao.mysql.builders.StatementBuilder;
 import org.training.issuetracker.dao.transferObjects.Role;
 
-public class MySQLRoleDAO implements RoleDAO{
+/**
+ * !!! This class is not used.
+ * Maybe it will be useful someday in the future in an other project.
+ * @author Dzmitry_Salnikau
+ * @deprecated
+ */
+public class MySQLRoleDAO /*implements RoleDAO */{
 	
 	private static final Logger logger = Logger.getLogger(MySQLRoleDAO.class);
 
-	@Override
+	//@Override
 	public ArrayList<Role> getRoles() {
 		ArrayList<Role> roles = null;
 		try {
@@ -60,7 +66,7 @@ public class MySQLRoleDAO implements RoleDAO{
 		return roles;
 	}
 
-	@Override
+	//@Override
 	public Role getRoleById(int roleId) {
 		Role role = null;
 		try {
@@ -105,7 +111,7 @@ public class MySQLRoleDAO implements RoleDAO{
 		return role;
 	}
 
-	@Override
+	//@Override
 	public boolean createRole(Role role) {
 		boolean isSuccess = false;
 		try {
@@ -138,7 +144,7 @@ public class MySQLRoleDAO implements RoleDAO{
 		return isSuccess;
 	}
 
-	@Override
+	//@Override
 	public boolean updateRole(Role role) {
 		boolean isSuccess = false;
 		try {
@@ -173,7 +179,7 @@ public class MySQLRoleDAO implements RoleDAO{
 		return isSuccess;
 	}
 
-	@Override
+	//@Override
 	public boolean deleteRole(int roleId) {
 		boolean isSuccess = false;
 		try {

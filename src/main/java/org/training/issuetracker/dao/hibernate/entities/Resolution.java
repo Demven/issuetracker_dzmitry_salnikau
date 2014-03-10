@@ -22,19 +22,22 @@ public class Resolution implements Serializable {
 
 	public static final String TABLE_NAME = "resolutions";
 	
+	public static final String COLUMN_ID = "id";
+	public static final String COLUMN_NAME = "name";
+	
 	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name="id")
-	private int resolutionId;
+    @Column(name=COLUMN_ID)
+	private Integer resolutionId;
 	
-	@Column(name="name")
+	@Column(name=COLUMN_NAME)
 	private String name;
 
 	
-	public int getResolutionId() {
+	public Integer getResolutionId() {
 		return resolutionId;
 	}
-	public void setResolutionId(int resolutionId) {
+	public void setResolutionId(Integer resolutionId) {
 		this.resolutionId = resolutionId;
 	}
 

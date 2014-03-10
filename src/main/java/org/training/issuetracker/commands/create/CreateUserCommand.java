@@ -1,7 +1,7 @@
 package org.training.issuetracker.commands.create;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -9,10 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.training.issuetracker.commands.Command;
 import org.training.issuetracker.dao.factories.DAOFactory;
+import org.training.issuetracker.dao.hibernate.entities.Role;
+import org.training.issuetracker.dao.hibernate.entities.User;
 import org.training.issuetracker.dao.interfaces.RoleDAO;
 import org.training.issuetracker.dao.interfaces.UserDAO;
-import org.training.issuetracker.dao.transferObjects.Role;
-import org.training.issuetracker.dao.transferObjects.User;
 import org.training.issuetracker.logic.ValidationLogic;
 import org.training.issuetracker.managers.ConfigurationManager;
 
@@ -42,9 +42,10 @@ public class CreateUserCommand implements Command{
 				ConfigurationManager.USER_PAGE_PATH);
 		request.setAttribute("pageTitle", "New user");
 		
-		DAOFactory mysqlFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
-		UserDAO userDAO = mysqlFactory.getUserDAO();
-		roleDAO = mysqlFactory.getRoleDAO();
+		DAOFactory hibernateFactory = DAOFactory.getDAOFactory(DAOFactory.HYBERNATE);
+		
+		UserDAO userDAO = hibernateFactory.getUserDAO();
+		roleDAO = hibernateFactory.getRoleDAO();
 		
 		firstName = request.getParameter(PARAM_FIRST_NAME);
 		if(firstName != null && !firstName.equals("")){
@@ -64,8 +65,19 @@ public class CreateUserCommand implements Command{
 					&& validation.isPasswordValid(password)
 					&& password.equals(repeatPassword)){
 				// all is ok - save new user
-				boolean userSuccess = userDAO.createUser(new User(0, firstName, lastName,
-						email, Integer.valueOf(roleId), password));
+				User user = new User();
+				user.setUserId(0);
+				user.setFirstName(firstName);
+				user.setLastName(lastName);
+				user.setEmail(email);
+
+				Role userRole = new Role();
+				userRole.setRoleId(Integer.valueOf(roleId));
+
+				user.setRole(userRole);
+				user.setPassword(password);
+				
+				boolean userSuccess = userDAO.createUser(user);
 				
 				if(userSuccess){
 					// All data saved succesfully
@@ -81,7 +93,7 @@ public class CreateUserCommand implements Command{
 			}
 		}
 		
-		ArrayList<Role> roles = roleDAO.getRoles();
+		List<Role> roles = roleDAO.getRoles();
 		if(roles != null){
 			request.setAttribute("roles", roles);
 		}

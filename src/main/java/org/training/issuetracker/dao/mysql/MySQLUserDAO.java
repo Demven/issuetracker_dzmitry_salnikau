@@ -12,11 +12,17 @@ import org.training.issuetracker.dao.interfaces.UserDAO;
 import org.training.issuetracker.dao.mysql.builders.StatementBuilder;
 import org.training.issuetracker.dao.transferObjects.User;
 
-public class MySQLUserDAO implements UserDAO{
+/**
+ * !!! This class is not used.
+ * Maybe it will be useful someday in the future in an other project.
+ * @author Dzmitry_Salnikau
+ * @deprecated
+ */
+public class MySQLUserDAO /* implements UserDAO */  {
 	
 	private static final Logger logger = Logger.getLogger(MySQLUserDAO.class);
 
-	@Override
+	//@Override
 	public ArrayList<User> getUsers() {
 		ArrayList<User> users = null;
 		try {
@@ -64,7 +70,7 @@ public class MySQLUserDAO implements UserDAO{
 		return users;
 	}
 
-	@Override
+	//@Override
 	public boolean checkAuth(String email, String password) {
 		boolean isAuth = false;
 		try {
@@ -106,7 +112,7 @@ public class MySQLUserDAO implements UserDAO{
 		return isAuth;
 	}
 
-	@Override
+	//@Override
 	public boolean checkUserEmail(String email) {
 		boolean isEmailExists = false;
 		try {
@@ -148,7 +154,7 @@ public class MySQLUserDAO implements UserDAO{
 		return isEmailExists;
 	}
 
-	@Override
+	//@Override
 	public Integer getUserIdByName(String firstName, String lastName) {
 		Integer userId = null;
 		try {
@@ -190,7 +196,7 @@ public class MySQLUserDAO implements UserDAO{
 		return userId;
 	}
 
-	@Override
+	//@Override
 	public User getUserByEmail(String email) {
 		User user = null;
 		try {
@@ -238,7 +244,7 @@ public class MySQLUserDAO implements UserDAO{
 		return user;
 	}
 
-	@Override
+	//@Override
 	public User getUserById(Integer userId) {
 		User user = null;
 		try {
@@ -286,7 +292,7 @@ public class MySQLUserDAO implements UserDAO{
 		return user;
 	}
 
-	@Override
+	//@Override
 	public boolean createUser(User user) {
 		boolean isSuccess = false;
 		try {
@@ -331,7 +337,7 @@ public class MySQLUserDAO implements UserDAO{
 		return isSuccess;
 	}
 
-	@Override
+	//@Override
 	public boolean updateUser(User user) {
 		boolean isSuccess = false;
 		try {
@@ -378,8 +384,8 @@ public class MySQLUserDAO implements UserDAO{
 		return isSuccess;
 	}
 	
-	@Override
-	public boolean deleteUser(String userId) {
+	//@Override
+	public boolean deleteUser(int userId) {
 		boolean isSuccess = false;
 		try {
 			Connection cn = null;

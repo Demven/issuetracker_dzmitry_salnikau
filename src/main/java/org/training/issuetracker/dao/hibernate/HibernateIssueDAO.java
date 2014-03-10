@@ -7,105 +7,105 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
-import org.training.issuetracker.dao.hibernate.entities.Role;
+import org.training.issuetracker.dao.hibernate.entities.Issue;
 import org.training.issuetracker.dao.hibernate.util.HibernateUtil;
-import org.training.issuetracker.dao.interfaces.RoleDAO;
+import org.training.issuetracker.dao.interfaces.IssueDAO;
 
-public class HibernateRoleDAO implements RoleDAO {
+public class HibernateIssueDAO implements IssueDAO{
 
-	private static final Logger logger = Logger.getLogger(HibernateRoleDAO.class);
-	private static final String TAG = HibernateRoleDAO.class.getSimpleName();
+	private static final Logger logger = Logger.getLogger(HibernateIssueDAO.class);
+	private static final String TAG = HibernateIssueDAO.class.getSimpleName();
 	
 	@Override
-	public List<Role> getRoles() {
-		List<Role> roles = null;
+	public List<Issue> getIssues() {
+		List<Issue> issues = null;
 		
 		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		final Transaction transaction = session.beginTransaction();	
 		try {
-	        Criteria criteria = session.createCriteria(Role.class);
-	        criteria.addOrder(Order.asc(Role.COLUMN_ID));
-	        roles = (List<Role>) criteria.list();
+	        Criteria criteria = session.createCriteria(Issue.class);
+	        criteria.addOrder(Order.asc(Issue.COLUMN_ID));
+	        issues = (List<Issue>) criteria.list();
 	        transaction.commit();
 		} catch (Exception e) {
-			logger.error(TAG + " Getting all roles failed!", e);
+			logger.error(TAG + " Getting all issues failed!", e);
 		    transaction.rollback();
 		    throw e;
 		}
-        
-        return roles;
+		
+        return issues;
 	}
 
 	@Override
-	public Role getRoleById(int roleId) {
-		Role role = null;
+	public Issue getIssueById(Integer issueId) {
+		Issue issue = null;
 		
 		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		final Transaction transaction = session.beginTransaction();	
 		try {
-	        role = (Role) session.get(Role.class, roleId);
-	        transaction.commit();
+	        issue = (Issue) session.get(Issue.class, issueId);
+	        session.getTransaction().commit();
 		} catch (Exception e) {
-			logger.error(TAG + " Getting Role-object " + roleId + " failed!", e);
+			logger.error(TAG + " Getting Issue-object " + issueId + "failed!", e);
 		    transaction.rollback();
 		    throw e;
 		}
         
-        return role;
+        return issue;
 	}
 
 	@Override
-	public boolean createRole(Role role) {
+	public boolean createIssue(Issue issue) {
 		boolean success = false;
 		
 		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		final Transaction transaction = session.beginTransaction();	
 		try {
-		    session.save(role);
+		    session.save(issue);
 		    transaction.commit();
 		    success = true;
 		} catch(Exception e) {
 			transaction.rollback();
-		    logger.error(TAG + " Creating Role-object failed!", e);
+		    logger.error(TAG + " Creating Issue-object failed!", e);
 		}
 		
 		return success;
 	}
 
 	@Override
-	public boolean updateRole(Role role) {
+	public boolean updateIssue(Issue issue) {
 		boolean success = false;
 		
 		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		final Transaction transaction = session.beginTransaction();	
 		try {
-		    session.update(role);
+		    session.update(issue);
 		    transaction.commit();
 		    success = true;
 		} catch(Exception e) {
 			transaction.rollback();
-		    logger.error(TAG + " Updating Role-object with id=" + role.getRoleId() + " failed!", e);
+		    logger.warn(TAG + " Updating Issue-object with id=" + issue.getIssueId() + " failed!", e);
 		}
 		
 		return success;
 	}
 
 	@Override
-	public boolean deleteRole(int roleId) {
+	public boolean deleteIssue(Integer issueId) {
 		boolean success = false;
 		
-		Role deletingRole = new Role();
-		deletingRole.setRoleId(roleId);
+		Issue deletingIssue = new Issue();
+		deletingIssue.setIssueId(issueId);
 		
 		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		final Transaction transaction = session.beginTransaction();	
 		try {
-		    session.delete(deletingRole);
+		    session.delete(deletingIssue);
 		    transaction.commit();
 		    success = true;
 		} catch(Exception e) {
 			transaction.rollback();
-		    logger.error(TAG + " Deleting Role-object with id=" + roleId + " failed!", e);
+		    logger.error(TAG + " Deleting Issue-object with id=" + issueId + " failed!", e);
 		}
 		
 		return success;

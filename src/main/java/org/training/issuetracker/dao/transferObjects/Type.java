@@ -4,6 +4,7 @@ package org.training.issuetracker.dao.transferObjects;
  * Class, describing an issue's type
  * @author Dzmitry Salnikau
  * @since 07.02.2014
+ * @deprecated
  */
 public class Type implements java.io.Serializable{
 

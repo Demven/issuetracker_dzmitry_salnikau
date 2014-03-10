@@ -12,11 +12,17 @@ import org.training.issuetracker.dao.interfaces.BuildDAO;
 import org.training.issuetracker.dao.mysql.builders.StatementBuilder;
 import org.training.issuetracker.dao.transferObjects.Build;
 
-public class MySQLBuildDAO implements BuildDAO {
+/**
+ * !!! This class is not used.
+ * Maybe it will be useful someday in the future in an other project.
+ * @author Dzmitry_Salnikau
+ * @deprecated
+ */
+public class MySQLBuildDAO /*implements BuildDAO */ {
 
 	private static final Logger logger = Logger.getLogger(MySQLBuildDAO.class);
 
-	@Override
+	//@Override
 	public ArrayList<Build> getBuilds() {
 		ArrayList<Build> builds = null;
 		try {
@@ -61,7 +67,7 @@ public class MySQLBuildDAO implements BuildDAO {
 		return builds;
 	}
 	
-	@Override
+	//@Override
 	public ArrayList<Build> getBuildsForProject(int projectId) {
 		ArrayList<Build> builds = null;
 		try {
@@ -108,7 +114,7 @@ public class MySQLBuildDAO implements BuildDAO {
 		return builds;
 	}
 
-	@Override
+	//@Override
 	public Build getBuildById(int buildId) {
 		Build build = null;
 		try {
@@ -152,7 +158,7 @@ public class MySQLBuildDAO implements BuildDAO {
 		return build;
 	}
 
-	@Override
+	//@Override
 	public boolean createBuild(Build build) {
 		boolean isSuccess = false;
 		try {
@@ -186,7 +192,7 @@ public class MySQLBuildDAO implements BuildDAO {
 		return isSuccess;
 	}
 
-	@Override
+	//@Override
 	public boolean updateBuild(Build build) {
 		boolean isSuccess = false;
 		try {
@@ -222,7 +228,7 @@ public class MySQLBuildDAO implements BuildDAO {
 		return isSuccess;
 	}
 	
-	@Override
+	//@Override
 	public boolean deleteBuild(int buildId) {
 		boolean isSuccess = false;
 		try {

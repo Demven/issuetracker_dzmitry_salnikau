@@ -12,11 +12,17 @@ import org.training.issuetracker.dao.interfaces.ResolutionDAO;
 import org.training.issuetracker.dao.mysql.builders.StatementBuilder;
 import org.training.issuetracker.dao.transferObjects.Resolution;
 
-public class MySQLResolutionDAO implements ResolutionDAO{
+/**
+ * !!! This class is not used.
+ * Maybe it will be useful someday in the future in an other project.
+ * @author Dzmitry_Salnikau
+ * @deprecated
+ */
+public class MySQLResolutionDAO /*implements ResolutionDAO */ {
 
 	private static final Logger logger = Logger.getLogger(MySQLResolutionDAO.class);
 	
-	@Override
+	//@Override
 	public ArrayList<Resolution> getResolutions() {
 		ArrayList<Resolution> resolutions = null;
 		try {
@@ -60,7 +66,7 @@ public class MySQLResolutionDAO implements ResolutionDAO{
 		return resolutions;
 	}
 
-	@Override
+	//@Override
 	public Resolution getResolutionById(int resolutionId) {
 		Resolution resolution = null;
 		try {
@@ -105,7 +111,7 @@ public class MySQLResolutionDAO implements ResolutionDAO{
 		return resolution;
 	}
 
-	@Override
+	//@Override
 	public boolean createResolution(Resolution resolution) {
 		boolean isSuccess = false;
 		try {
@@ -138,7 +144,7 @@ public class MySQLResolutionDAO implements ResolutionDAO{
 		return isSuccess;
 	}
 
-	@Override
+	//@Override
 	public boolean updateResolution(Resolution resolution) {
 		boolean isSuccess = false;
 		try {
@@ -173,7 +179,7 @@ public class MySQLResolutionDAO implements ResolutionDAO{
 		return isSuccess;
 	}
 
-	@Override
+	//@Override
 	public boolean deleteResolution(int resolutionId) {
 		boolean isSuccess = false;
 		try {

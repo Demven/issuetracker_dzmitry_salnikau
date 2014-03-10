@@ -1,8 +1,8 @@
 package org.training.issuetracker.dao.interfaces;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import org.training.issuetracker.dao.transferObjects.Issue;
+import org.training.issuetracker.dao.hibernate.entities.Issue;
 
 /**
  * Interface, providing access to the issues and their data
@@ -12,9 +12,9 @@ import org.training.issuetracker.dao.transferObjects.Issue;
 public interface IssueDAO {
 	
 	/**
-	 * @return ArrayList of all issues
+	 * @return List of all issues
 	 */
-	public ArrayList<Issue> getIssues();
+	public List<Issue> getIssues();
 	
 	/**
 	 * Returns Issue object with stated issueId

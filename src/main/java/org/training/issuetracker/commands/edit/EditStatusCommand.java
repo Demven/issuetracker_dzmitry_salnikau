@@ -10,8 +10,8 @@ import org.apache.log4j.Logger;
 import org.training.issuetracker.commands.Command;
 import org.training.issuetracker.commands.view.ViewStatusesCommand;
 import org.training.issuetracker.dao.factories.DAOFactory;
+import org.training.issuetracker.dao.hibernate.entities.Status;
 import org.training.issuetracker.dao.interfaces.StatusDAO;
-import org.training.issuetracker.dao.transferObjects.Status;
 import org.training.issuetracker.managers.ConfigurationManager;
 
 public class EditStatusCommand implements Command{
@@ -21,7 +21,7 @@ public class EditStatusCommand implements Command{
 	
 	private static final Logger logger = Logger.getLogger(EditStatusCommand.class);
 	
-	private DAOFactory mysqlFactory;
+	private DAOFactory hibernateFactory;
 	private StatusDAO statusDAO;
 
 	@Override
@@ -29,8 +29,8 @@ public class EditStatusCommand implements Command{
 			throws ServletException, IOException {
 		
 		String page;
-		mysqlFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
-		statusDAO = mysqlFactory.getStatusDAO();
+		hibernateFactory = DAOFactory.getDAOFactory(DAOFactory.HYBERNATE);
+		statusDAO = hibernateFactory.getStatusDAO();
 		
 		Status editStatus = getEditStatus(request.getParameter(PARAM_STATUS_ID));
 		if(editStatus != null){

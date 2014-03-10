@@ -12,11 +12,17 @@ import org.training.issuetracker.dao.interfaces.PriorityDAO;
 import org.training.issuetracker.dao.mysql.builders.StatementBuilder;
 import org.training.issuetracker.dao.transferObjects.Priority;
 
-public class MySQLPriorityDAO implements PriorityDAO{
+/**
+ * !!! This class is not used.
+ * Maybe it will be useful someday in the future in an other project.
+ * @author Dzmitry_Salnikau
+ * @deprecated
+ */
+public class MySQLPriorityDAO /*implements PriorityDAO */{
 
 	private static final Logger logger = Logger.getLogger(MySQLPriorityDAO.class);
 	
-	@Override
+	//@Override
 	public ArrayList<Priority> getPriorities() {
 		ArrayList<Priority> priorities = null;
 		try {
@@ -60,7 +66,7 @@ public class MySQLPriorityDAO implements PriorityDAO{
 		return priorities;
 	}
 
-	@Override
+	//@Override
 	public Priority getPriorityById(int priorityId) {
 		Priority priority = null;
 		try {
@@ -105,7 +111,7 @@ public class MySQLPriorityDAO implements PriorityDAO{
 		return priority;
 	}
 
-	@Override
+	//@Override
 	public boolean createPriority(Priority priority) {
 		boolean isSuccess = false;
 		try {
@@ -138,7 +144,7 @@ public class MySQLPriorityDAO implements PriorityDAO{
 		return isSuccess;
 	}
 
-	@Override
+	//@Override
 	public boolean updatePriority(Priority priority) {
 		boolean isSuccess = false;
 		try {
@@ -173,7 +179,7 @@ public class MySQLPriorityDAO implements PriorityDAO{
 		return isSuccess;
 	}
 
-	@Override
+	//@Override
 	public boolean deletePriority(int priorityId) {
 		boolean isSuccess = false;
 		try {

@@ -4,6 +4,7 @@ package org.training.issuetracker.dao.transferObjects;
  * Class, describing an issue's status
  * @author Dzmitry Salnikau
  * @since 07.02.2014
+ * @deprecated
  */
 public class Status implements java.io.Serializable{
 

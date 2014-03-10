@@ -10,8 +10,8 @@ import org.apache.log4j.Logger;
 import org.training.issuetracker.commands.Command;
 import org.training.issuetracker.commands.view.ViewPrioritiesCommand;
 import org.training.issuetracker.dao.factories.DAOFactory;
+import org.training.issuetracker.dao.hibernate.entities.Priority;
 import org.training.issuetracker.dao.interfaces.PriorityDAO;
-import org.training.issuetracker.dao.transferObjects.Priority;
 import org.training.issuetracker.managers.ConfigurationManager;
 
 public class EditPriorityCommand implements Command{
@@ -21,7 +21,7 @@ public class EditPriorityCommand implements Command{
 	
 	private static final Logger logger = Logger.getLogger(EditPriorityCommand.class);
 	
-	private DAOFactory mysqlFactory;
+	private DAOFactory hibernateFactory;
 	private PriorityDAO priorityDAO;
 
 	@Override
@@ -29,8 +29,8 @@ public class EditPriorityCommand implements Command{
 			throws ServletException, IOException {
 		
 		String page;
-		mysqlFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
-		priorityDAO = mysqlFactory.getPriorityDAO();
+		hibernateFactory = DAOFactory.getDAOFactory(DAOFactory.HYBERNATE);
+		priorityDAO = hibernateFactory.getPriorityDAO();
 		
 		Priority editPriority = getEditPriority(request.getParameter(PARAM_PRIORITY_ID));
 		if(editPriority != null){

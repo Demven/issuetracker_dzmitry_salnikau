@@ -1,116 +1,117 @@
 package org.training.issuetracker.dao.hibernate;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.training.issuetracker.dao.hibernate.entities.Project;
-import org.training.issuetracker.dao.hibernate.entities.User;
 import org.training.issuetracker.dao.hibernate.util.HibernateUtil;
 import org.training.issuetracker.dao.interfaces.ProjectDAO;
 
 public class HibernateProjectDAO implements ProjectDAO {
 	
 	private static final Logger logger = Logger.getLogger(HibernateProjectDAO.class);
-
+	private static final String TAG = HibernateProjectDAO.class.getSimpleName();
+	
 	@Override
-	public ArrayList<org.training.issuetracker.dao.transferObjects.Project> getProjects() {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        Criteria criteria = session.createCriteria(Project.class);
-        List<Project> result = (List<Project>) criteria.list();
-        session.getTransaction().commit();
+	public List<Project> getProjects() {
+		List<Project> projects = null;
+		
+		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Transaction transaction = session.beginTransaction();	
+		try {
+	        Criteria criteria = session.createCriteria(Project.class);
+	        criteria.addOrder(Order.asc(Project.COLUMN_ID));
+	        projects = (List<Project>) criteria.list();
+	        transaction.commit();
+		} catch (Exception e) {
+			logger.error(TAG + " Getting all projects failed!", e);
+		    transaction.rollback();
+		    throw e;
+		}
         
-        logger.warn("Projects = " + result.size());
-        for(Project project: result){
-        	logger.warn("Id = " + project.getProjectId() + " Name=" + project.getName() + " Description=" + project.getDescription()
-        			+ " Manager=" + project.getManager().getUserId() + " " + project.getManager().getLastName());
-        }
-        return null;
+        return projects;
 	}
 
 	@Override
-	public org.training.issuetracker.dao.transferObjects.Project getProjectById(int projectId) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        Project result = (Project) session.get(Project.class, projectId);
-        session.getTransaction().commit();
-        
-        logger.warn("Id = " + result.getProjectId() + " Name=" + result.getName() + " Description=" + result.getDescription()
-    			+ " Manager=" + result.getManager().getUserId() + " " + result.getManager().getLastName());
-        return null;
+	public Project getProjectById(int projectId) {
+		Project projectById = null;
+		
+		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Transaction transaction = session.beginTransaction();	
+		try {
+	        projectById = (Project) session.get(Project.class, projectId);
+	        transaction.commit();
+		} catch (Exception e) {
+			logger.error(TAG + " Getting Project-object " + projectId + " failed!", e);
+		    transaction.rollback();
+		    throw e;
+		}
+		
+        return projectById;
 	}
 
 	@Override
 	public Integer getProjectIdByName(String name) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        
-        Criteria criteria = session.createCriteria(Project.class);
-
-        List<Project> result = (List<Project>) criteria.add(Restrictions.like("name", name)).list();
-        Project project = result.get(0);
-        
-        session.getTransaction().commit();
-        
-        if(project != null){
-        	logger.warn("For name =" + name + "projectId = " + project.getProjectId());
-        }
+		Integer projectId = null;
+		
+		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Transaction transaction = session.beginTransaction();	
+		try {
+	        Criteria criteria = session.createCriteria(Project.class);
+	
+	        List<Project> result = (List<Project>) criteria.add(Restrictions.like(Project.COLUMN_NAME, name)).list();
+	        Project project = result.get(0);
+	        
+	        transaction.commit();
+	        
+	        if(project != null){
+	        	projectId = project.getProjectId();
+	        }
+		} catch (Exception e) {
+			logger.error(TAG + " Getting projectId by name=" + name +" failed!", e);
+		    transaction.rollback();
+		    throw e;
+		}
            
-        return null;
+        return projectId;
 	}
 
 	@Override
-	public boolean createProject(org.training.issuetracker.dao.transferObjects.Project project) {
+	public boolean createProject(Project project) {
 		boolean success = false;
-		
-		Project newProject = new Project();
-		User manager = new User();
-		manager.setUserId(project.getManager());
-		
-		newProject.setProjectId(project.getProjectId());
-		newProject.setName(project.getName());
-		newProject.setDescription(project.getDescription());
-		newProject.setManager(manager);
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		Transaction tx = null;
+
+		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Transaction transaction = session.beginTransaction();	
 		try {
-		    tx = session.beginTransaction();
-		    session.saveOrUpdate(newProject);
-		    tx.commit();
+		    session.save(project);
+		    transaction.commit();
 		    success = true;
 		} catch(Exception e) {
-		    tx.rollback();
+			transaction.rollback();
+		    logger.error(TAG + " Creating Project-object failed!", e);
 		}
 		
 		return success;
 	}
 
 	@Override
-	public boolean updateProject(org.training.issuetracker.dao.transferObjects.Project project) {
+	public boolean updateProject(Project project) {
 		boolean success = false;
-		
-		Project newProject = new Project();
-		User manager = new User();
-		manager.setUserId(project.getManager());
-		
-		newProject.setProjectId(project.getProjectId());
-		newProject.setName(project.getName());
-		newProject.setDescription(project.getDescription());
-		newProject.setManager(manager);
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		Transaction tx = null;
+
+		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Transaction transaction = session.beginTransaction();	
 		try {
-		    tx = session.beginTransaction();
-		    session.saveOrUpdate(newProject);
-		    tx.commit();
+		    session.update(project);
+		    transaction.commit();
 		    success = true;
 		} catch(Exception e) {
-		    tx.rollback();
+			transaction.rollback();
+		    logger.error(TAG + " Updating Project-object with id=" + project.getProjectId() + " failed!", e);
 		}
 		
 		return success;
@@ -123,15 +124,15 @@ public class HibernateProjectDAO implements ProjectDAO {
 		Project deletingProject = new Project();
 		deletingProject.setProjectId(projectId);
 		
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		Transaction tx = null;
+		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Transaction transaction = session.beginTransaction();	
 		try {
-		    tx = session.beginTransaction();
 		    session.delete(deletingProject);
-		    tx.commit();
+		    transaction.commit();
 		    success = true;
 		} catch(Exception e) {
-		    tx.rollback();
+			transaction.rollback();
+		    logger.error(TAG + " Deleting Build-object with id=" + projectId + " failed!", e);
 		}
 		
 		return success;

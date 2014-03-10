@@ -2,6 +2,7 @@ package org.training.issuetracker.commands.view;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -10,10 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.training.issuetracker.beans.ProjectBean;
 import org.training.issuetracker.commands.Command;
 import org.training.issuetracker.dao.factories.DAOFactory;
+import org.training.issuetracker.dao.hibernate.entities.Project;
+import org.training.issuetracker.dao.hibernate.entities.User;
 import org.training.issuetracker.dao.interfaces.ProjectDAO;
 import org.training.issuetracker.dao.interfaces.UserDAO;
-import org.training.issuetracker.dao.transferObjects.Project;
-import org.training.issuetracker.dao.transferObjects.User;
 import org.training.issuetracker.managers.ConfigurationManager;
 
 public class ViewProjectsCommand implements Command{
@@ -22,7 +23,7 @@ public class ViewProjectsCommand implements Command{
 	
 	private final int FIRST_PAGE = 1;
 	
-	private DAOFactory mysqlFactory;
+	private DAOFactory hibernateFactory;
 	
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response)
@@ -36,9 +37,9 @@ public class ViewProjectsCommand implements Command{
 			pageNumber = Integer.valueOf(request.getParameter(PARAM_PAGE));
 		}
 		
-		mysqlFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
-		ProjectDAO projectDAO = mysqlFactory.getProjectDAO();
-		ArrayList<Project> allProjects = projectDAO.getProjects();
+		hibernateFactory = DAOFactory.getDAOFactory(DAOFactory.HYBERNATE);
+		ProjectDAO projectDAO = hibernateFactory.getProjectDAO();
+		List<Project> allProjects = projectDAO.getProjects();
 		int totalPagesNumber = (int) Math.ceil((double)allProjects.size() / (double)ProjectBean.MAX_SHOWN_NUMBER);
 		
 		ArrayList<ProjectBean> projects = getProjectsPortion(pageNumber, totalPagesNumber, allProjects);
@@ -63,7 +64,7 @@ public class ViewProjectsCommand implements Command{
 	 * @return ArrayList<ProjectBean> - list, containing a portion of project-beans
 	 * to show on received page
 	 */
-	private ArrayList<ProjectBean> getProjectsPortion(int pageNumber, int totalPagesNumber, ArrayList<Project> allProjects){
+	private ArrayList<ProjectBean> getProjectsPortion(int pageNumber, int totalPagesNumber, List<Project> allProjects){
 		ArrayList<ProjectBean> projectsPortion = new ArrayList<ProjectBean>();
 
 		int from = (pageNumber - 1) * ProjectBean.MAX_SHOWN_NUMBER;
@@ -72,11 +73,11 @@ public class ViewProjectsCommand implements Command{
 			to = from + ProjectBean.MAX_SHOWN_NUMBER;
 		}
 		
-		UserDAO userDAO = mysqlFactory.getUserDAO();
+		UserDAO userDAO = hibernateFactory.getUserDAO();
 		
 		for(int i=from; i < to; i++){
 			Project project = allProjects.get(i);
-			User manager = userDAO.getUserById(project.getManager());
+			User manager = userDAO.getUserById(project.getManager().getUserId());
 			projectsPortion.add(new ProjectBean(
 					project.getProjectId(),
 					project.getName(),

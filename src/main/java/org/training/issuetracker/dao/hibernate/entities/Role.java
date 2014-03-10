@@ -22,19 +22,22 @@ public class Role implements Serializable {
 
 	public static final String TABLE_NAME = "roles";
 	
+	public static final String COLUMN_ID = "id";
+	public static final String COLUMN_NAME = "name";
+	
 	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name="id")
-	private int roleId;
+    @Column(name=COLUMN_ID)
+	private Integer roleId;
 	
-	@Column(name="name")
+	@Column(name=COLUMN_NAME)
 	private String name;
 
 	
-	public int getRoleId() {
+	public Integer getRoleId() {
 		return roleId;
 	}
-	public void setRoleId(int roleId) {
+	public void setRoleId(Integer roleId) {
 		this.roleId = roleId;
 	}
 

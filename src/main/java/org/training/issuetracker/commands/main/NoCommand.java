@@ -2,59 +2,40 @@ package org.training.issuetracker.commands.main;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
-import org.training.issuetracker.beans.IssueBean;
 import org.training.issuetracker.beans.UserBean;
 import org.training.issuetracker.commands.Command;
 import org.training.issuetracker.dao.factories.DAOFactory;
-import org.training.issuetracker.dao.interfaces.BuildDAO;
+import org.training.issuetracker.dao.hibernate.entities.Issue;
 import org.training.issuetracker.dao.interfaces.IssueDAO;
-import org.training.issuetracker.dao.interfaces.PriorityDAO;
-import org.training.issuetracker.dao.interfaces.ProjectDAO;
-import org.training.issuetracker.dao.interfaces.ResolutionDAO;
-import org.training.issuetracker.dao.interfaces.RoleDAO;
-import org.training.issuetracker.dao.interfaces.StatusDAO;
-import org.training.issuetracker.dao.interfaces.TypeDAO;
-import org.training.issuetracker.dao.interfaces.UserDAO;
-import org.training.issuetracker.dao.transferObjects.Build;
-import org.training.issuetracker.dao.transferObjects.Issue;
-import org.training.issuetracker.dao.transferObjects.Priority;
-import org.training.issuetracker.dao.transferObjects.Project;
-import org.training.issuetracker.dao.transferObjects.Resolution;
-import org.training.issuetracker.dao.transferObjects.Role;
-import org.training.issuetracker.dao.transferObjects.Status;
-import org.training.issuetracker.dao.transferObjects.Type;
-import org.training.issuetracker.dao.transferObjects.User;
 import org.training.issuetracker.managers.ConfigurationManager;
 import org.training.issuetracker.managers.SessionManager;
 
 public class NoCommand implements Command { 
 	
-	private DAOFactory mysqlFactory;
-	
-	private static final Logger logger = Logger.getLogger(NoCommand.class);
+	private DAOFactory hibernateFactory;
 	
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { 
 
 		// In case of direct address to the servlet - show main page
 		String page = ConfigurationManager.getInstance().getProperty(ConfigurationManager.MAIN_PAGE_PATH);
 		
-		mysqlFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
-		IssueDAO issueDAO = mysqlFactory.getIssueDAO();
+		hibernateFactory = DAOFactory.getDAOFactory(DAOFactory.HYBERNATE);
+		IssueDAO issueDAO = hibernateFactory.getIssueDAO();
 		
-		ArrayList<Issue> allIssues = issueDAO.getIssues();
+		List<Issue> allIssues = issueDAO.getIssues();
 		
 		SessionManager sessionManager = new SessionManager();
 		UserBean loginUser = (UserBean) sessionManager.getSessionValue(request, SessionManager.NAME_LOGIN_USER);
 		
 		if(loginUser != null){
 			// if a user is authorized - show him assigned issues
-			ArrayList<IssueBean> assignedIssues = getAssignedIssues(allIssues, loginUser.getUserId());
+			ArrayList<Issue> assignedIssues = getAssignedIssues(allIssues, loginUser.getUserId());
 			if(assignedIssues.size() > 0){
 				request.setAttribute("assignedIssues", assignedIssues);		
 				request.setAttribute("pageTitle", "Assigned issues");	
@@ -63,43 +44,13 @@ public class NoCommand implements Command {
 			}
 		} else{
 			// show the latest issues
-			ArrayList<IssueBean> latestIssues = getLatestIssues(allIssues);
+			ArrayList<Issue> latestIssues = getLatestIssues(allIssues);
 			request.setAttribute("latestIssues", latestIssues);
 			request.setAttribute("pageTitle", "Latest issues");	
 		}
-
-		// hibernate test
-		DAOFactory hibernatefactory = DAOFactory.getDAOFactory(DAOFactory.HYBERNATE);
-		TypeDAO typeDAO = hibernatefactory.getTypeDAO();
 		
-		/*
-		logger.warn("---------------------------------");
-		logger.warn("ALL TYPes");
-		typeDAO.getTypes();
-		logger.warn("---------------------------------");
-		logger.warn("TYPE by ID");
-		typeDAO.getTypeById(1);
-		
-	
-		logger.warn("---------------------------------");
-		logger.warn("PROJECT ID by NAME");
-		priorityDAO.getProjectIdByName("EYEkey");
-		
-		logger.warn("*********************************");
-		logger.warn("CREATING TYPE");
-		logger.warn(typeDAO.createType(new Type(0, "Some name")));
-		
-		
-		logger.warn("*********************************");
-		logger.warn("UPDATING Type");
-		logger.warn(typeDAO.updateType(new Type(5, "Updated name")));
-		
-		
-		logger.warn("*********************************");
-		logger.warn("DELETING TYPE");
-		logger.warn(typeDAO.deleteType(5));
-		*/
 		return page;
+		
 	} 
 
 	/**
@@ -107,7 +58,7 @@ public class NoCommand implements Command {
 	 * @param allIssues - list of issues
 	 * @return ArrayList<Issue> - list of N latest issues
 	 */
-	private ArrayList<IssueBean> getLatestIssues(ArrayList<Issue> allIssues){
+	private ArrayList<Issue> getLatestIssues(List<Issue> allIssues){
 		ArrayList<Issue> latestIssues = new ArrayList<Issue>();
 		
 		int number = Issue.MAX_SHOWN_NUMBER;
@@ -119,7 +70,7 @@ public class NoCommand implements Command {
 			latestIssues.add(allIssues.get(i));
 		}
 		
-		return convertIdsToObjects(latestIssues);
+		return latestIssues;
 	}
 	
 	/**
@@ -128,13 +79,13 @@ public class NoCommand implements Command {
 	 * @param userId - unique ID of a user
 	 * @return ArrayList<Issue> - list of N assigned issues for the user
 	 */
-	private ArrayList<IssueBean> getAssignedIssues(ArrayList<Issue> allIssues, int userId){
+	private ArrayList<Issue> getAssignedIssues(List<Issue> allIssues, int userId){
 		ArrayList<Issue> assignedIssues = new ArrayList<Issue>();
 		
 		int number = 0;
 		for(Issue issue: allIssues){
 			if(number <= Issue.MAX_SHOWN_NUMBER){
-				if(issue.getAssignee() == userId){
+				if(issue.getAssignee() != null && issue.getAssignee().getUserId() == userId){
 					assignedIssues.add(issue);
 					number++;
 				}
@@ -143,81 +94,6 @@ public class NoCommand implements Command {
 			}
 		}
 		
-		return convertIdsToObjects(assignedIssues);
-	}
-	
-	/**
-	 * Use received list of issues to create new list of IssueBean-objects
-	 * for convenient use in JSP-pages
-	 * @param issuesWithIds - ArrayList<Issue> - list, where all issue-objects
-	 * have id-links to the according objects in the database
-	 * @return ArrayList<IssueBean> - list, where all issue-objects
-	 * contain dependent objects instead of ids.
-	 */
-	private ArrayList<IssueBean> convertIdsToObjects(ArrayList<Issue> issuesWithIds){
-		ArrayList<IssueBean> issueBeans = new ArrayList<IssueBean>();
-		
-		UserDAO userDAO = mysqlFactory.getUserDAO();
-		PriorityDAO priorityDAO = mysqlFactory.getPriorityDAO();
-		TypeDAO typeDAO = mysqlFactory.getTypeDAO();
-		StatusDAO statusDAO = mysqlFactory.getStatusDAO();
-		
-		ArrayList<User> users = userDAO.getUsers();
-		ArrayList<Priority> priorities = priorityDAO.getPriorities();
-		ArrayList<Type> types = typeDAO.getTypes();
-		ArrayList<Status> statuses = statusDAO.getStatuses();
-		
-		for(Issue issue : issuesWithIds){
-			// find assignee
-			User assignee = new User();
-			for(User user : users){
-				if(issue.getAssignee() == user.getUserId()){
-					assignee = user;
-				}
-			}
-			
-			// find priority
-			Priority priority = null;
-			for(Priority p : priorities){
-				if(issue.getPriority() == p.getPriorityId()){
-					priority = p;
-				}
-			}
-			
-			// find type
-			Type type = null;
-			for(Type t : types){
-				if(issue.getType() == t.getTypeId()){
-					type = t;
-				}
-			}
-			
-			// find status
-			Status status = null;
-			for(Status s : statuses){
-				if(issue.getStatus() == s.getStatusId()){
-					status = s;
-				}
-			}
-			
-			issueBeans.add(new IssueBean(
-					issue.getIssueId(),
-					issue.getCreateDate(),
-					null,
-					issue.getModifyDate(),
-					null,
-					issue.getSummary(),
-					issue.getDescription(),
-					status,
-					null,
-					type,
-					priority,
-					null,
-					null,
-					assignee)
-			);
-		}
-		
-		return issueBeans;
+		return assignedIssues;
 	}
 }

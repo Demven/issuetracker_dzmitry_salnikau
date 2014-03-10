@@ -1,8 +1,8 @@
 package org.training.issuetracker.dao.interfaces;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import org.training.issuetracker.dao.transferObjects.User;
+import org.training.issuetracker.dao.hibernate.entities.User;
 
 /**
  * Interface, providing access to the users and their data
@@ -14,7 +14,7 @@ public interface UserDAO {
 	/**
 	 * @return ArrayList of all users, registered into the system
 	 */
-	public ArrayList<User> getUsers();
+	public List<User> getUsers();
 	
 	/**
 	 * Check existing of the user with such parameters
@@ -72,5 +72,5 @@ public interface UserDAO {
 	 * @param userId
 	 * @return boolean - true, if it was successful
 	 */
-	public boolean deleteUser(String userId);
+	public boolean deleteUser(int userId);
 }

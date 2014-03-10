@@ -24,26 +24,31 @@ public class Project implements Serializable{
 
 	public static final String TABLE_NAME = "projects";
 	
+	public static final String COLUMN_ID = "id";
+	public static final String COLUMN_NAME = "name";
+	public static final String COLUMN_DESCRIPTION = "description";
+	public static final String COLUMN_MANAGER = "manager";
+	
 	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name="id")
-	private int projectId;
+    @Column(name=COLUMN_ID)
+	private Integer projectId;
 	
-	@Column(name="name")
+	@Column(name=COLUMN_NAME)
 	private String name;
 	
-	@Column(name="description")
+	@Column(name=COLUMN_DESCRIPTION)
 	private String description;
 	
 	@ManyToOne
-	@JoinColumn(name="manager")
+	@JoinColumn(name=COLUMN_MANAGER)
 	private User manager;
 	
 	
-	public int getProjectId() {
+	public Integer getProjectId() {
 		return projectId;
 	}
-	public void setProjectId(int projectId) {
+	public void setProjectId(Integer projectId) {
 		this.projectId = projectId;
 	}
 

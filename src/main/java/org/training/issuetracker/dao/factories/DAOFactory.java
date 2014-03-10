@@ -13,7 +13,7 @@ import org.training.issuetracker.dao.interfaces.RoleDAO;
 public abstract class DAOFactory {
 
 	  // Supported DAO types
-	  public static final int MYSQL = 1;
+	  //public static final int MYSQL = 1;
 	  public static final int HYBERNATE = 2;
 
 	  // Methods for each DAO, that can be created
@@ -29,8 +29,8 @@ public abstract class DAOFactory {
 
 	  public static DAOFactory getDAOFactory(int whichFactory) {
 	    switch (whichFactory){
-	      case MYSQL: 
-	          return new MySQLDAOFactory();
+	      //case MYSQL: 
+	      //    return new MySQLDAOFactory();
 	      case HYBERNATE: 
 	          return new HibernateDAOFactory();
 	      default: 

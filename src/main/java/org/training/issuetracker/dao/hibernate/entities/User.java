@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -23,36 +25,47 @@ public class User implements Serializable{
 	public static final String TABLE_NAME = "users";
 	public final static String NAME_PLACEHOLDER = "-"; 
 	
+	public static final String COLUMN_ID = "id";
+	public static final String COLUMN_FIRST_NAME = "firstName";
+	public static final String COLUMN_LAST_NAME = "lastName";
+	public static final String COLUMN_EMAIL = "email";
+	public static final String COLUMN_ROLE = "role";
+	public static final String COLUMN_PASSWORD = "password";
+	
 	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name="id")
-	private int userId;
+    @Column(name=COLUMN_ID)
+	private Integer userId;
 	
-	@Column(name="firstName")
-	private String firstName = NAME_PLACEHOLDER;
+	@Column(name=COLUMN_FIRST_NAME)
+	private String firstName;
 	
-	@Column(name="lastName")
+	@Column(name=COLUMN_LAST_NAME)
 	private String lastName;
 	
-	@Column(name="email")
+	@Column(name=COLUMN_EMAIL)
 	private String email;
 	
-	@Column(name="role")
-	private int roleId;
+	@ManyToOne
+    @JoinColumn(name=COLUMN_ROLE)
+	private Role role;
 	
-	@Column(name="password")
+	@Column(name=COLUMN_PASSWORD)
 	private String password;
 
 
-	public int getUserId() {
+	public Integer getUserId() {
 		return userId;
 	}
-	public void setUserId(int userId) {
+	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
 
 	
 	public String getFirstName() {
+		if(firstName == null || firstName.equals("")){
+			firstName = NAME_PLACEHOLDER;
+		}
 		return firstName;
 	}
 	public void setFirstName(String firstName) {
@@ -76,11 +89,11 @@ public class User implements Serializable{
 	}
 
 	
-	public int getRoleId() {
-		return roleId;
+	public Role getRole() {
+		return role;
 	}
-	public void setRoleId(int roleId) {
-		this.roleId = roleId;
+	public void setRole(Role role) {
+		this.role = role;
 	}
 
 	

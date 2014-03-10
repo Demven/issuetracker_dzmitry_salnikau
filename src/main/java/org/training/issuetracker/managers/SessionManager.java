@@ -91,8 +91,8 @@ public final class SessionManager {
 				String login = cookieManager.getCookieValue(request, CookieManager.NAME_LOGIN);
 		        if(login != null){
 		        	if(getSessionValue(request, NAME_LOGIN_USER) == null){
-		        		DAOFactory mysqlFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
-		        		UserDAO userDAO = mysqlFactory.getUserDAO();
+		        		DAOFactory hibernateFactory = DAOFactory.getDAOFactory(DAOFactory.HYBERNATE);
+		        		UserDAO userDAO = hibernateFactory.getUserDAO();
 		        		UserBean loginUser = BeanConverter.convertToUserBean(
 		        				userDAO.getUserByEmail(login));
 		        		// set this object of the authorized user into the session

@@ -1,7 +1,7 @@
 package org.training.issuetracker.commands.edit;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -12,10 +12,10 @@ import org.training.issuetracker.beans.converters.BeanConverter;
 import org.training.issuetracker.commands.Command;
 import org.training.issuetracker.commands.main.NoCommand;
 import org.training.issuetracker.dao.factories.DAOFactory;
+import org.training.issuetracker.dao.hibernate.entities.Role;
+import org.training.issuetracker.dao.hibernate.entities.User;
 import org.training.issuetracker.dao.interfaces.RoleDAO;
 import org.training.issuetracker.dao.interfaces.UserDAO;
-import org.training.issuetracker.dao.transferObjects.Role;
-import org.training.issuetracker.dao.transferObjects.User;
 import org.training.issuetracker.logic.ValidationLogic;
 import org.training.issuetracker.managers.ConfigurationManager;
 
@@ -45,9 +45,9 @@ public class EditUserCommand implements Command{
 	public String execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		DAOFactory mysqlFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
-		userDAO = mysqlFactory.getUserDAO();
-		roleDAO = mysqlFactory.getRoleDAO();
+		DAOFactory hibernateFactory = DAOFactory.getDAOFactory(DAOFactory.HYBERNATE);
+		userDAO = hibernateFactory.getUserDAO();
+		roleDAO = hibernateFactory.getRoleDAO();
 		
 		User editUser = getEditUser(request.getParameter(PARAM_USER_ID));
 		
@@ -76,7 +76,11 @@ public class EditUserCommand implements Command{
 					editUser.setFirstName(firstName);
 					editUser.setLastName(lastName);
 					editUser.setEmail(email);
-					editUser.setRoleId(Integer.valueOf(roleId));
+					
+					Role userRole = new Role();
+					userRole.setRoleId(Integer.valueOf(roleId));
+					
+					editUser.setRole(userRole);
 					
 					if(!password.equals("") && !repeatPassword.equals("")){
 						if(validation.isPasswordValid(password) && password.equals(repeatPassword)){
@@ -103,7 +107,7 @@ public class EditUserCommand implements Command{
 			
 			request.setAttribute("editUser", BeanConverter.convertToUserBean(editUser));
 			
-			ArrayList<Role> roles = roleDAO.getRoles();
+			List<Role> roles = roleDAO.getRoles();
 			if(roles != null){
 				request.setAttribute("roles", roles);
 			}

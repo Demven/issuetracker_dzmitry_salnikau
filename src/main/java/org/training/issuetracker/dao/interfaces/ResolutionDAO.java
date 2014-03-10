@@ -1,8 +1,8 @@
 package org.training.issuetracker.dao.interfaces;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import org.training.issuetracker.dao.transferObjects.Resolution;
+import org.training.issuetracker.dao.hibernate.entities.Resolution;
 
 /**
  * Interface, providing access to the resolutions and their data
@@ -12,9 +12,9 @@ import org.training.issuetracker.dao.transferObjects.Resolution;
 public interface ResolutionDAO {
 
 	/**
-	 * @return ArrayList of all issues' resolutions
+	 * @return List of all issues' resolutions
 	 */
-	public ArrayList<Resolution> getResolutions();
+	public List<Resolution> getResolutions();
 	
 	/**
 	 * Returns Resolution object with stated resolutionId

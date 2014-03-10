@@ -1,6 +1,6 @@
 package org.training.issuetracker.beans;
 
-import org.training.issuetracker.dao.transferObjects.Role;
+import org.training.issuetracker.dao.hibernate.entities.Role;
 
 /**
  * Class, describing a user. Used in JSP.

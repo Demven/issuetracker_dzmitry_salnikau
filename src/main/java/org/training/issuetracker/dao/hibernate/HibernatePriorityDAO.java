@@ -1,12 +1,12 @@
 package org.training.issuetracker.dao.hibernate;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
 import org.training.issuetracker.dao.hibernate.entities.Priority;
 import org.training.issuetracker.dao.hibernate.util.HibernateUtil;
 import org.training.issuetracker.dao.interfaces.PriorityDAO;
@@ -14,35 +14,49 @@ import org.training.issuetracker.dao.interfaces.PriorityDAO;
 public class HibernatePriorityDAO implements PriorityDAO {
 
 	private static final Logger logger = Logger.getLogger(HibernatePriorityDAO.class);
+	private static final String TAG = HibernatePriorityDAO.class.getSimpleName();
 	
 	@Override
-	public ArrayList<org.training.issuetracker.dao.transferObjects.Priority> getPriorities() {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        Criteria criteria = session.createCriteria(Priority.class);
-        List<Priority> result = (List<Priority>) criteria.list();
-        session.getTransaction().commit();
+	public List<Priority> getPriorities() {
+		List<Priority> priorities = null;
+		
+		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Transaction transaction = session.beginTransaction();	
+		try {
+			Criteria criteria = session.createCriteria(Priority.class);
+			criteria.addOrder(Order.asc(Priority.COLUMN_ID));
+			priorities = (List<Priority>) criteria.list();
+			
+		    transaction.commit();
+		} catch (Exception e) {
+			logger.error(TAG + " Getting all priorities failed!", e);
+		    transaction.rollback();
+		    throw e;
+		}
         
-        logger.warn("Projects = " + result.size());
-        for(Priority priority: result){
-        	logger.warn("Id = " + priority.getPriorityId() + " Name=" + priority.getName());
-        }
-        return null;
+        return priorities;
 	}
 
 	@Override
-	public org.training.issuetracker.dao.transferObjects.Priority getPriorityById(int priorityId) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        Priority result = (Priority) session.get(Priority.class, priorityId);
-        session.getTransaction().commit();
-        
-        logger.warn("Id = " + result.getPriorityId() + " Name=" + result.getName());
-        return null;
+	public Priority getPriorityById(int priorityId) {
+		Priority priority = null;
+		
+		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Transaction transaction = session.beginTransaction();
+		try {
+	        priority = (Priority) session.get(Priority.class, priorityId);
+	        transaction.commit();
+		} catch (Exception e) {
+			logger.error(TAG + " Getting Priority by id failed!", e);
+		    transaction.rollback();
+		    throw e;
+		}
+		
+        return priority;
 	}
 
 	@Override
-	public boolean createPriority(org.training.issuetracker.dao.transferObjects.Priority priority) {
+	public boolean createPriority(Priority priority) {
 		boolean success = false;
 		
 		Priority newPriority = new Priority();
@@ -50,22 +64,22 @@ public class HibernatePriorityDAO implements PriorityDAO {
 		newPriority.setPriorityId(priority.getPriorityId());
 		newPriority.setName(priority.getName());
 		
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		Transaction tx = null;
+		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Transaction transaction = session.beginTransaction();
 		try {
-		    tx = session.beginTransaction();
-		    session.saveOrUpdate(newPriority);
-		    tx.commit();
+		    session.save(newPriority);
+		    transaction.commit();
 		    success = true;
 		} catch(Exception e) {
-		    tx.rollback();
+			transaction.rollback();
+		    logger.error(TAG + " Creating Priority-object failed!", e);
 		}
 		
 		return success;
 	}
 
 	@Override
-	public boolean updatePriority(org.training.issuetracker.dao.transferObjects.Priority priority) {
+	public boolean updatePriority(Priority priority) {
 		boolean success = false;
 		
 		Priority newPriority = new Priority();
@@ -73,15 +87,15 @@ public class HibernatePriorityDAO implements PriorityDAO {
 		newPriority.setPriorityId(priority.getPriorityId());
 		newPriority.setName(priority.getName());
 		
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		Transaction tx = null;
+		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Transaction transaction = session.beginTransaction();
 		try {
-		    tx = session.beginTransaction();
-		    session.saveOrUpdate(newPriority);
-		    tx.commit();
+		    session.update(newPriority);
+		    transaction.commit();
 		    success = true;
 		} catch(Exception e) {
-		    tx.rollback();
+			transaction.rollback();
+		    logger.error(TAG + " Updating Priority-object with id=" + priority.getPriorityId() + " failed!", e);
 		}
 		
 		return success;
@@ -94,15 +108,15 @@ public class HibernatePriorityDAO implements PriorityDAO {
 		Priority deletingPriority = new Priority();
 		deletingPriority.setPriorityId(priorityId);
 		
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		Transaction tx = null;
+		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Transaction transaction = session.beginTransaction();
 		try {
-		    tx = session.beginTransaction();
 		    session.delete(deletingPriority);
-		    tx.commit();
+		    transaction.commit();
 		    success = true;
 		} catch(Exception e) {
-		    tx.rollback();
+			transaction.rollback();
+		    logger.error(TAG + " Deleting Priority-object with id=" + priorityId + " failed!", e);
 		}
 		
 		return success;

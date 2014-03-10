@@ -12,11 +12,17 @@ import org.training.issuetracker.dao.interfaces.ProjectDAO;
 import org.training.issuetracker.dao.mysql.builders.StatementBuilder;
 import org.training.issuetracker.dao.transferObjects.Project;
 
-public class MySQLProjectDAO implements ProjectDAO {
+/**
+ * !!! This class is not used.
+ * Maybe it will be useful someday in the future in an other project.
+ * @author Dzmitry Salnikau
+ * @deprecated
+ */
+public class MySQLProjectDAO /*implements ProjectDAO */ {
 
 	private static final Logger logger = Logger.getLogger(MySQLProjectDAO.class);
 
-	@Override
+	//@Override
 	public ArrayList<Project> getProjects() {
 		ArrayList<Project> projects = null;
 		try {
@@ -60,7 +66,7 @@ public class MySQLProjectDAO implements ProjectDAO {
 		return projects;
 	}
 
-	@Override
+	//@Override
 	public Project getProjectById(int projectId) {
 		Project project = null;
 		try {
@@ -105,7 +111,7 @@ public class MySQLProjectDAO implements ProjectDAO {
 		return project;
 	}
 	
-	@Override
+	//@Override
 	public Integer getProjectIdByName(String name) {
 		Integer projectId = null;
 		try {
@@ -147,7 +153,7 @@ public class MySQLProjectDAO implements ProjectDAO {
 		return projectId;
 	}
 
-	@Override
+	//@Override
 	public boolean createProject(Project project) {
 		boolean isSuccess = false;
 		try {
@@ -188,7 +194,7 @@ public class MySQLProjectDAO implements ProjectDAO {
 		return isSuccess;
 	}
 
-	@Override
+	//@Override
 	public boolean updateProject(Project project) {
 		boolean isSuccess = false;
 		try {
@@ -231,7 +237,7 @@ public class MySQLProjectDAO implements ProjectDAO {
 		return isSuccess;
 	}
 	
-	@Override
+	//@Override
 	public boolean deleteProject(int projectId) {
 		boolean isSuccess = false;
 		try {

@@ -12,11 +12,17 @@ import org.training.issuetracker.dao.interfaces.IssueDAO;
 import org.training.issuetracker.dao.mysql.builders.StatementBuilder;
 import org.training.issuetracker.dao.transferObjects.Issue;
 
-public class MySQLIssueDAO implements IssueDAO{
+/**
+ * !!! This class is not used.
+ * Maybe it will be useful someday in the future in an other project.
+ * @author Dzmitry_Salnikau
+ * @deprecated
+ */
+public class MySQLIssueDAO /* implements IssueDAO */ {
 
 	private static final Logger logger = Logger.getLogger(MySQLIssueDAO.class);
 
-	@Override
+	//@Override
 	public ArrayList<Issue> getIssues() {
 		ArrayList<Issue> issues = null;
 		try {
@@ -72,7 +78,7 @@ public class MySQLIssueDAO implements IssueDAO{
 		return issues;
 	}
 
-	@Override
+	//@Override
 	public Issue getIssueById(Integer issueId) {
 		Issue issue = null;
 		try {
@@ -129,7 +135,7 @@ public class MySQLIssueDAO implements IssueDAO{
 		return issue;
 	}
 
-	@Override
+	//@Override
 	public boolean createIssue(Issue issue) {
 		boolean isSuccess = false;
 		try {
@@ -190,7 +196,7 @@ public class MySQLIssueDAO implements IssueDAO{
 		return isSuccess;
 	}
 
-	@Override
+	//@Override
 	public boolean updateIssue(Issue issue) {
 		boolean isSuccess = false;
 		try {
@@ -253,7 +259,7 @@ public class MySQLIssueDAO implements IssueDAO{
 		return isSuccess;
 	}
 	
-	@Override
+	//@Override
 	public boolean deleteIssue(Integer issueId) {
 		boolean isSuccess = false;
 		try {

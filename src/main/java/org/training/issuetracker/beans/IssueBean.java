@@ -4,14 +4,14 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Date;
 
-import org.training.issuetracker.dao.transferObjects.Build;
-import org.training.issuetracker.dao.transferObjects.Issue;
-import org.training.issuetracker.dao.transferObjects.Priority;
-import org.training.issuetracker.dao.transferObjects.Project;
-import org.training.issuetracker.dao.transferObjects.Resolution;
-import org.training.issuetracker.dao.transferObjects.Status;
-import org.training.issuetracker.dao.transferObjects.Type;
-import org.training.issuetracker.dao.transferObjects.User;
+import org.training.issuetracker.dao.hibernate.entities.Build;
+import org.training.issuetracker.dao.hibernate.entities.Issue;
+import org.training.issuetracker.dao.hibernate.entities.Priority;
+import org.training.issuetracker.dao.hibernate.entities.Project;
+import org.training.issuetracker.dao.hibernate.entities.Resolution;
+import org.training.issuetracker.dao.hibernate.entities.Status;
+import org.training.issuetracker.dao.hibernate.entities.Type;
+import org.training.issuetracker.dao.hibernate.entities.User;
 
 /**
  * Class, describing an issue. Used in JSP.

@@ -1,9 +1,8 @@
 package org.training.issuetracker.dao.interfaces;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import org.training.issuetracker.dao.transferObjects.Role;
-
+import org.training.issuetracker.dao.hibernate.entities.Role;
 
 /**
  * Interface, providing access to the user's roles and their data
@@ -13,9 +12,9 @@ import org.training.issuetracker.dao.transferObjects.Role;
 public interface RoleDAO {
 
 	/**
-	 * @return ArrayList of all user's roles
+	 * @return List of all user's roles
 	 */
-	public ArrayList<Role> getRoles();
+	public List<Role> getRoles();
 	
 	/**
 	 * Returns Role object with stated roleId

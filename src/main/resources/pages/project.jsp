@@ -58,7 +58,7 @@
                   	<option selected disabled value="0">Manager</option>
                     <c:forEach items="${managers}" var="manager">
                     	<c:choose>
-                            <c:when test="${manager.userId eq editProject.manager}">
+                            <c:when test="${manager.userId eq editProject.manager.userId}">
                                 <option value="${manager.userId}" selected><c:out value="${manager.firstName}"/> <c:out value="${manager.lastName}"/></option>
                             </c:when>
                             <c:otherwise>

@@ -22,19 +22,22 @@ public class Type implements Serializable{
 
 	public static final String TABLE_NAME = "types";
 	
+	public static final String COLUMN_ID = "id";
+	public static final String COLUMN_NAME = "name";
+	
 	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name="id")
-	private int typeId;
+    @Column(name=COLUMN_ID)
+	private Integer typeId;
 	
-	@Column(name="name")
+	@Column(name=COLUMN_NAME)
 	private String name;
 	
 	
-	public int getTypeId() {
+	public Integer getTypeId() {
 		return typeId;
 	}
-	public void setTypeId(int typeId) {
+	public void setTypeId(Integer typeId) {
 		this.typeId = typeId;
 	}
 

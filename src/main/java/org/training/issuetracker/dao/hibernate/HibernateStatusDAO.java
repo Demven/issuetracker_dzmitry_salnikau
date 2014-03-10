@@ -1,12 +1,12 @@
 package org.training.issuetracker.dao.hibernate;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
 import org.training.issuetracker.dao.hibernate.entities.Status;
 import org.training.issuetracker.dao.hibernate.util.HibernateUtil;
 import org.training.issuetracker.dao.interfaces.StatusDAO;
@@ -14,35 +14,48 @@ import org.training.issuetracker.dao.interfaces.StatusDAO;
 public class HibernateStatusDAO implements StatusDAO{
 
 	private static final Logger logger = Logger.getLogger(HibernateStatusDAO.class);
+	private static final String TAG = HibernateStatusDAO.class.getSimpleName();
 	
 	@Override
-	public ArrayList<org.training.issuetracker.dao.transferObjects.Status> getStatuses() {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        Criteria criteria = session.createCriteria(Status.class);
-        List<Status> result = (List<Status>) criteria.list();
-        session.getTransaction().commit();
-        
-        logger.warn("Statuses = " + result.size());
-        for(Status status: result){
-        	logger.warn("Id = " + status.getStatusId() + " Name=" + status.getName());
-        }
-        return null;
+	public List<Status> getStatuses() {
+		List<Status> statuses = null;
+		
+		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Transaction transaction = session.beginTransaction();	
+		try {
+	        Criteria criteria = session.createCriteria(Status.class);
+	        criteria.addOrder(Order.asc(Status.COLUMN_ID));
+	        statuses = (List<Status>) criteria.list();
+	        transaction.commit();
+		} catch (Exception e) {
+			logger.error(TAG + " Getting all statuses failed!", e);
+		    transaction.rollback();
+		    throw e;
+		}
+
+        return statuses;
 	}
 
 	@Override
-	public org.training.issuetracker.dao.transferObjects.Status getStatusById(int statusId) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        Status result = (Status) session.get(Status.class, statusId);
-        session.getTransaction().commit();
+	public Status getStatusById(int statusId) {
+		Status status = null;
+		
+		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Transaction transaction = session.beginTransaction();	
+		try {
+	        status = (Status) session.get(Status.class, statusId);
+	        transaction.commit();
+		} catch (Exception e) {
+			logger.error(TAG + " Getting Status-object " + statusId + " failed!", e);
+		    transaction.rollback();
+		    throw e;
+		}
         
-        logger.warn("Id = " + result.getStatusId() + " Name=" + result.getName());
-        return null;
+        return status;
 	}
 
 	@Override
-	public boolean createStatus(org.training.issuetracker.dao.transferObjects.Status status) {
+	public boolean createStatus(Status status) {
 		boolean success = false;
 		
 		Status newStatus = new Status();
@@ -50,22 +63,22 @@ public class HibernateStatusDAO implements StatusDAO{
 		newStatus.setStatusId(status.getStatusId());
 		newStatus.setName(status.getName());
 		
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		Transaction tx = null;
+		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Transaction transaction = session.beginTransaction();	
 		try {
-		    tx = session.beginTransaction();
-		    session.saveOrUpdate(newStatus);
-		    tx.commit();
+		    session.save(newStatus);
+		    transaction.commit();
 		    success = true;
 		} catch(Exception e) {
-		    tx.rollback();
+			transaction.rollback();
+		    logger.error(TAG + " Creating Status-object failed!", e);
 		}
 		
 		return success;
 	}
 
 	@Override
-	public boolean updateStatus(org.training.issuetracker.dao.transferObjects.Status status) {
+	public boolean updateStatus(Status status) {
 		boolean success = false;
 		
 		Status newStatus = new Status();
@@ -73,15 +86,15 @@ public class HibernateStatusDAO implements StatusDAO{
 		newStatus.setStatusId(status.getStatusId());
 		newStatus.setName(status.getName());
 		
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		Transaction tx = null;
+		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Transaction transaction = session.beginTransaction();	
 		try {
-		    tx = session.beginTransaction();
-		    session.saveOrUpdate(newStatus);
-		    tx.commit();
+		    session.update(newStatus);
+		    transaction.commit();
 		    success = true;
 		} catch(Exception e) {
-		    tx.rollback();
+			transaction.rollback();
+		    logger.error(TAG + " Updating Status-object with id=" + status.getStatusId() + " failed!", e);
 		}
 		
 		return success;
@@ -94,15 +107,15 @@ public class HibernateStatusDAO implements StatusDAO{
 		Status deletingStatus = new Status();
 		deletingStatus.setStatusId(statusId);
 		
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		Transaction tx = null;
+		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Transaction transaction = session.beginTransaction();	
 		try {
-		    tx = session.beginTransaction();
 		    session.delete(deletingStatus);
-		    tx.commit();
+		    transaction.commit();
 		    success = true;
 		} catch(Exception e) {
-		    tx.rollback();
+			transaction.rollback();
+		    logger.error(TAG + " Deleting Status-object with id=" + statusId + " failed!", e);
 		}
 		
 		return success;

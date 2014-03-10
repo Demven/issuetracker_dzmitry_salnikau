@@ -4,6 +4,7 @@ package org.training.issuetracker.dao.transferObjects;
  * Class, describing an issue's priority
  * @author Dzmitry Salnikau
  * @since 07.02.2014
+ * @deprecated
  */
 public class Priority implements java.io.Serializable{
 

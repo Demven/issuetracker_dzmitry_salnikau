@@ -1,7 +1,7 @@
 package org.training.issuetracker.commands.edit;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +15,14 @@ import org.training.issuetracker.beans.converters.BeanConverter;
 import org.training.issuetracker.commands.Command;
 import org.training.issuetracker.commands.main.NoCommand;
 import org.training.issuetracker.dao.factories.DAOFactory;
+import org.training.issuetracker.dao.hibernate.entities.Build;
+import org.training.issuetracker.dao.hibernate.entities.Issue;
+import org.training.issuetracker.dao.hibernate.entities.Priority;
+import org.training.issuetracker.dao.hibernate.entities.Project;
+import org.training.issuetracker.dao.hibernate.entities.Resolution;
+import org.training.issuetracker.dao.hibernate.entities.Status;
+import org.training.issuetracker.dao.hibernate.entities.Type;
+import org.training.issuetracker.dao.hibernate.entities.User;
 import org.training.issuetracker.dao.interfaces.BuildDAO;
 import org.training.issuetracker.dao.interfaces.IssueDAO;
 import org.training.issuetracker.dao.interfaces.PriorityDAO;
@@ -23,14 +31,6 @@ import org.training.issuetracker.dao.interfaces.ResolutionDAO;
 import org.training.issuetracker.dao.interfaces.StatusDAO;
 import org.training.issuetracker.dao.interfaces.TypeDAO;
 import org.training.issuetracker.dao.interfaces.UserDAO;
-import org.training.issuetracker.dao.transferObjects.Build;
-import org.training.issuetracker.dao.transferObjects.Issue;
-import org.training.issuetracker.dao.transferObjects.Priority;
-import org.training.issuetracker.dao.transferObjects.Project;
-import org.training.issuetracker.dao.transferObjects.Resolution;
-import org.training.issuetracker.dao.transferObjects.Status;
-import org.training.issuetracker.dao.transferObjects.Type;
-import org.training.issuetracker.dao.transferObjects.User;
 import org.training.issuetracker.managers.ConfigurationManager;
 import org.training.issuetracker.managers.DateManager;
 import org.training.issuetracker.managers.SessionManager;
@@ -60,8 +60,8 @@ public class EditIssueCommand implements Command{
 			throws ServletException, IOException {
 		String page;
 		
-		DAOFactory mysqlFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
-		issueDAO = mysqlFactory.getIssueDAO();
+		DAOFactory hibernateFactory = DAOFactory.getDAOFactory(DAOFactory.HYBERNATE);
+		issueDAO = hibernateFactory.getIssueDAO();
 		
 		Issue editIssue = getEditIssue(request.getParameter(PARAM_ISSUE_ID));
 		
@@ -70,13 +70,13 @@ public class EditIssueCommand implements Command{
 					ConfigurationManager.ISSUE_PAGE_PATH);
 			request.setAttribute("pageTitle", "Edit issue");
 			
-			StatusDAO statusDAO = mysqlFactory.getStatusDAO();
-			TypeDAO typeDAO = mysqlFactory.getTypeDAO();
-			PriorityDAO priorityDAO = mysqlFactory.getPriorityDAO();
-			ProjectDAO projectDAO = mysqlFactory.getProjectDAO();
-			ResolutionDAO resolutionDAO = mysqlFactory.getResolutionDAO();
-			BuildDAO buildDAO = mysqlFactory.getBuildDAO();
-			UserDAO userDAO = mysqlFactory.getUserDAO();
+			StatusDAO statusDAO = hibernateFactory.getStatusDAO();
+			TypeDAO typeDAO = hibernateFactory.getTypeDAO();
+			PriorityDAO priorityDAO = hibernateFactory.getPriorityDAO();
+			ProjectDAO projectDAO = hibernateFactory.getProjectDAO();
+			ResolutionDAO resolutionDAO = hibernateFactory.getResolutionDAO();
+			BuildDAO buildDAO = hibernateFactory.getBuildDAO();
+			UserDAO userDAO = hibernateFactory.getUserDAO();
 			
 			String summary = request.getParameter(PARAM_SUMMARY);
 			String description = request.getParameter(PARAM_DESCRIPTION);
@@ -112,30 +112,53 @@ public class EditIssueCommand implements Command{
 						
 						editIssue.setModifyDate(DateManager.getCurrentDate());
 						
-						Integer modifiedBy = ((UserBean) new SessionManager().getSessionValue(
+						User modifiedBy = new User();
+						Integer modifiedById = ((UserBean) new SessionManager().getSessionValue(
 								request, SessionManager.NAME_LOGIN_USER)).getUserId();
+						modifiedBy.setUserId(modifiedById);
+						
+						Status status = new Status();
+						status.setStatusId(statusIndex);
+						
+						Type type = new Type();
+						type.setTypeId(typeId);
+						
+						Priority priority = new Priority();
+						priority.setPriorityId(priorityId);
+						
+						Project project = new Project();
+						project.setProjectId(projectId);
+						
+						Build build = new Build();
+						build.setBuildId(buildId);
 						
 						editIssue.setModifiedBy(modifiedBy);
 						editIssue.setSummary(summary);
 						editIssue.setDescription(description);
-						editIssue.setStatus(statusIndex);
+						editIssue.setStatus(status);
 						editIssue.setResolution(null);
-						editIssue.setType(typeId);
-						editIssue.setPriority(priorityId);
-						editIssue.setProject(projectId);
-						editIssue.setBuildFound(buildId);
+						editIssue.setType(type);
+						editIssue.setPriority(priority);
+						editIssue.setProject(project);
+						editIssue.setBuildFound(build);
 						editIssue.setAssignee(null);
 						
 						if(isAssigned && assigneeId != null){
 							// we should save with an assignee
-							editIssue.setAssignee(assigneeId);
+							User assignee = new User();
+							assignee.setUserId(assigneeId);
+							
+							editIssue.setAssignee(assignee);
 						}
 						
 						if(isClosed && resolutionId != null){
 							// we should save with a resolution
-							editIssue.setResolution(resolutionId);
+							Resolution resolution = new Resolution();
+							resolution.setResolutionId(resolutionId);
+							
+							editIssue.setResolution(resolution);
 						}
-						
+
 						// update issue
 						if(issueDAO.updateIssue(editIssue)){
 							isSuccess = true;
@@ -155,27 +178,27 @@ public class EditIssueCommand implements Command{
 			
 			request.setAttribute("editIssue", BeanConverter.convertToIssueBean(editIssue));
 			
-			ArrayList<Status> statuses = statusDAO.getStatuses();
+			List<Status> statuses = statusDAO.getStatuses();
 			if(statuses != null){
 				request.setAttribute("statuses", statuses);
 			}
 			
-			ArrayList<Resolution> resolutions = resolutionDAO.getResolutions();
+			List<Resolution> resolutions = resolutionDAO.getResolutions();
 			if(resolutions != null){
 				request.setAttribute("resolutions", resolutions);
 			}
 			
-			ArrayList<Type> types = typeDAO.getTypes();
+			List<Type> types = typeDAO.getTypes();
 			if(types != null){
 				request.setAttribute("types", types);
 			}
 			
-			ArrayList<Priority> priorities = priorityDAO.getPriorities();
+			List<Priority> priorities = priorityDAO.getPriorities();
 			if(priorities != null){
 				request.setAttribute("priorities", priorities);
 			}
 			
-			ArrayList<Project> projects = projectDAO.getProjects();
+			List<Project> projects = projectDAO.getProjects();
 			if(projects != null){
 				request.setAttribute("projects", projects);
 			}
@@ -186,7 +209,7 @@ public class EditIssueCommand implements Command{
 				request.setAttribute("builds", builds);
 			}
 			
-			ArrayList<User> users = userDAO.getUsers();
+			List<User> users = userDAO.getUsers();
 			if(users != null){
 				request.setAttribute("users", users);
 			}
@@ -242,11 +265,11 @@ public class EditIssueCommand implements Command{
 	
 	/**
 	 * Generate a JSOn-string with projects' ids and all builds for all projects
-	 * @param projects - ArrayList<Project> with all projects
-	 * @param builds - ArrayList<Build> - with all builds
+	 * @param projects - List<Project> with all projects
+	 * @param builds - List<Build> - with all builds
 	 * @return String in JSON format
 	 */
-	private String getJSONBuilds(ArrayList<Project> projects, ArrayList<Build> builds){
+	private String getJSONBuilds(List<Project> projects, List<Build> builds){
 		String jsonBuilds = null;
 		
 		if(projects != null && builds != null){
@@ -258,7 +281,7 @@ public class EditIssueCommand implements Command{
 				
 				JSONArray buildsArray = new JSONArray();
 				for(Build build : builds){
-					if(build.getProject() == projectId){
+					if(build.getProject().getProjectId() == projectId){
 						JSONObject buildJSON = new JSONObject();
 						buildJSON.put("id", build.getBuildId());
 						buildJSON.put("name", build.getVersion());

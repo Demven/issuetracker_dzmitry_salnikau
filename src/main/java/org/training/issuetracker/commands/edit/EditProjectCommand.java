@@ -1,7 +1,7 @@
 package org.training.issuetracker.commands.edit;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -11,12 +11,12 @@ import org.apache.log4j.Logger;
 import org.training.issuetracker.commands.Command;
 import org.training.issuetracker.commands.view.ViewProjectsCommand;
 import org.training.issuetracker.dao.factories.DAOFactory;
+import org.training.issuetracker.dao.hibernate.entities.Build;
+import org.training.issuetracker.dao.hibernate.entities.Project;
+import org.training.issuetracker.dao.hibernate.entities.User;
 import org.training.issuetracker.dao.interfaces.BuildDAO;
 import org.training.issuetracker.dao.interfaces.ProjectDAO;
 import org.training.issuetracker.dao.interfaces.UserDAO;
-import org.training.issuetracker.dao.transferObjects.Build;
-import org.training.issuetracker.dao.transferObjects.Project;
-import org.training.issuetracker.dao.transferObjects.User;
 import org.training.issuetracker.managers.ConfigurationManager;
 
 public class EditProjectCommand implements Command{
@@ -35,7 +35,7 @@ public class EditProjectCommand implements Command{
 	private String buildName;
 	private Integer managerId;
 	
-	private DAOFactory mysqlFactory;
+	private DAOFactory hibernateFactory;
 	private ProjectDAO projectDAO;
 	private BuildDAO buildDAO;
 	
@@ -44,9 +44,9 @@ public class EditProjectCommand implements Command{
 			throws ServletException, IOException {
 		
 		String page;
-		mysqlFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
-		projectDAO = mysqlFactory.getProjectDAO();
-		buildDAO = mysqlFactory.getBuildDAO();
+		hibernateFactory = DAOFactory.getDAOFactory(DAOFactory.HYBERNATE);
+		projectDAO = hibernateFactory.getProjectDAO();
+		buildDAO = hibernateFactory.getBuildDAO();
 		
 		Project editProject = getEditProject(request.getParameter(PARAM_PROJECT_ID));
 		if(editProject != null){
@@ -69,21 +69,35 @@ public class EditProjectCommand implements Command{
 				if(buildName != null && !buildName.equals("")){
 					// New build was addded
 					// At first - save new build
-					boolean buildSuccess = buildDAO.createBuild(
-							new Build(0, editProject.getProjectId(), buildName));
+					
+					Project buildProject = new Project();
+					buildProject.setProjectId(editProject.getProjectId());
+					
+					Build newBuild = new Build();
+					newBuild.setBuildId(0);
+					newBuild.setProject(buildProject);
+					newBuild.setVersion(buildName);
+					
+					boolean buildSuccess = buildDAO.createBuild(newBuild);
 					if(buildSuccess){
 						// build saved successfully - we can update project
+						User manager = new User();
+						manager.setUserId(managerId);
+						
 						editProject.setName(name);
 						editProject.setDescription(description);
-						editProject.setManager(managerId);
+						editProject.setManager(manager);
 						projectSuccess = projectDAO.updateProject(editProject);
 					}
 				} else if(request.getParameter(PARAM_BUILD_ID) != null){
 					// Used old build
 					// update this project with a new data
+					User manager = new User();
+					manager.setUserId(managerId);
+					
 					editProject.setName(name);
 					editProject.setDescription(description);
-					editProject.setManager(managerId);
+					editProject.setManager(manager);
 					projectSuccess = projectDAO.updateProject(editProject);
 				}
 				
@@ -96,13 +110,13 @@ public class EditProjectCommand implements Command{
 				}
 			}
 			
-			UserDAO userDAO = mysqlFactory.getUserDAO();
-			ArrayList<User> managers = userDAO.getUsers();
+			UserDAO userDAO = hibernateFactory.getUserDAO();
+			List<User> managers = userDAO.getUsers();
 			if(managers != null){
 				request.setAttribute("managers", managers);
 			}
 			
-			ArrayList<Build> builds = buildDAO.getBuildsForProject(editProject.getProjectId());
+			List<Build> builds = buildDAO.getBuildsForProject(editProject.getProjectId());
 			if(builds != null){
 				request.setAttribute("builds", builds);
 			}

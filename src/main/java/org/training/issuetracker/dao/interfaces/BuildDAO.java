@@ -1,8 +1,8 @@
 package org.training.issuetracker.dao.interfaces;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import org.training.issuetracker.dao.transferObjects.Build;
+import org.training.issuetracker.dao.hibernate.entities.Build;
 
 /**
  * Interface, providing access to the builds and their data
@@ -12,16 +12,16 @@ import org.training.issuetracker.dao.transferObjects.Build;
 public interface BuildDAO {
 	
 	/**
-	 * @return ArrayList of all builds for all projects
+	 * @return List of all builds for all projects
 	 */
-	public ArrayList<Build> getBuilds();
+	public List<Build> getBuilds();
 	
 	/**
-	 * Returns ArrayList of all builds for a specified project
+	 * Returns List of all builds for a specified project
 	 * @param projectId - unique Id of a project
-	 * @return ArrayList<Build> 
+	 * @return List<Build> 
 	 */
-	public ArrayList<Build> getBuildsForProject(int projectId);
+	public List<Build> getBuildsForProject(int projectId);
 	
 	/**
 	 * Returns Build object with stated buildId

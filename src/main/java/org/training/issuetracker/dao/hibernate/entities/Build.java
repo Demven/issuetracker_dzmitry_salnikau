@@ -24,23 +24,27 @@ public class Build implements Serializable{
 
 	public static final String TABLE_NAME = "builds";
 	
+	public static final String COLUMN_ID = "id";
+	public static final String COLUMN_PROJECT= "project";
+	public static final String COLUMN_VERSION= "version";
+	
 	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name="id")
-	private int buildId;
+    @Column(name=COLUMN_ID)
+	private Integer buildId;
 	
 	@ManyToOne
-    @JoinColumn(name="project")
+    @JoinColumn(name=COLUMN_PROJECT)
 	private Project project;
 	
-	@Column(name="version")
+	@Column(name=COLUMN_VERSION)
 	private String version;
 	
 	
-	public int getBuildId() {
+	public Integer getBuildId() {
 		return buildId;
 	}
-	public void setBuildId(int buildId) {
+	public void setBuildId(Integer buildId) {
 		this.buildId = buildId;
 	}
 

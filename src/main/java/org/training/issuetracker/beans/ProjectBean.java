@@ -1,6 +1,6 @@
 package org.training.issuetracker.beans;
 
-import org.training.issuetracker.dao.transferObjects.User;
+import org.training.issuetracker.dao.hibernate.entities.User;
 
 /**
  * Class, describing a project. Used in JSP.

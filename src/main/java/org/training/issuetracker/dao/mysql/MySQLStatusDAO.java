@@ -12,11 +12,17 @@ import org.training.issuetracker.dao.interfaces.StatusDAO;
 import org.training.issuetracker.dao.mysql.builders.StatementBuilder;
 import org.training.issuetracker.dao.transferObjects.Status;
 
-public class MySQLStatusDAO implements StatusDAO{
+/**
+ * !!! This class is not used.
+ * Maybe it will be useful someday in the future in an other project.
+ * @author Dzmitry_Salnikau
+ * @deprecated
+ */
+public class MySQLStatusDAO /*implements StatusDAO */ {
 
 	private static final Logger logger = Logger.getLogger(MySQLStatusDAO.class);
 	
-	@Override
+	//@Override
 	public ArrayList<Status> getStatuses() {
 		ArrayList<Status> statuses = null;
 		try {
@@ -60,7 +66,7 @@ public class MySQLStatusDAO implements StatusDAO{
 		return statuses;
 	}
 
-	@Override
+	//@Override
 	public Status getStatusById(int statusId) {
 		Status status = null;
 		try {
@@ -105,7 +111,7 @@ public class MySQLStatusDAO implements StatusDAO{
 		return status;
 	}
 
-	@Override
+	//@Override
 	public boolean createStatus(Status status) {
 		boolean isSuccess = false;
 		try {
@@ -138,7 +144,7 @@ public class MySQLStatusDAO implements StatusDAO{
 		return isSuccess;
 	}
 
-	@Override
+	//@Override
 	public boolean updateStatus(Status status) {
 		boolean isSuccess = false;
 		try {
@@ -173,7 +179,7 @@ public class MySQLStatusDAO implements StatusDAO{
 		return isSuccess;
 	}
 
-	@Override
+	//@Override
 	public boolean deleteStatus(int statusId) {
 		boolean isSuccess = false;
 		try {

@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.training.issuetracker.commands.Command;
 import org.training.issuetracker.dao.factories.DAOFactory;
+import org.training.issuetracker.dao.hibernate.entities.Resolution;
 import org.training.issuetracker.dao.interfaces.ResolutionDAO;
-import org.training.issuetracker.dao.transferObjects.Resolution;
 import org.training.issuetracker.managers.ConfigurationManager;
 
 public class CreateResolutionCommand implements Command{
@@ -24,13 +24,16 @@ public class CreateResolutionCommand implements Command{
 				ConfigurationManager.RESOLUTION_PAGE_PATH);
 		request.setAttribute("pageTitle", "New resolution");
 		
-		DAOFactory mysqlFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
-		ResolutionDAO resolutionDAO = mysqlFactory.getResolutionDAO();
+		DAOFactory hibernateFactory = DAOFactory.getDAOFactory(DAOFactory.HYBERNATE);
+		ResolutionDAO resolutionDAO = hibernateFactory.getResolutionDAO();
 		
 		String name = request.getParameter(PARAM_NAME);
 		if(name != null && !name.equals("")){
 			// It is request to save new resolution
-			boolean resolutionSuccess = resolutionDAO.createResolution(new Resolution(0, name));
+			Resolution newResolution = new Resolution();
+			newResolution.setResolutionId(0);
+			newResolution.setName(name);
+			boolean resolutionSuccess = resolutionDAO.createResolution(newResolution);
 			
 			if(resolutionSuccess){
 				// Data saved succesfully

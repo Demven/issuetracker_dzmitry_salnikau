@@ -22,19 +22,22 @@ public class Priority implements Serializable{
 
 	public static final String TABLE_NAME = "priorities";
 	
+	public static final String COLUMN_ID = "id";
+	public static final String COLUMN_NAME = "name";
+	
 	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name="id")
-	private int priorityId;
+    @Column(name=COLUMN_ID)
+	private Integer priorityId;
 	
-	@Column(name="name")
+	@Column(name=COLUMN_NAME)
 	private String name;
 
 	
-	public int getPriorityId() {
+	public Integer getPriorityId() {
 		return priorityId;
 	}
-	public void setPriorityId(int priorityId) {
+	public void setPriorityId(Integer priorityId) {
 		this.priorityId = priorityId;
 	}
 

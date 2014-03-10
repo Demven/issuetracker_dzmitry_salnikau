@@ -23,7 +23,6 @@ import org.training.issuetracker.dao.mysql.MySQLTypeDAO;
 import org.training.issuetracker.dao.mysql.MySQLUserDAO;
 import org.training.issuetracker.dao.mysql.MySQLRoleDAO;
 
-
 public class MySQLDAOFactory extends DAOFactory {
 	 
 	/**
@@ -38,48 +37,55 @@ public class MySQLDAOFactory extends DAOFactory {
 	}
 
 	@Override
+	@Deprecated
 	public UserDAO getUserDAO() {
-		return new MySQLUserDAO();
+		return null;
 	}
 
 	@Override
+	@Deprecated
 	public IssueDAO getIssueDAO() {
-		return new MySQLIssueDAO();
+		return null;
 	}
 
 	@Override
+	@Deprecated
 	public ProjectDAO getProjectDAO() {
-		return new MySQLProjectDAO();
+		return null;
 	}
 
 	@Override
+	@Deprecated
 	public BuildDAO getBuildDAO() {
-		return new MySQLBuildDAO();
+		return null;
 	}
 
 	@Override
+	@Deprecated
 	public StatusDAO getStatusDAO() {
-		return new MySQLStatusDAO();
+		return null;
 	}
 
 	@Override
+	@Deprecated
 	public ResolutionDAO getResolutionDAO() {
-		return new MySQLResolutionDAO();
+		return null;
 	}
 
 	@Override
 	public PriorityDAO getPriorityDAO() {
-		return new MySQLPriorityDAO();
+		return null;
 	}
 
 	@Override
 	public TypeDAO getTypeDAO() {
-		return new MySQLTypeDAO();
+		return null;
 	}
 
 	@Override
+	@Deprecated
 	public RoleDAO getRoleDAO() {
-		return new MySQLRoleDAO();
+		return null;
 	}
 	
 }

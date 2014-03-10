@@ -8,6 +8,7 @@ import java.util.Date;
  * Class, describing an issue
  * @author Dzmitry Salnikau
  * @since 02.01.2014
+ * @deprecated
  */
 public class Issue implements java.io.Serializable, Comparable<Issue> {
 
