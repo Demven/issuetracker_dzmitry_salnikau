@@ -5,22 +5,30 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import org.training.issuetracker.dao.hibernate.entities.Issue;
-import org.training.issuetracker.dao.hibernate.util.HibernateUtil;
 import org.training.issuetracker.dao.interfaces.IssueDAO;
 
+@Repository("issueDAO") 
+@Transactional
 public class HibernateIssueDAO implements IssueDAO{
 
 	private static final Logger logger = Logger.getLogger(HibernateIssueDAO.class);
 	private static final String TAG = HibernateIssueDAO.class.getSimpleName();
 	
+	@Autowired
+    protected SessionFactory sessionFactory;
+	
 	@Override
 	public List<Issue> getIssues() {
 		List<Issue> issues = null;
 		
-		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Session session = sessionFactory.getCurrentSession();
 		final Transaction transaction = session.beginTransaction();	
 		try {
 	        Criteria criteria = session.createCriteria(Issue.class);
@@ -40,7 +48,7 @@ public class HibernateIssueDAO implements IssueDAO{
 	public Issue getIssueById(Integer issueId) {
 		Issue issue = null;
 		
-		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Session session = sessionFactory.getCurrentSession();
 		final Transaction transaction = session.beginTransaction();	
 		try {
 	        issue = (Issue) session.get(Issue.class, issueId);
@@ -58,7 +66,7 @@ public class HibernateIssueDAO implements IssueDAO{
 	public boolean createIssue(Issue issue) {
 		boolean success = false;
 		
-		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Session session = sessionFactory.getCurrentSession();
 		final Transaction transaction = session.beginTransaction();	
 		try {
 		    session.save(issue);
@@ -76,7 +84,7 @@ public class HibernateIssueDAO implements IssueDAO{
 	public boolean updateIssue(Issue issue) {
 		boolean success = false;
 		
-		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Session session = sessionFactory.getCurrentSession();
 		final Transaction transaction = session.beginTransaction();	
 		try {
 		    session.update(issue);
@@ -97,7 +105,7 @@ public class HibernateIssueDAO implements IssueDAO{
 		Issue deletingIssue = new Issue();
 		deletingIssue.setIssueId(issueId);
 		
-		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Session session = sessionFactory.getCurrentSession();
 		final Transaction transaction = session.beginTransaction();	
 		try {
 		    session.delete(deletingIssue);

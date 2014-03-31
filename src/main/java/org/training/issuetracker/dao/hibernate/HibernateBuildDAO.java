@@ -5,24 +5,33 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import org.training.issuetracker.dao.hibernate.entities.Build;
 import org.training.issuetracker.dao.hibernate.entities.Project;
-import org.training.issuetracker.dao.hibernate.util.HibernateUtil;
 import org.training.issuetracker.dao.interfaces.BuildDAO;
 
+@Repository("buildDAO") 
+//@Transactional 
 public class HibernateBuildDAO implements BuildDAO {
 	
 	private static final Logger logger = Logger.getLogger(HibernateBuildDAO.class);
 	private static final String TAG = HibernateBuildDAO.class.getSimpleName();
 
+	@Autowired
+    protected SessionFactory sessionFactory;
+	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Build> getBuilds() {
 		List<Build> builds = null;
 		
-		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Session session = sessionFactory.getCurrentSession();
 		final Transaction transaction = session.beginTransaction();	
 		try {
 	        Criteria criteria = session.createCriteria(Build.class);
@@ -38,11 +47,12 @@ public class HibernateBuildDAO implements BuildDAO {
         return builds;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Build> getBuildsForProject(int projectId) {
 		List<Build> buildsForProject = null;
 		
-		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Session session = sessionFactory.getCurrentSession();
 		final Transaction transaction = session.beginTransaction();	
 		try {
 	        Criteria criteria = session.createCriteria(Build.class);
@@ -67,7 +77,7 @@ public class HibernateBuildDAO implements BuildDAO {
 	public Build getBuildById(int buildId) {
 		Build buildById = null;
 		
-		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Session session = sessionFactory.getCurrentSession();
 		final Transaction transaction = session.beginTransaction();	
 		try {
 	        buildById= (Build) session.get(Build.class, buildId);
@@ -85,7 +95,7 @@ public class HibernateBuildDAO implements BuildDAO {
 	public boolean createBuild(Build build) {
 		boolean success = false;
 		
-		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Session session = sessionFactory.getCurrentSession();
 		final Transaction transaction = session.beginTransaction();	
 		try {
 		    session.save(build);
@@ -103,7 +113,7 @@ public class HibernateBuildDAO implements BuildDAO {
 	public boolean updateBuild(Build build) {
 		boolean success = false;
 		
-		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Session session = sessionFactory.getCurrentSession();
 		final Transaction transaction = session.beginTransaction();	
 		try {
 		    session.update(build);
@@ -124,7 +134,7 @@ public class HibernateBuildDAO implements BuildDAO {
 		Build deletingBuild = new Build();
 		deletingBuild.setBuildId(buildId);
 		
-		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Session session = sessionFactory.getCurrentSession();
 		final Transaction transaction = session.beginTransaction();	
 		try {
 		    session.delete(deletingBuild);

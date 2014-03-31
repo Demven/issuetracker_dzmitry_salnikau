@@ -1,0 +1,113 @@
+@charset "utf-8";
+/* CONTENT */
+.content{
+	height: auto;
+	padding: 130px 0 70px 0;
+}
+.content #content_title{
+	height: 90px;
+	font-family: "Century Gothic";
+	font-size: 75px;
+	padding-bottom: 20px;
+	width: 1080px;
+	margin: 0 auto;
+}
+/* form */
+.content #user_form{
+	font-family: "Century Gothic";
+	font-size: 75px;
+	width: 1080px;
+	margin: 0 auto;
+	margin-top: 20px;
+}
+#user_form #user_first_name{
+	height: 40px;
+	width: 325px;
+	border-radius: 6px;
+	border: 1px solid #ccc;
+	font-size: 26px;
+	line-height: 40px;
+	padding: 2px 5px 2px 7px;
+	display: block;
+	font-family: Verdana;
+}
+#user_form #user_last_name{
+	height: 40px;
+	width: 325px;
+	border-radius: 6px;
+	border: 1px solid #ccc;
+	font-size: 26px;
+	line-height: 40px;
+	padding: 2px 5px 2px 7px;
+	display: block;
+	font-family: Verdana;
+	margin-top: 15px;
+}
+#user_form #user_email{
+	height: 40px;
+	width: 325px;
+	border-radius: 6px;
+	border: 1px solid #ccc;
+	font-size: 26px;
+	line-height: 40px;
+	padding: 2px 5px 2px 7px;
+	display: block;
+	font-family: Verdana;
+	margin-top: 15px;
+}
+#user_form #user_password{
+	height: 40px;
+	width: 325px;
+	border-radius: 6px;
+	border: 1px solid #ccc;
+	font-size: 26px;
+	line-height: 40px;
+	padding: 2px 5px 2px 7px;
+	display: block;
+	font-family: Verdana;
+	margin-top: 15px;
+}
+#user_form #user_repeat_password{
+	height: 40px;
+	width: 325px;
+	border-radius: 6px;
+	border: 1px solid #ccc;
+	font-size: 26px;
+	line-height: 40px;
+	padding: 2px 5px 2px 7px;
+	display: block;
+	font-family: Verdana;
+	margin-top: 15px;
+}
+#user_form #user_role{
+	height: 44px;
+	width: 340px;
+	border-radius: 6px;
+	border: 1px solid #ccc;
+	font-size: 26px;
+	line-height: 44px;
+	padding: 2px 5px 2px 7px;
+	display: block;
+	font-family: Verdana;
+	margin-top: 15px;
+}
+#user_form #user_submit{
+	height: 40px;
+	width: 140px;
+	background-color: #FFFFFF;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	font-size: 26px;
+	line-height: 40px;
+	display: block;
+	font-family: Verdana;
+	margin-top: 35px;
+	margin-left: 198px;
+	color: #639638;
+	cursor: pointer;
+}
+#user_form #user_submit:hover{
+	background-color: #689E3C;
+	border: 1px solid #92C567;
+	color: #fff;
+}

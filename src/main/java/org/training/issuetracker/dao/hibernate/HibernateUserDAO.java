@@ -5,23 +5,31 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import org.training.issuetracker.dao.hibernate.entities.User;
-import org.training.issuetracker.dao.hibernate.util.HibernateUtil;
 import org.training.issuetracker.dao.interfaces.UserDAO;
 
+@Repository("userDAO") 
+@Transactional 
 public class HibernateUserDAO implements UserDAO{
 
 	private static final Logger logger = Logger.getLogger(HibernateUserDAO.class);
 	private static final String TAG = HibernateUserDAO.class.getSimpleName();
 	
+	@Autowired
+    protected SessionFactory sessionFactory;
+	
 	@Override
 	public List<User> getUsers() {
 		List<User> users = null;
 		
-		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Session session = sessionFactory.getCurrentSession();
 		final Transaction transaction = session.beginTransaction();	
 		try {
 	        Criteria criteria = session.createCriteria(User.class);
@@ -41,7 +49,7 @@ public class HibernateUserDAO implements UserDAO{
 	public boolean checkAuth(String email, String password) {
 		boolean isUserExists = false;
 		
-		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Session session = sessionFactory.getCurrentSession();
 		final Transaction transaction = session.beginTransaction();	
 		try {
 	        Criteria criteria = session.createCriteria(User.class);
@@ -72,7 +80,7 @@ public class HibernateUserDAO implements UserDAO{
 	public boolean checkUserEmail(String email) {
 		boolean isEmailExists = false;
 		
-		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Session session = sessionFactory.getCurrentSession();
 		final Transaction transaction = session.beginTransaction();	
 		try {
 	        Criteria criteria = session.createCriteria(User.class);
@@ -103,7 +111,7 @@ public class HibernateUserDAO implements UserDAO{
 	public Integer getUserIdByName(String firstName, String lastName) {
 		Integer userId = null;
 		
-		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Session session = sessionFactory.getCurrentSession();
 		final Transaction transaction = session.beginTransaction();	
 		try {
 	        Criteria criteria = session.createCriteria(User.class);
@@ -132,7 +140,7 @@ public class HibernateUserDAO implements UserDAO{
 	public User getUserByEmail(String email) {
 		User user = null;
 		
-		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Session session = sessionFactory.getCurrentSession();
 		final Transaction transaction = session.beginTransaction();	
 		try {
 	        Criteria criteria = session.createCriteria(User.class);
@@ -154,7 +162,7 @@ public class HibernateUserDAO implements UserDAO{
 	public User getUserById(Integer userId) {
 		User user = null;
 		
-		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Session session = sessionFactory.getCurrentSession();
 		final Transaction transaction = session.beginTransaction();	
 		try {
 			user = (User) session.get(User.class, userId);
@@ -172,7 +180,7 @@ public class HibernateUserDAO implements UserDAO{
 	public boolean createUser(User user) {
 		boolean success = false;
 		
-		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Session session = sessionFactory.getCurrentSession();
 		final Transaction transaction = session.beginTransaction();	
 		try {
 		    session.save(user);
@@ -191,7 +199,7 @@ public class HibernateUserDAO implements UserDAO{
 	public boolean updateUser(User user) {
 		boolean success = false;
 		
-		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Session session = sessionFactory.getCurrentSession();
 		final Transaction transaction = session.beginTransaction();	
 		try {
 		    session.update(user);
@@ -213,7 +221,7 @@ public class HibernateUserDAO implements UserDAO{
 		User deletingUser = new User();
 		deletingUser.setUserId(userId);
 		
-		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Session session = sessionFactory.getCurrentSession();
 		final Transaction transaction = session.beginTransaction();	
 		try {
 		    session.delete(deletingUser);

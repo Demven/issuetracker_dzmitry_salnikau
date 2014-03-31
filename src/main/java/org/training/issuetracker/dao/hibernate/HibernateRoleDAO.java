@@ -5,22 +5,30 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import org.training.issuetracker.dao.hibernate.entities.Role;
-import org.training.issuetracker.dao.hibernate.util.HibernateUtil;
 import org.training.issuetracker.dao.interfaces.RoleDAO;
 
+@Repository("roleDAO") 
+@Transactional 
 public class HibernateRoleDAO implements RoleDAO {
 
 	private static final Logger logger = Logger.getLogger(HibernateRoleDAO.class);
 	private static final String TAG = HibernateRoleDAO.class.getSimpleName();
 	
+	@Autowired
+    protected SessionFactory sessionFactory;
+	
 	@Override
 	public List<Role> getRoles() {
 		List<Role> roles = null;
 		
-		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Session session = sessionFactory.getCurrentSession();
 		final Transaction transaction = session.beginTransaction();	
 		try {
 	        Criteria criteria = session.createCriteria(Role.class);
@@ -40,7 +48,7 @@ public class HibernateRoleDAO implements RoleDAO {
 	public Role getRoleById(int roleId) {
 		Role role = null;
 		
-		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Session session = sessionFactory.getCurrentSession();
 		final Transaction transaction = session.beginTransaction();	
 		try {
 	        role = (Role) session.get(Role.class, roleId);
@@ -58,7 +66,7 @@ public class HibernateRoleDAO implements RoleDAO {
 	public boolean createRole(Role role) {
 		boolean success = false;
 		
-		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Session session = sessionFactory.getCurrentSession();
 		final Transaction transaction = session.beginTransaction();	
 		try {
 		    session.save(role);
@@ -76,7 +84,7 @@ public class HibernateRoleDAO implements RoleDAO {
 	public boolean updateRole(Role role) {
 		boolean success = false;
 		
-		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Session session = sessionFactory.getCurrentSession();
 		final Transaction transaction = session.beginTransaction();	
 		try {
 		    session.update(role);
@@ -97,7 +105,7 @@ public class HibernateRoleDAO implements RoleDAO {
 		Role deletingRole = new Role();
 		deletingRole.setRoleId(roleId);
 		
-		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Session session = sessionFactory.getCurrentSession();
 		final Transaction transaction = session.beginTransaction();	
 		try {
 		    session.delete(deletingRole);

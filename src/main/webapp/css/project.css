@@ -1,0 +1,153 @@
+@charset "utf-8";
+/* ------- */
+/* CONTENT */
+.content{
+	height: auto;
+	padding: 130px 0 70px 0;
+}
+.content #content_title{
+	height: 90px;
+	font-family: "Century Gothic";
+	font-size: 75px;
+	padding-bottom: 20px;
+	width: 1080px;
+	margin: 0 auto;
+}
+/* form */
+.content #project_form{
+	font-family: "Century Gothic";
+	font-size: 75px;
+	width: 1080px;
+	margin: 0 auto;
+	margin-top: 20px;
+}
+#project_form #project_name{
+	height: 40px;
+	width: 430px;
+	border-radius: 6px;
+	border: 1px solid #ccc;
+	font-size: 26px;
+	line-height: 40px;
+	padding: 2px 5px 2px 7px;
+	display: block;
+	font-family: Verdana;
+}
+#project_form #project_description{
+	height: 160px;
+	width: 430px;
+	border-radius: 6px;
+	border: 1px solid #ccc;
+	font-size: 26px;
+	line-height: 40px;
+	padding: 5px 5px 5px 7px;
+	display: block;
+	margin-top: 15px;
+	font-family: Verdana;
+}
+#project_form .build_container{
+	width: 445px;
+	margin-top: 15px;
+	height: 44px;
+}
+.build_container #add_build{
+	float: right;
+	height: 42px;
+	width: 42px;
+	cursor: pointer;
+	background-image: url(../img/icons/add.png);
+	margin-top: 2px;
+}
+.build_container #add_build:hover{
+	background-image: url(../img/icons/add_hover.png);
+}
+.build_container #clear_build{
+	float: right;
+	height: 42px;
+	width: 42px;
+	cursor: pointer;
+	background-image: url(../img/icons/clear.png);
+	margin-top: 2px;
+}
+.build_container #clear_build:hover{
+	background-image: url(../img/icons/clear_hover.png);
+}
+#project_form #project_select_build{
+	height: 46px;
+	width: 390px;
+	border-radius: 6px;
+	border: 1px solid #ccc;
+	font-size: 26px;
+	line-height: 44px;
+	padding: 2px 5px 2px 7px;
+	display: block;
+	font-family: Verdana;
+	float: left;
+}
+#project_form #project_build{
+	height: 40px;
+	width: 430px;
+	border-radius: 6px;
+	border: 1px solid #ccc;
+	font-size: 26px;
+	line-height: 40px;
+	padding: 2px 5px 2px 7px;
+	display: block;
+	font-family: Verdana;
+	margin-top: 15px;
+}
+#project_form #project_manager{
+	height: 44px;
+	width: 445px;
+	border-radius: 6px;
+	border: 1px solid #ccc;
+	font-size: 26px;
+	line-height: 44px;
+	padding: 2px 5px 2px 7px;
+	display: block;
+	font-family: Verdana;
+	margin-top: 15px;
+}
+#project_form #project_new_build{
+	height: 40px;
+	width: 376px;
+	border-radius: 6px;
+	border: 1px solid #ccc;
+	font-size: 26px;
+	line-height: 40px;
+	padding: 2px 5px 2px 7px;
+	display: block;
+	font-family: Verdana;
+	float: left;
+}
+#project_form #project_select_manager{
+	height: 44px;
+	width: 445px;
+	border-radius: 6px;
+	border: 1px solid #ccc;
+	font-size: 26px;
+	line-height: 44px;
+	padding: 2px 5px 2px 7px;
+	display: block;
+	font-family: Verdana;
+	margin-top: 15px;
+}
+#project_form #project_submit{
+	height: 40px;
+	width: 140px;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	font-size: 26px;
+	line-height: 40px;
+	display: block;
+	margin-top: 35px;
+	margin-left: 303px;
+	color: #639638;
+	cursor: pointer;
+}
+#project_form #project_submit:hover{
+	background-color: #689E3C;
+	border: 1px solid #92C567;
+	color: #fff;
+}
+

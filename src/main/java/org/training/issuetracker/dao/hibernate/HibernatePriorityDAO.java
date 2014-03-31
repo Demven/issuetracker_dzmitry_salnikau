@@ -5,22 +5,30 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import org.training.issuetracker.dao.hibernate.entities.Priority;
-import org.training.issuetracker.dao.hibernate.util.HibernateUtil;
 import org.training.issuetracker.dao.interfaces.PriorityDAO;
 
+@Repository("priorityDAO") 
+@Transactional 
 public class HibernatePriorityDAO implements PriorityDAO {
 
 	private static final Logger logger = Logger.getLogger(HibernatePriorityDAO.class);
 	private static final String TAG = HibernatePriorityDAO.class.getSimpleName();
 	
+	@Autowired
+    protected SessionFactory sessionFactory;
+	
 	@Override
 	public List<Priority> getPriorities() {
 		List<Priority> priorities = null;
 		
-		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Session session = sessionFactory.getCurrentSession();
 		final Transaction transaction = session.beginTransaction();	
 		try {
 			Criteria criteria = session.createCriteria(Priority.class);
@@ -41,7 +49,7 @@ public class HibernatePriorityDAO implements PriorityDAO {
 	public Priority getPriorityById(int priorityId) {
 		Priority priority = null;
 		
-		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Session session = sessionFactory.getCurrentSession();
 		final Transaction transaction = session.beginTransaction();
 		try {
 	        priority = (Priority) session.get(Priority.class, priorityId);
@@ -64,7 +72,7 @@ public class HibernatePriorityDAO implements PriorityDAO {
 		newPriority.setPriorityId(priority.getPriorityId());
 		newPriority.setName(priority.getName());
 		
-		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Session session = sessionFactory.getCurrentSession();
 		final Transaction transaction = session.beginTransaction();
 		try {
 		    session.save(newPriority);
@@ -87,7 +95,7 @@ public class HibernatePriorityDAO implements PriorityDAO {
 		newPriority.setPriorityId(priority.getPriorityId());
 		newPriority.setName(priority.getName());
 		
-		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Session session = sessionFactory.getCurrentSession();
 		final Transaction transaction = session.beginTransaction();
 		try {
 		    session.update(newPriority);
@@ -108,7 +116,7 @@ public class HibernatePriorityDAO implements PriorityDAO {
 		Priority deletingPriority = new Priority();
 		deletingPriority.setPriorityId(priorityId);
 		
-		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Session session = sessionFactory.getCurrentSession();
 		final Transaction transaction = session.beginTransaction();
 		try {
 		    session.delete(deletingPriority);

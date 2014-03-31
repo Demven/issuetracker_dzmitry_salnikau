@@ -1,19 +1,50 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-  version="2.5">
-
-  <display-name>Issue Tracker</display-name>
-  <description>JEE training project implementation by Dzmitry Salnikau</description>
-
-  <servlet>
-    <servlet-name>MainController</servlet-name>
-    <servlet-class>org.training.issuetracker.controllers.MainController</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>MainController</servlet-name>
-    <url-pattern>/main</url-pattern>
-  </servlet-mapping>
-
-</web-app>
+<?xml version="1.0" encoding="UTF-8"?> 
+<web-app version="3.0" xmlns="http://Java.sun.com/xml/ns/javaee" 
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		xsi:schemaLocation="http://j ava.sun.com/xml/ns/j avaee 
+		http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"> 
+		
+    <context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/spring/servlet-context.xml</param-value>
+	</context-param>
+    
+    
+	<!-- Фильтры Spring MVC --> 
+	<filter> 
+		<filter-name>CharacterEncodingFilter</filter-name> 
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class> 
+		<init-param> 
+			<param-name>encoding</param-name> 
+			<param-value>UTF-8</param-value> 
+		</init-param> 
+		<init-param> 
+			<param-name>forceEncoding</param-name> 
+			<param-value>true</param-value> 
+		</init-param> 
+	</filter>
+	
+	<filter-mapping> 
+		<filter-name>CharacterEncodingFilter</filter-name> 
+		<url-pattern>/*</url-pattern> 
+	</filter-mapping> 
+	
+	<!-- Создание контейнера Spring, разделяемого всеми сервлетами и фильтрами --> 
+	<listener> 
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class> 
+	</listener> 
+	
+	<!-- Обработка запросов приложения --> 
+	<servlet> 
+		<servlet-name>dispatcher</servlet-name> 
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class> 
+		<load-on-startup>1</load-on-startup> 
+	</servlet> 
+	
+	<servlet-mapping> 
+		<servlet-name>dispatcher</servlet-name> 
+		<url-pattern>/</url-pattern> 
+	</servlet-mapping> 
+</web-app> 
+	
+	

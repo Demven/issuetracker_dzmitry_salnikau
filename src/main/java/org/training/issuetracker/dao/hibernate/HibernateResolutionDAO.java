@@ -5,22 +5,30 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import org.training.issuetracker.dao.hibernate.entities.Resolution;
-import org.training.issuetracker.dao.hibernate.util.HibernateUtil;
 import org.training.issuetracker.dao.interfaces.ResolutionDAO;
 
+@Repository("resolutionDAO") 
+@Transactional 
 public class HibernateResolutionDAO implements ResolutionDAO{
 
 	private static final Logger logger = Logger.getLogger(HibernateResolutionDAO.class);
 	private static final String TAG = HibernateResolutionDAO.class.getSimpleName();
 	
+	@Autowired
+    protected SessionFactory sessionFactory;
+	
 	@Override
 	public List<Resolution> getResolutions() {
 		List<Resolution> resolutions = null;
 		
-		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Session session = sessionFactory.getCurrentSession();
 		final Transaction transaction = session.beginTransaction();	
 		try {
 	        Criteria criteria = session.createCriteria(Resolution.class);
@@ -40,7 +48,7 @@ public class HibernateResolutionDAO implements ResolutionDAO{
 	public Resolution getResolutionById(int resolutionId) {
 		Resolution resolutionById = null;
 		
-		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Session session = sessionFactory.getCurrentSession();
 		final Transaction transaction = session.beginTransaction();	
 		try {
 	        resolutionById = (Resolution) session.get(Resolution.class, resolutionId);
@@ -63,7 +71,7 @@ public class HibernateResolutionDAO implements ResolutionDAO{
 		newResolution.setResolutionId(resolution.getResolutionId());
 		newResolution.setName(resolution.getName());
 		
-		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Session session = sessionFactory.getCurrentSession();
 		final Transaction transaction = session.beginTransaction();	
 		try {
 		    session.save(newResolution);
@@ -86,7 +94,7 @@ public class HibernateResolutionDAO implements ResolutionDAO{
 		newResolution.setResolutionId(resolution.getResolutionId());
 		newResolution.setName(resolution.getName());
 		
-		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Session session = sessionFactory.getCurrentSession();
 		final Transaction transaction = session.beginTransaction();	
 		try {
 		    session.update(newResolution);
@@ -107,7 +115,7 @@ public class HibernateResolutionDAO implements ResolutionDAO{
 		Resolution deletingResolution = new Resolution();
 		deletingResolution.setResolutionId(resolutionId);
 		
-		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Session session = sessionFactory.getCurrentSession();
 		final Transaction transaction = session.beginTransaction();	
 		try {
 		    session.delete(deletingResolution);

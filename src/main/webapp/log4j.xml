@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<appender name="stdout" class="org.apache.log4j.ConsoleAppender">
+		<param name="Target" value="System.out" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %p [%c] %X{server.context} %m%n" />
+		</layout>
+	</appender>
+	
+	<appender name="issuetracker_error" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="webapps/issuetracker/logs/issuetracker_error.log"/>
+        <param name="Append" value="true"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd'.log'"/>
+        <param name="Encoding" value="UTF-8"/>
+        <layout class="org.apache.log4j.EnhancedPatternLayout">
+            <param name="ConversionPattern" value="%d{ISO8601} [%-5p][%30c] - %m%n"/>
+        </layout>
+    </appender>
+
+	<root>
+        <priority value="WARN"/>
+        <appender-ref ref="issuetracker_error"/>
+    </root>
+
+</log4j:configuration>

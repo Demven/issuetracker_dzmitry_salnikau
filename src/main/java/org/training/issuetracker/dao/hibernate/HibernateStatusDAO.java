@@ -5,22 +5,30 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import org.training.issuetracker.dao.hibernate.entities.Status;
-import org.training.issuetracker.dao.hibernate.util.HibernateUtil;
 import org.training.issuetracker.dao.interfaces.StatusDAO;
 
+@Repository("statusDAO") 
+@Transactional 
 public class HibernateStatusDAO implements StatusDAO{
 
 	private static final Logger logger = Logger.getLogger(HibernateStatusDAO.class);
 	private static final String TAG = HibernateStatusDAO.class.getSimpleName();
 	
+	@Autowired
+    protected SessionFactory sessionFactory;
+	
 	@Override
 	public List<Status> getStatuses() {
 		List<Status> statuses = null;
 		
-		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Session session = sessionFactory.getCurrentSession();
 		final Transaction transaction = session.beginTransaction();	
 		try {
 	        Criteria criteria = session.createCriteria(Status.class);
@@ -40,7 +48,7 @@ public class HibernateStatusDAO implements StatusDAO{
 	public Status getStatusById(int statusId) {
 		Status status = null;
 		
-		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Session session = sessionFactory.getCurrentSession();
 		final Transaction transaction = session.beginTransaction();	
 		try {
 	        status = (Status) session.get(Status.class, statusId);
@@ -63,7 +71,7 @@ public class HibernateStatusDAO implements StatusDAO{
 		newStatus.setStatusId(status.getStatusId());
 		newStatus.setName(status.getName());
 		
-		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Session session = sessionFactory.getCurrentSession();
 		final Transaction transaction = session.beginTransaction();	
 		try {
 		    session.save(newStatus);
@@ -86,7 +94,7 @@ public class HibernateStatusDAO implements StatusDAO{
 		newStatus.setStatusId(status.getStatusId());
 		newStatus.setName(status.getName());
 		
-		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Session session = sessionFactory.getCurrentSession();
 		final Transaction transaction = session.beginTransaction();	
 		try {
 		    session.update(newStatus);
@@ -107,7 +115,7 @@ public class HibernateStatusDAO implements StatusDAO{
 		Status deletingStatus = new Status();
 		deletingStatus.setStatusId(statusId);
 		
-		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Session session = sessionFactory.getCurrentSession();
 		final Transaction transaction = session.beginTransaction();	
 		try {
 		    session.delete(deletingStatus);

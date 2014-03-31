@@ -5,23 +5,31 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import org.training.issuetracker.dao.hibernate.entities.Project;
-import org.training.issuetracker.dao.hibernate.util.HibernateUtil;
 import org.training.issuetracker.dao.interfaces.ProjectDAO;
 
+@Repository("projectDAO") 
+@Transactional 
 public class HibernateProjectDAO implements ProjectDAO {
 	
 	private static final Logger logger = Logger.getLogger(HibernateProjectDAO.class);
 	private static final String TAG = HibernateProjectDAO.class.getSimpleName();
 	
+	@Autowired
+    protected SessionFactory sessionFactory;
+	
 	@Override
 	public List<Project> getProjects() {
 		List<Project> projects = null;
 		
-		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Session session = sessionFactory.getCurrentSession();
 		final Transaction transaction = session.beginTransaction();	
 		try {
 	        Criteria criteria = session.createCriteria(Project.class);
@@ -41,7 +49,7 @@ public class HibernateProjectDAO implements ProjectDAO {
 	public Project getProjectById(int projectId) {
 		Project projectById = null;
 		
-		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Session session = sessionFactory.getCurrentSession();
 		final Transaction transaction = session.beginTransaction();	
 		try {
 	        projectById = (Project) session.get(Project.class, projectId);
@@ -59,7 +67,7 @@ public class HibernateProjectDAO implements ProjectDAO {
 	public Integer getProjectIdByName(String name) {
 		Integer projectId = null;
 		
-		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Session session = sessionFactory.getCurrentSession();
 		final Transaction transaction = session.beginTransaction();	
 		try {
 	        Criteria criteria = session.createCriteria(Project.class);
@@ -85,7 +93,7 @@ public class HibernateProjectDAO implements ProjectDAO {
 	public boolean createProject(Project project) {
 		boolean success = false;
 
-		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Session session = sessionFactory.getCurrentSession();
 		final Transaction transaction = session.beginTransaction();	
 		try {
 		    session.save(project);
@@ -103,7 +111,7 @@ public class HibernateProjectDAO implements ProjectDAO {
 	public boolean updateProject(Project project) {
 		boolean success = false;
 
-		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Session session = sessionFactory.getCurrentSession();
 		final Transaction transaction = session.beginTransaction();	
 		try {
 		    session.update(project);
@@ -124,7 +132,7 @@ public class HibernateProjectDAO implements ProjectDAO {
 		Project deletingProject = new Project();
 		deletingProject.setProjectId(projectId);
 		
-		final Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		final Session session = sessionFactory.getCurrentSession();
 		final Transaction transaction = session.beginTransaction();	
 		try {
 		    session.delete(deletingProject);
