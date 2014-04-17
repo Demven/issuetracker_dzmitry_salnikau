@@ -6,7 +6,6 @@ import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -24,20 +23,18 @@ public class HibernateResolutionDAO implements ResolutionDAO{
 	@Autowired
     protected SessionFactory sessionFactory;
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Resolution> getResolutions() {
 		List<Resolution> resolutions = null;
 		
 		final Session session = sessionFactory.getCurrentSession();
-		final Transaction transaction = session.beginTransaction();	
 		try {
 	        Criteria criteria = session.createCriteria(Resolution.class);
 	        criteria.addOrder(Order.asc(Resolution.COLUMN_ID));
 	        resolutions = (List<Resolution>) criteria.list();
-	        transaction.commit();
 		} catch (Exception e) {
 			logger.error(TAG + " Getting all resolutions failed!", e);
-		    transaction.rollback();
 		    throw e;
 		}
         
@@ -49,13 +46,10 @@ public class HibernateResolutionDAO implements ResolutionDAO{
 		Resolution resolutionById = null;
 		
 		final Session session = sessionFactory.getCurrentSession();
-		final Transaction transaction = session.beginTransaction();	
 		try {
 	        resolutionById = (Resolution) session.get(Resolution.class, resolutionId);
-	        transaction.commit();
 		} catch (Exception e) {
 			logger.error(TAG + " Getting Resolution-object " + resolutionId +" failed!", e);
-		    transaction.rollback();
 		    throw e;
 		}
         
@@ -72,13 +66,10 @@ public class HibernateResolutionDAO implements ResolutionDAO{
 		newResolution.setName(resolution.getName());
 		
 		final Session session = sessionFactory.getCurrentSession();
-		final Transaction transaction = session.beginTransaction();	
 		try {
 		    session.save(newResolution);
-		    transaction.commit();
 		    success = true;
 		} catch(Exception e) {
-			transaction.rollback();
 		    logger.error(TAG + " Creating Resolution-object failed!", e);
 		}
 		
@@ -95,13 +86,10 @@ public class HibernateResolutionDAO implements ResolutionDAO{
 		newResolution.setName(resolution.getName());
 		
 		final Session session = sessionFactory.getCurrentSession();
-		final Transaction transaction = session.beginTransaction();	
 		try {
 		    session.update(newResolution);
-		    transaction.commit();
 		    success = true;
 		} catch(Exception e) {
-			transaction.rollback();
 		    logger.error(TAG + " Updating Resolution-object with id=" + resolution.getResolutionId() + " failed!", e);
 		}
 		
@@ -116,13 +104,10 @@ public class HibernateResolutionDAO implements ResolutionDAO{
 		deletingResolution.setResolutionId(resolutionId);
 		
 		final Session session = sessionFactory.getCurrentSession();
-		final Transaction transaction = session.beginTransaction();	
 		try {
 		    session.delete(deletingResolution);
-		    transaction.commit();
 		    success = true;
 		} catch(Exception e) {
-			transaction.rollback();
 		    logger.error(TAG + " Deleting Resolution-object with id=" + resolutionId + " failed!", e);
 		}
 		

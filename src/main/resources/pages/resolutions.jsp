@@ -5,9 +5,9 @@
 <head>
 <meta charset="utf-8">
 <title><c:out value="${pageTitle}"/></title>
-<link rel="stylesheet" href="./css/_header.css" type="text/css" />
-<link rel="stylesheet" href="./css/resolutions.css" type="text/css" />
-<link rel="stylesheet" href="./css/_footer.css" type="text/css" />
+<link rel="stylesheet" href="/issuetracker/resources/css/_header.css" type="text/css" />
+<link rel="stylesheet" href="/issuetracker/resources/css/resolutions.css" type="text/css" />
+<link rel="stylesheet" href="/issuetracker/resources/css/_footer.css" type="text/css" />
 </head>
 
 <body>
@@ -24,7 +24,7 @@
                 <c:forEach items="${resolutions}" var="resolution">
                     <div class="resolution_line">
                     	<div class="name">
-                            <a href="main?command=editResolution&resolutionId=${resolution.resolutionId}">
+                            <a href="/issuetracker/resolution/${resolution.resolutionId}">
                                 <c:out value="${resolution.name}"/>
                             </a>
                         </div>

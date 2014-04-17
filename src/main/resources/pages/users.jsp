@@ -5,9 +5,9 @@
 <head>
 <meta charset="utf-8">
 <title><c:out value="${pageTitle}"/></title>
-<link rel="stylesheet" href="./css/_header.css" type="text/css" />
-<link rel="stylesheet" href="./css/users.css" type="text/css" />
-<link rel="stylesheet" href="./css/_footer.css" type="text/css" />
+<link rel="stylesheet" href="/issuetracker/resources/css/_header.css" type="text/css" />
+<link rel="stylesheet" href="/issuetracker/resources/css/users.css" type="text/css" />
+<link rel="stylesheet" href="/issuetracker/resources/css/_footer.css" type="text/css" />
 </head>
 
 <body>
@@ -21,10 +21,7 @@
     		<input type="text" id="name_search" value="${filter}" placeholder="Name">
             <div id="name_submit" onClick="findUser();"></div>
         </form>
-        <form name="hidden_search_user_form" action="main">
-    		<input type="hidden" name="command" value="viewUsers"/>
-            <input type="hidden" name="filter" value=""/>
-        </form>
+        <form name="hidden_search_user_form" action="/issuetracker/users" method="POST"></form>
     </div>
     
     <c:choose>
@@ -41,7 +38,7 @@
                         <c:forEach items="${users}" var="user">
                             <div class="user_line">
                                 <div class="name">
-                                    <a href="main?command=editUser&userId=${user.userId}">
+                                    <a href="/issuetracker/user/${user.userId}">
                                         <c:out value="${user.firstName}"/> <c:out value="${user.lastName}"/>
                                     </a>
                                 </div>
@@ -60,7 +57,9 @@
 		function findUser(){
 			var name = name_search.value.trim();
 			if(isNameValid(name)){
-				hidden_form.filter.value = name;
+				if(name != ""){
+					hidden_form.action = hidden_form.action + "/filter/" + name;
+				}
 				hidden_form.submit();
 			}
 		}

@@ -4,17 +4,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;  
 
 import org.apache.log4j.Logger;
-import org.training.issuetracker.beans.UserBean;
-import org.training.issuetracker.beans.converters.BeanConverter;
-import org.training.issuetracker.dao.factories.DAOFactory;
-import org.training.issuetracker.dao.interfaces.UserDAO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.training.issuetracker.dao.hibernate.entities.User;
+import org.training.issuetracker.services.UserService;
  
 /**
  * Class that manages sessions
  * @author Dzmitry Salnikau
  * @since 07.02.2014
  */
-public final class SessionManager { 
+@Service
+public class SessionManager { 
 	
 	private static final Logger logger = Logger.getLogger(SessionManager.class);
 	
@@ -22,6 +23,16 @@ public final class SessionManager {
 	
 	public final static String NAME_LOGIN_USER = "loginUser";
 	
+	@Autowired
+	private CookieManager cookieManager;
+	
+	@Autowired
+	private UserService userService; 
+	
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
+
 	/**
 	 * Returns the value of variable from the session
 	 * @param request
@@ -87,14 +98,14 @@ public final class SessionManager {
 	public void setSessionFromCookies(HttpServletRequest request, int type){
 		switch(type){
 			case TYPE_LOGIN_USER:
+				logger.error("setSessionFromCookies!!");
 				CookieManager cookieManager = new CookieManager();
+				logger.error("cookieManager=" + cookieManager);
+				logger.error("userService=" + userService);
 				String login = cookieManager.getCookieValue(request, CookieManager.NAME_LOGIN);
 		        if(login != null){
 		        	if(getSessionValue(request, NAME_LOGIN_USER) == null){
-		        		DAOFactory hibernateFactory = DAOFactory.getDAOFactory(DAOFactory.HYBERNATE);
-		        		UserDAO userDAO = hibernateFactory.getUserDAO();
-		        		UserBean loginUser = BeanConverter.convertToUserBean(
-		        				userDAO.getUserByEmail(login));
+		        		User loginUser = userService.getUserByEmail(login);
 		        		// set this object of the authorized user into the session
 		        		setSessionValue(request, NAME_LOGIN_USER, loginUser);
 		        	}

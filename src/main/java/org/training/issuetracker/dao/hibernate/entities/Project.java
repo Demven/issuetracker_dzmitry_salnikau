@@ -29,6 +29,10 @@ public class Project implements Serializable{
 	public static final String COLUMN_DESCRIPTION = "description";
 	public static final String COLUMN_MANAGER = "manager";
 	
+	public final static int MAX_SHOWN_NUMBER = 10;
+	public final static int MAX_SHOWN_DESCRIPTION_LENGTH = 100;
+	public final static String PLACEHOLDER = "...";
+	
 	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name=COLUMN_ID)

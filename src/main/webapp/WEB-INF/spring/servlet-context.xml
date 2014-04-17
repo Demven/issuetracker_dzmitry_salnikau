@@ -16,57 +16,16 @@
         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 		
-    <context:annotation-config />
-	<context:component-scan base-package="org.training.issuetracker" /> 
+    <mvc:annotation-driven />
     
-	<mvc:annotation-driven /> 
-	<!--  <resources mapping="/resources/**" location="/resources/" /> -->
-	
-	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"> 
+    <mvc:resources mapping="/resources/**" location="/resources/" />
+    
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"> 
 	    <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
-		<property name="prefix" value="/pages/" />
+		<property name="prefix" value="/resources/pages/" />
 		<property name="suffix" value=".jsp" /> 
 	</bean>
-	<!--
-	<bean id="buildDAO" class="org.training.issuetracker.dao.hibernate.HibernateBuildDAO" />
-	<bean id="issueDAO" class="org.training.issuetracker.dao.hibernate.HibernateIssueDAO" />
-	<bean id="priorityDAO" class="org.training.issuetracker.dao.hibernate.HibernatePriorityDAO" />
-	<bean id="projectDAO" class="org.training.issuetracker.dao.hibernate.HibernateProjectDAO" />
-	<bean id="resolutionDAO" class="org.training.issuetracker.dao.hibernate.HibernateResolutionDAO" />
-	<bean id="roleDAO" class="org.training.issuetracker.dao.hibernate.HibernateRoleDAO" />
-	<bean id="statusDAO" class="org.training.issuetracker.dao.hibernate.HibernateStatusDAO" />
-	<bean id="typeDAO" class="org.training.issuetracker.dao.hibernate.HibernateTypeDAO" />
-	<bean id="userDAO" class="org.training.issuetracker.dao.hibernate.HibernateUserDAO" />
+	
+	<context:component-scan base-package="org.training.issuetracker.controllers" /> 
 
-	<bean id="buildService" class="org.training.issuetracker.services.spring.SpringBuildService" >
-		<property name="buildDAO" ref="buildDAO" />
-	</bean>
-	<bean id="issueService" class="org.training.issuetracker.services.spring.SpringIssueService" >
-		<property name="issueDAO" ref="issueDAO" />
-	</bean>
-	<bean id="priorityService" class="org.training.issuetracker.services.spring.SpringPriorityService" >
-		<property name="priorityDAO" ref="priorityDAO" />
-	</bean>
-	<bean id="projectService" class="org.training.issuetracker.services.spring.SpringProjectService" >
-		<property name="projectDAO" ref="projectDAO" />
-	</bean>
-	<bean id="resolutionService" class="org.training.issuetracker.services.spring.SpringResolutionService" >
-		<property name="resolutionDAO" ref="resolutionDAO" />
-	</bean>
-	<bean id="roleService" class="org.training.issuetracker.services.spring.SpringRoleService" >
-		<property name="roleDAO" ref="roleDAO" />
-	</bean>
-	<bean id="statusService" class="org.training.issuetracker.services.spring.SpringStatusService" >
-		<property name="statusDAO" ref="statusDAO" />
-	</bean>
-	<bean id="typeService" class="org.training.issuetracker.services.spring.SpringTypeService" >
-		<property name="typeDAO" ref="typeDAO" />
-	</bean>
-	<bean id="userService" class="org.training.issuetracker.services.spring.SpringUserService" >
-		<property name="userDAO" ref="userDAO" />
-	</bean>
-	-->
-	
-	<import resource="datasource-hibernate.xml" />
-	
 </beans> 

@@ -7,9 +7,9 @@
 <meta charset="utf-8">
 <title>BugTracker</title>
 
-<link rel="stylesheet" href="./css/_header.css" type="text/css" />
-<link rel="stylesheet" href="./css/index.css" type="text/css" />
-<link rel="stylesheet" href="./css/_footer.css" type="text/css" />
+<link rel="stylesheet" href="/issuetracker/resources/css/_header.css" type="text/css" />
+<link rel="stylesheet" href="/issuetracker/resources/css/index.css" type="text/css" />
+<link rel="stylesheet" href="/issuetracker/resources/css/_footer.css" type="text/css" />
 </head>
 
 <body>
@@ -47,7 +47,7 @@
                         <c:forEach items="${assignedIssues}" var="issue">
                             <!-- issue-line (for an authorized user, with assigned issue) -->
                             <div class="issue_line">
-                                <div class="id"><a href="main?command=editIssue&issueId=${issue.issueId}"><c:out value="${issue.issueId}"/></a></div>
+                                <div class="id"><a href="/issuetracker/issue/${issue.issueId}"><c:out value="${issue.issueId}"/></a></div>
                                 <div class="priority" id="${fn:toLowerCase(issue.priority.name)}"><c:out value="${issue.priority.name}"/></div>
                                 <div class="assignee"><c:out value="${issue.assignee.firstName}"/> <c:out value="${issue.assignee.lastName}"/></div>
                                 <div class="type"><c:out value="${issue.type.name}"/></div>

@@ -5,9 +5,9 @@
 <head>
 <meta charset="utf-8">
 <title><c:out value="${pageTitle}"/></title>
-<link rel="stylesheet" href="./css/_header.css" type="text/css" />
-<link rel="stylesheet" href="./css/projects.css" type="text/css" />
-<link rel="stylesheet" href="./css/_footer.css" type="text/css" />
+<link rel="stylesheet" href="/issuetracker/resources/css/_header.css" type="text/css" />
+<link rel="stylesheet" href="/issuetracker/resources/css/projects.css" type="text/css" />
+<link rel="stylesheet" href="/issuetracker/resources/css/_footer.css" type="text/css" />
 </head>
 
 <body>
@@ -25,7 +25,7 @@
         	<c:forEach items="${projects}" var="project">
                 <div class="project_line">
                     <div class="name">
-                    	<a href="main?command=editProject&projectId=${project.projectId}">
+                    	<a href="/issuetracker/project/${project.projectId}">
                     		<c:out value="${project.name}"/>
                         </a>
                     </div>
@@ -42,12 +42,12 @@
             <c:forEach items="${pages}" varStatus="index">
                 <c:choose>
                     <c:when test="${currentPage eq index.count}">
-                        <a href="main?command=viewProjects&page=${index.count}">
+                        <a href="/issuetracker/projects/page/${index.count}">
                         	<div class="page" id="current_page"><c:out value="${index.count}"/></div>
                         </a>
                     </c:when>
                     <c:otherwise>
-                    	<a href="main?command=viewProjects&page=${index.count}">
+                    	<a href="/issuetracker/projects/page/${index.count}">
                         	<div class="page"><c:out value="${index.count}"/></div>
                         </a>
                     </c:otherwise>

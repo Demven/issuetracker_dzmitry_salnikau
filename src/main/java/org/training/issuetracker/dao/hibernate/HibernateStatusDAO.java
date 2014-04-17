@@ -6,7 +6,6 @@ import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -24,20 +23,18 @@ public class HibernateStatusDAO implements StatusDAO{
 	@Autowired
     protected SessionFactory sessionFactory;
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Status> getStatuses() {
 		List<Status> statuses = null;
 		
 		final Session session = sessionFactory.getCurrentSession();
-		final Transaction transaction = session.beginTransaction();	
 		try {
 	        Criteria criteria = session.createCriteria(Status.class);
 	        criteria.addOrder(Order.asc(Status.COLUMN_ID));
 	        statuses = (List<Status>) criteria.list();
-	        transaction.commit();
 		} catch (Exception e) {
 			logger.error(TAG + " Getting all statuses failed!", e);
-		    transaction.rollback();
 		    throw e;
 		}
 
@@ -49,13 +46,10 @@ public class HibernateStatusDAO implements StatusDAO{
 		Status status = null;
 		
 		final Session session = sessionFactory.getCurrentSession();
-		final Transaction transaction = session.beginTransaction();	
 		try {
 	        status = (Status) session.get(Status.class, statusId);
-	        transaction.commit();
 		} catch (Exception e) {
 			logger.error(TAG + " Getting Status-object " + statusId + " failed!", e);
-		    transaction.rollback();
 		    throw e;
 		}
         
@@ -72,13 +66,10 @@ public class HibernateStatusDAO implements StatusDAO{
 		newStatus.setName(status.getName());
 		
 		final Session session = sessionFactory.getCurrentSession();
-		final Transaction transaction = session.beginTransaction();	
 		try {
 		    session.save(newStatus);
-		    transaction.commit();
 		    success = true;
 		} catch(Exception e) {
-			transaction.rollback();
 		    logger.error(TAG + " Creating Status-object failed!", e);
 		}
 		
@@ -95,13 +86,10 @@ public class HibernateStatusDAO implements StatusDAO{
 		newStatus.setName(status.getName());
 		
 		final Session session = sessionFactory.getCurrentSession();
-		final Transaction transaction = session.beginTransaction();	
 		try {
 		    session.update(newStatus);
-		    transaction.commit();
 		    success = true;
 		} catch(Exception e) {
-			transaction.rollback();
 		    logger.error(TAG + " Updating Status-object with id=" + status.getStatusId() + " failed!", e);
 		}
 		
@@ -116,13 +104,10 @@ public class HibernateStatusDAO implements StatusDAO{
 		deletingStatus.setStatusId(statusId);
 		
 		final Session session = sessionFactory.getCurrentSession();
-		final Transaction transaction = session.beginTransaction();	
 		try {
 		    session.delete(deletingStatus);
-		    transaction.commit();
 		    success = true;
 		} catch(Exception e) {
-			transaction.rollback();
 		    logger.error(TAG + " Deleting Status-object with id=" + statusId + " failed!", e);
 		}
 		

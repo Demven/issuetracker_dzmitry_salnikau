@@ -10,11 +10,11 @@
             <div class="menu_btn_icon"></div>
             <ul class="menu">
               <div id="user_menu">
-                    <a href="main?command=editProfile&userId=${sessionScope.loginUser.userId}">
+                    <a href="/issuetracker/profile/${sessionScope.loginUser.userId}">
                     	<li class="menu_item">Profile</li>
                     </a>
-                    <a href="main?command=createIssue"><li class="menu_item">Submit issue</li></a>
-                    <a href="main?command=logout"><li class="menu_item">Log out</li></a>
+                    <a href="/issuetracker/issue"><li class="menu_item">Submit issue</li></a>
+                    <a href="/issuetracker/logout"><li class="menu_item">Log out</li></a>
               </div>
               
               <c:if test="${sessionScope.loginUser.role.name eq 'Administrator'}">
@@ -23,25 +23,25 @@
             			<div class="bottom_line"></div>
                       	<li class="menu_item" id="create">&#9654; Create
                             <ul class="create_menu">
-                                 <a href="main?command=createProject"><li class="menu_item">Project</li></a>
-                                 <a href="main?command=createResolution"><li class="menu_item">Resolution</li></a>
-                                 <a href="main?command=createPriority"><li class="menu_item">Priority</li></a>
-                                 <a href="main?command=createType"><li class="menu_item">Type</li></a>
+                                 <a href="/issuetracker/project"><li class="menu_item">Project</li></a>
+                                 <a href="/issuetracker/resolution"><li class="menu_item">Resolution</li></a>
+                                 <a href="/issuetracker/priority"><li class="menu_item">Priority</li></a>
+                                 <a href="/issuetracker/type"><li class="menu_item">Type</li></a>
                           </ul>
                       	</li>
                         <li class="menu_item" id="users">&#9654; Users
                             <ul class="users_menu">
-                                 <a href="main?command=viewUsers"><li class="menu_item">Find user</li></a>
-                                 <a href="main?command=createUser"><li class="menu_item">Add user</li></a>
+                                 <a href="/issuetracker/users"><li class="menu_item">Find user</li></a>
+                                 <a href="/issuetracker/user"><li class="menu_item">Add user</li></a>
                             </ul>
                         </li>
                         <li class="menu_item" id="view">&#9654; View
                             <ul class="view_menu">
-                                 <a href="main?command=viewProjects"><li class="menu_item">Projects</li></a>
-                                 <a href="main?command=viewStatuses"><li class="menu_item">Statuses</li></a>
-                                 <a href="main?command=viewResolutions"><li class="menu_item">Resolutions</li></a>
-                                 <a href="main?command=viewPriorities"><li class="menu_item">Priorities</li></a>
-                                 <a href="main?command=viewTypes"><li class="menu_item">Types</li></a>
+                                 <a href="/issuetracker/projects"><li class="menu_item">Projects</li></a>
+                                 <a href="/issuetracker/statuses"><li class="menu_item">Statuses</li></a>
+                                 <a href="/issuetracker/resolutions"><li class="menu_item">Resolutions</li></a>
+                                 <a href="/issuetracker/priorities"><li class="menu_item">Priorities</li></a>
+                                 <a href="/issuetracker/types"><li class="menu_item">Types</li></a>
                             </ul>
                         </li>
                     </div>
@@ -50,18 +50,18 @@
         </div>
     </c:if>
  
-    <a href="main">
+    <a href="/issuetracker/">
     	<div class="logo" title="To main page"></div>
     </a>
     
     <!-- If loginUser variable exists - we have to show this greeting block-->
     <c:if test="${not empty sessionScope.loginUser}">
         <div id="user_welcome">
-            <a href="main?command=createIssue"><span id="submit_issue">Submit issue</span></a> | 
-            <a href="main?command=editProfile&userId=${sessionScope.loginUser.userId}">
+            <a href="/issuetracker/issue"><span id="submit_issue">Submit issue</span></a> | 
+            <a href="/issuetracker/profile/${sessionScope.loginUser.userId}">
             	<span id="user_login"><c:out value="${sessionScope.loginUser.firstName}"/> <c:out value="${sessionScope.loginUser.lastName}"/></span>
             </a> | 
-            <a href="main?command=logout"><span id="log_out">Log out</span></a>
+            <a href="/issuetracker/logout"><span id="log_out">Log out</span></a>
         </div>
     </c:if>
     
@@ -73,7 +73,7 @@
         <c:choose>
         	<c:when test="${empty sessionScope.loginUser}">
                 <div class="auth_container">
-                    <form name="auth_form" action="main" method="get">
+                    <form name="auth_form" action="/issuetracker/auth" method="post">
                         <input type="submit" id="sign_in_btn" value="Sign In"/>
                         <div id="auth">
                             <input type="hidden" name="command" value="auth"/>

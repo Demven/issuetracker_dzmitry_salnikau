@@ -25,6 +25,9 @@ public class Role implements Serializable {
 	public static final String COLUMN_ID = "id";
 	public static final String COLUMN_NAME = "name";
 	
+	public static final String ROLE_ADMIN = "Administrator";
+	public static final String ROLE_USER = "User";
+	
 	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name=COLUMN_ID)

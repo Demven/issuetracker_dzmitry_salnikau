@@ -4,11 +4,14 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.stereotype.Component;
+
 /**
  * Class that manages cookies
  * @author Dzmitry Salnikau
  * @since 07.02.2014
  */
+@Component
 public final class CookieManager {
 	
 	public final static String NAME_LOGIN = "login";

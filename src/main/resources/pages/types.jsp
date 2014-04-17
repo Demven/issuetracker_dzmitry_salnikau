@@ -4,27 +4,27 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title><c:out value="${attr.pageTitle}"/></title>
-<link rel="stylesheet" href="./css/_header.css" type="text/css" />
-<link rel="stylesheet" href="./css/types.css" type="text/css" />
-<link rel="stylesheet" href="./css/_footer.css" type="text/css" />
+<title><c:out value="${pageTitle}"/></title>
+<link rel="stylesheet" href="/issuetracker/resources/css/_header.css" type="text/css" />
+<link rel="stylesheet" href="/issuetracker/resources/css/types.css" type="text/css" />
+<link rel="stylesheet" href="/issuetracker/resources/css/_footer.css" type="text/css" />
 </head>
 
 <body>
 <%@ include file="_header.jsp" %>
             
 <div class="content">
-	<div id="content_title"><c:out value="${attr.pageTitle}"/></div>
+	<div id="content_title"><c:out value="${pageTitle}"/></div>
     <div id="table_container">
     	<div class="type_table">
             <div class="header_line">
               <div class="name">Name</div>
             </div>
             <div id="type_lines">
-            	<c:forEach items="${attr.types}" var="type">
+            	<c:forEach items="${types}" var="type">
                     <div class="type_line">
                     	<div class="name">
-                            <a href="main?command=editType&typeId=${type.typeId}">
+                            <a href="/issuetracker/type/${type.typeId}">
                                 <c:out value="${type.name}"/>
                             </a>
                         </div>

@@ -7,7 +7,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>JEE training project implementation by Dzmitry Salnikau</name>
 	<properties>
-		<spring-version>3.1.1.RELEASE</spring-version>
+		<spring-version>4.0.3.RELEASE</spring-version>
 	</properties>
 	<dependencies>
 		<dependency>

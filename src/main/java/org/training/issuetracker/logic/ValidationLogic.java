@@ -3,11 +3,14 @@ package org.training.issuetracker.logic;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.springframework.stereotype.Component;
+
 /**
  * Class responsible for checking user input
  * @author Dmitry Dementor Salnikov
  * @since 19.09.2013
  */
+@Component
 public class ValidationLogic {
 	
 	/**

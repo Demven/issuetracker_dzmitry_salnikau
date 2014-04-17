@@ -5,18 +5,18 @@
 <head>
 <meta charset="utf-8">
 <title><c:out value="${pageTitle}"/></title>
-<link rel="stylesheet" href="./css/_header.css" type="text/css" />
+<link rel="stylesheet" href="/issuetracker/resources/css/_header.css" type="text/css" />
 <c:choose>
     <c:when test="${empty editIssue}">
         <!-- Create issue --> 
-        <link rel="stylesheet" href="./css/issue_create.css" type="text/css" />
+        <link rel="stylesheet" href="/issuetracker/resources/css/issue_create.css" type="text/css" />
     </c:when>
     <c:when test="${not empty editIssue}">
         <!-- Edit issue -->
-        <link rel="stylesheet" href="./css/issue_edit.css" type="text/css" />
+        <link rel="stylesheet" href="/issuetracker/resources/css/issue_edit.css" type="text/css" />
     </c:when>
 </c:choose>
-<link rel="stylesheet" href="./css/_footer.css" type="text/css" />
+<link rel="stylesheet" href="/issuetracker/resources/css/_footer.css" type="text/css" />
 </head>
 
 <body>
@@ -29,8 +29,7 @@
             <!-- Create issue --> 
             <div id="content_title"><c:out value="${pageTitle}"/></div>
             
-            <form id="issue_form" action="main">
-                <input type="hidden" name="command" value="createIssue"/>
+            <form id="issue_form" action="/issuetracker/issue" method="POST">
                 <input id="issue_summary" name="summary" type="text" maxlength="45" placeholder="Summary">
                 <textarea id="issue_description" name="description" rows="4" placeholder="Description"></textarea>
                 <select id="issue_status" name="statusIndex" size="1" onChange="setStatusChanged();">
@@ -288,9 +287,7 @@
             
             <div class="form_container">
                 <div id="content_title"><c:out value="${pageTitle}"/></div>
-                <form id="issue_form" action="main">
-                    <input type="hidden" name="command" value="editIssue"/>
-                    <input type="hidden" name="issueId" value="${editIssue.issueId}"/>
+                <form id="issue_form" action="/issuetracker/issue/${editIssue.issueId}" method="POST">
                     <div id="issue_subtitle">Id:</div>
                     <div id="issue_id" class="text_field"><c:out value="${editIssue.issueId}"/></div>
                     <div id="issue_subtitle">Create date:</div>
@@ -655,8 +652,8 @@
 		
 			<div class="side_container">
 				<div class="tabs_container">
-					<div id="tab_comments" class="tab_selected" title="Show comments" onClick="showComments();"><img src="./img/icons/tab_comments.png" /></div>
-					<div id="tab_attachments" class="tab" title="Show attachments" onClick="showAttachments();"><img src="./img/icons/tab_attachments.png" /></div>
+					<div id="tab_comments" class="tab_selected" title="Show comments" onClick="showComments();"><img src="/issuetracker/resources/img/icons/tab_comments.png" /></div>
+					<div id="tab_attachments" class="tab" title="Show attachments" onClick="showAttachments();"><img src="/issuetracker/resources/img/icons/tab_attachments.png" /></div>
 				</div>
 				
 				<div id="side_title">Comments</div>

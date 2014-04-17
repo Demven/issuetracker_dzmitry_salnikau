@@ -6,7 +6,6 @@ import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,20 +24,18 @@ public class HibernateUserDAO implements UserDAO{
 	@Autowired
     protected SessionFactory sessionFactory;
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> getUsers() {
 		List<User> users = null;
 		
 		final Session session = sessionFactory.getCurrentSession();
-		final Transaction transaction = session.beginTransaction();	
 		try {
 	        Criteria criteria = session.createCriteria(User.class);
 	        criteria.addOrder(Order.asc(User.COLUMN_ID));
 	        users = (List<User>) criteria.list();
-	        transaction.commit();
 		} catch (Exception e) {
 			logger.error(TAG + " Getting all users failed!", e);
-		    transaction.rollback();
 		    throw e;
 		}
 
@@ -50,7 +47,6 @@ public class HibernateUserDAO implements UserDAO{
 		boolean isUserExists = false;
 		
 		final Session session = sessionFactory.getCurrentSession();
-		final Transaction transaction = session.beginTransaction();	
 		try {
 	        Criteria criteria = session.createCriteria(User.class);
 	
@@ -65,11 +61,8 @@ public class HibernateUserDAO implements UserDAO{
 	            	isUserExists = true;
 	            }
 	        }
-	        
-	        transaction.commit();
 		} catch (Exception e) {
 			logger.error(TAG + " Checking authorization for email=" + email + " and password=" + password +" failed!", e);
-		    transaction.rollback();
 		    throw e;
 		}
            
@@ -81,7 +74,6 @@ public class HibernateUserDAO implements UserDAO{
 		boolean isEmailExists = false;
 		
 		final Session session = sessionFactory.getCurrentSession();
-		final Transaction transaction = session.beginTransaction();	
 		try {
 	        Criteria criteria = session.createCriteria(User.class);
 	
@@ -96,11 +88,8 @@ public class HibernateUserDAO implements UserDAO{
 	            	isEmailExists = true;
 	            }
 	        }
-	        
-	        transaction.commit();
 		} catch (Exception e) {
 			logger.error(TAG + " Checking user's email=" + email + " failed!", e);
-		    transaction.rollback();
 		    throw e;
 		}
            
@@ -112,7 +101,6 @@ public class HibernateUserDAO implements UserDAO{
 		Integer userId = null;
 		
 		final Session session = sessionFactory.getCurrentSession();
-		final Transaction transaction = session.beginTransaction();	
 		try {
 	        Criteria criteria = session.createCriteria(User.class);
 	
@@ -125,11 +113,8 @@ public class HibernateUserDAO implements UserDAO{
 	        if(user != null){
 	        	userId = user.getUserId();
 	        }
-	        
-	        transaction.commit();
 		} catch (Exception e) {
 			logger.error(TAG + " Getting userId by name= " + firstName + " " + lastName + " failed", e);
-		    transaction.rollback();
 		    throw e;
 		}
            
@@ -141,17 +126,13 @@ public class HibernateUserDAO implements UserDAO{
 		User user = null;
 		
 		final Session session = sessionFactory.getCurrentSession();
-		final Transaction transaction = session.beginTransaction();	
 		try {
 	        Criteria criteria = session.createCriteria(User.class);
 	
 	        List<User> result = (List<User>) criteria.add(Restrictions.like("email", email)).list();
 	        user = result.get(0);
-	        
-	        transaction.commit();
 		} catch (Exception e) {
 			logger.error(TAG + " Getting User-object by email= " + email + " failed", e);
-		    transaction.rollback();
 		    throw e;
 		}
 		
@@ -163,13 +144,10 @@ public class HibernateUserDAO implements UserDAO{
 		User user = null;
 		
 		final Session session = sessionFactory.getCurrentSession();
-		final Transaction transaction = session.beginTransaction();	
 		try {
 			user = (User) session.get(User.class, userId);
-			transaction.commit();
 		} catch (Exception e) {
 			logger.error(TAG + " Getting User-object by id= " + userId + " failed", e);
-		    transaction.rollback();
 		    throw e;
 		}
            
@@ -181,14 +159,11 @@ public class HibernateUserDAO implements UserDAO{
 		boolean success = false;
 		
 		final Session session = sessionFactory.getCurrentSession();
-		final Transaction transaction = session.beginTransaction();	
 		try {
 		    session.save(user);
-		    transaction.commit();
 		    success = true;
 		} catch (Exception e) {
 			logger.error(TAG + " Creating User-object failed!", e);
-		    transaction.rollback();
 		    throw e;
 		}
 		
@@ -200,14 +175,11 @@ public class HibernateUserDAO implements UserDAO{
 		boolean success = false;
 		
 		final Session session = sessionFactory.getCurrentSession();
-		final Transaction transaction = session.beginTransaction();	
 		try {
 		    session.update(user);
-		    transaction.commit();
 		    success = true;
 		} catch (Exception e) {
 			logger.error(TAG + " Updating User-object " +  user.getUserId() + " failed!", e);
-		    transaction.rollback();
 		    throw e;
 		}
 		
@@ -222,14 +194,11 @@ public class HibernateUserDAO implements UserDAO{
 		deletingUser.setUserId(userId);
 		
 		final Session session = sessionFactory.getCurrentSession();
-		final Transaction transaction = session.beginTransaction();	
 		try {
 		    session.delete(deletingUser);
-		    transaction.commit();
 		    success = true;
 		} catch (Exception e) {
 			logger.error(TAG + " Deleting User-object " + userId + " failed!", e);
-		    transaction.rollback();
 		    throw e;
 		}
 		

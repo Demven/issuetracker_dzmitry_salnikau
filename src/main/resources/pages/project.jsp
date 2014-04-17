@@ -5,9 +5,9 @@
 <head>
 <meta charset="utf-8">
 <title><c:out value="${pageTitle}"/></title>
-<link rel="stylesheet" href="./css/_header.css" type="text/css" />
-<link rel="stylesheet" href="./css/project.css" type="text/css" />
-<link rel="stylesheet" href="./css/_footer.css" type="text/css" />
+<link rel="stylesheet" href="/issuetracker/resources/css/_header.css" type="text/css" />
+<link rel="stylesheet" href="/issuetracker/resources/css/project.css" type="text/css" />
+<link rel="stylesheet" href="/issuetracker/resources/css/_footer.css" type="text/css" />
 </head>
 
 <body>
@@ -19,8 +19,7 @@
     <c:choose>
         <c:when test="${empty editProject}">
             <!-- Create project -->
-            <form id="project_form" action="main">
-            	<input type="hidden" name="command" value="createProject" />
+            <form id="project_form" name="project_form" action="/issuetracker/project" method="POST">
                 <input id="project_name" name="name" type="text" maxlength="45" placeholder="Name of project">
                 <textarea id="project_description" name="description" rows="4" placeholder="Description"></textarea>
                 <input id="project_build" name="buildName" type="text" maxlength="45" placeholder="Initial build">
@@ -30,14 +29,27 @@
                         <option value="${manager.userId}"><c:out value="${manager.firstName}"/> <c:out value="${manager.lastName}"/></option>
                     </c:forEach>
                 </select>
-                <input id="project_submit" type="submit" name="submit" value="Create">
+                <input id="project_submit" type="button" onClick="trySubmit();" value="Create">
             </form>
+			<script type="text/javascript" language="javascript">
+				// Check all fields and if all is fine - submit 
+				function trySubmit(){
+					if(isNameValid()){
+						if(isDescriptionValid()){
+							if(isBuildValid()){
+								if(isManagerValid()){
+									// all is fine - submit!
+									document.forms.project_form.submit();
+								}
+							}
+						}
+					}
+				}
+			</script>
         </c:when>
        	<c:when test="${not empty editProject}">
         	<!-- Edit project -->
-            <form id="project_form" action="main">
-            	<input type="hidden" name="command" value="editProject" />
-                <input type="hidden" name="projectId" value="${editProject.projectId}" />
+            <form name="project_form" id="project_form" action="/issuetracker/project/${editProject.projectId}" method="POST">
                 <input id="project_name" name="name" value="${editProject.name}" type="text" maxlength="45" placeholder="Name of project">
                 <textarea id="project_description" name="description" rows="4" placeholder="Description"><c:out value="${editProject.description}"/></textarea>
                 <div class="build_container">
@@ -54,7 +66,7 @@
                     <div id="clear_build" title="Return to the list" onClick="clearBuild();" style="display:none"></div>
                     <div id="add_build" title="Add new build" onClick="addBuild();"></div>
                 </div>
-                <select id="project_select_manager" name="managerId" size="1">
+                <select id="project_manager" name="managerId" size="1">
                   	<option selected disabled value="0">Manager</option>
                     <c:forEach items="${managers}" var="manager">
                     	<c:choose>
@@ -67,8 +79,23 @@
                         </c:choose>
                     </c:forEach>
                 </select>
-                <input id="project_submit" type="submit" name="submit" value="Done">
+                <input id="project_submit" type="button" onClick="trySubmit();" value="Done">
             </form>
+			<script type="text/javascript" language="javascript">
+				// Check all fields and if all is fine - submit 
+				function trySubmit(){
+					if(isNameValid()){
+						if(isDescriptionValid()){
+							if(isBuildWithNewBuldValid()){
+								if(isManagerValid()){
+									// all is fine - submit!
+									document.forms.project_form.submit();
+								}
+							}
+						}
+					}
+				}
+			</script>
             <script type="text/javascript" language="javascript">
                 var add_build = document.getElementById("add_build");
                 var clear_build = document.getElementById("clear_build");
@@ -100,6 +127,81 @@
        	</c:when>
 	</c:choose>
 </div>
+
+<script type="text/javascript" language="javascript">
+	function  isNameValid(){
+		var projectName = document.getElementById("project_name").value.trim();
+		var regexp = /\!|\@|\№|\%|\^|\&|\*|\(|\)|\_|\=|\+|\?|\"|\'|\;|\<|\>|\,|\.|\`|\~/;
+		if(projectName != ""){
+			if(projectName.length < 2){
+				showErrorPopupWindow("Project name is too short! It cannot be less than 2 characters.");
+				return false;
+			} else if(projectName.search(regexp) != -1){
+				showErrorPopupWindow("Project name contains invalid characters!");
+				return false;
+			} else if(projectName.length > 40){
+				showErrorPopupWindow("First name is too long! It cannot be more than 40 characters.");
+				return false;
+			} else{
+				// projectName is ok
+				return true;
+			}
+		} else{
+			showErrorPopupWindow("You should enter a correct project name!");
+			return false;
+		}
+	}
+	
+	function  isDescriptionValid(){
+		var projectDescription = document.getElementById("project_description").value.trim();
+		if(projectDescription != ""){
+			if(projectDescription.length < 20){
+				showErrorPopupWindow("Project description is too short! It cannot be less than 20 characters.");
+				return false;
+			} else{
+				// projectDescription is ok
+				return true;
+			}
+		} else{
+			showErrorPopupWindow("You should enter a correct project description!");
+			return false;
+		}
+	}
+	
+	function  isBuildValid(){
+		var projectBuild = document.getElementById("project_build").value.trim();
+		if(projectBuild != ""){
+			// projectBuild is ok
+			return true;
+		} else{
+			showErrorPopupWindow("You should enter a correct initial build!");
+			return false;
+		}
+	}
+	
+	function  isBuildWithNewBuldValid(){
+		var projectSelectBuild = document.getElementById("project_select_build").value;
+		var projectNewBuild = document.getElementById("project_new_build").value.trim();
+		if(projectSelectBuild != 0 || projectNewBuild != ""){
+			// projectBuild is ok
+			return true;
+		} else{
+			showErrorPopupWindow("You should choose corect build");
+			return false;
+		}
+	}
+	
+	function  isManagerValid(){
+		var projectManager = document.getElementById("project_manager").value;
+		if(projectManager != 0){
+			// projectManager is ok
+			return true;
+		} else{
+			showErrorPopupWindow("You should choose manager to proceed!");
+			return false;
+		}
+	}
+</script>
 
 <%@ include file="_footer.jsp" %>
 

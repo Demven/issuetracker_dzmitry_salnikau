@@ -6,7 +6,6 @@ import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -24,21 +23,18 @@ public class HibernatePriorityDAO implements PriorityDAO {
 	@Autowired
     protected SessionFactory sessionFactory;
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Priority> getPriorities() {
 		List<Priority> priorities = null;
 		
 		final Session session = sessionFactory.getCurrentSession();
-		final Transaction transaction = session.beginTransaction();	
 		try {
 			Criteria criteria = session.createCriteria(Priority.class);
 			criteria.addOrder(Order.asc(Priority.COLUMN_ID));
 			priorities = (List<Priority>) criteria.list();
-			
-		    transaction.commit();
 		} catch (Exception e) {
 			logger.error(TAG + " Getting all priorities failed!", e);
-		    transaction.rollback();
 		    throw e;
 		}
         
@@ -50,13 +46,10 @@ public class HibernatePriorityDAO implements PriorityDAO {
 		Priority priority = null;
 		
 		final Session session = sessionFactory.getCurrentSession();
-		final Transaction transaction = session.beginTransaction();
 		try {
 	        priority = (Priority) session.get(Priority.class, priorityId);
-	        transaction.commit();
 		} catch (Exception e) {
 			logger.error(TAG + " Getting Priority by id failed!", e);
-		    transaction.rollback();
 		    throw e;
 		}
 		
@@ -73,13 +66,10 @@ public class HibernatePriorityDAO implements PriorityDAO {
 		newPriority.setName(priority.getName());
 		
 		final Session session = sessionFactory.getCurrentSession();
-		final Transaction transaction = session.beginTransaction();
 		try {
 		    session.save(newPriority);
-		    transaction.commit();
 		    success = true;
 		} catch(Exception e) {
-			transaction.rollback();
 		    logger.error(TAG + " Creating Priority-object failed!", e);
 		}
 		
@@ -96,13 +86,10 @@ public class HibernatePriorityDAO implements PriorityDAO {
 		newPriority.setName(priority.getName());
 		
 		final Session session = sessionFactory.getCurrentSession();
-		final Transaction transaction = session.beginTransaction();
 		try {
 		    session.update(newPriority);
-		    transaction.commit();
 		    success = true;
 		} catch(Exception e) {
-			transaction.rollback();
 		    logger.error(TAG + " Updating Priority-object with id=" + priority.getPriorityId() + " failed!", e);
 		}
 		
@@ -117,13 +104,10 @@ public class HibernatePriorityDAO implements PriorityDAO {
 		deletingPriority.setPriorityId(priorityId);
 		
 		final Session session = sessionFactory.getCurrentSession();
-		final Transaction transaction = session.beginTransaction();
 		try {
 		    session.delete(deletingPriority);
-		    transaction.commit();
 		    success = true;
 		} catch(Exception e) {
-			transaction.rollback();
 		    logger.error(TAG + " Deleting Priority-object with id=" + priorityId + " failed!", e);
 		}
 		

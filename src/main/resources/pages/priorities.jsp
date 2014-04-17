@@ -5,9 +5,9 @@
 <head>
 <meta charset="utf-8">
 <title><c:out value="${pageTitle}"/></title>
-<link rel="stylesheet" href="./css/_header.css" type="text/css" />
-<link rel="stylesheet" href="./css/priorities.css" type="text/css" />
-<link rel="stylesheet" href="./css/_footer.css" type="text/css" />
+<link rel="stylesheet" href="/issuetracker/resources/css/_header.css" type="text/css" />
+<link rel="stylesheet" href="/issuetracker/resources/css/priorities.css" type="text/css" />
+<link rel="stylesheet" href="/issuetracker/resources/css/_footer.css" type="text/css" />
 </head>
 
 <body>
@@ -24,7 +24,7 @@
                 <c:forEach items="${priorities}" var="priority">
                     <div class="priority_line">
                     	<div class="name">
-                            <a href="main?command=editPriority&priorityId=${priority.priorityId}">
+                            <a href="/issuetracker/priority/${priority.priorityId}">
                                 <c:out value="${priority.name}"/>
                             </a>
                         </div>

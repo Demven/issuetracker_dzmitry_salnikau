@@ -5,9 +5,9 @@
 <head>
 <meta charset="utf-8">
 <title><c:out value="${pageTitle}"/></title>
-<link rel="stylesheet" href="./css/_header.css" type="text/css" />
-<link rel="stylesheet" href="./css/profile.css" type="text/css" />
-<link rel="stylesheet" href="./css/_footer.css" type="text/css" />
+<link rel="stylesheet" href="/issuetracker/resources/css/_header.css" type="text/css" />
+<link rel="stylesheet" href="/issuetracker/resources/css/profile.css" type="text/css" />
+<link rel="stylesheet" href="/issuetracker/resources/css/_footer.css" type="text/css" />
 </head>
 
 <body>
@@ -19,9 +19,7 @@
     <c:choose>
         <c:when test="${not empty editUser}">
         	<!-- Show user data to administrator -->
-            <form id="user_form" name="user_form" action="main">
-                <input type="hidden" name="command" value="editUser"/>
-                <input type="hidden" name="userId" value="${editUser.userId}"/>
+            <form id="user_form" name="user_form" action="/issuetracker/profile/${editUser.userId}" method="POST">
                 <input id="user_first_name" name="firstName" value="${editUser.firstName}" type="text" maxlength="45" placeholder="First name"/>
                 <input id="user_last_name" name="lastName" value="${editUser.lastName}" type="text" maxlength="45" placeholder="Last name"/>
                 <input id="user_email" name="email" value="${editUser.email}" type="email" maxlength="45" placeholder="Email address"/>
@@ -75,9 +73,7 @@
         </c:when>
         <c:when test="${not empty editProfile}">
         	<!-- Show profile to a user -->
-        	<form id="user_form" name="user_form" action="main">
-                <input type="hidden" name="command" value="editProfile"/>
-                <input type="hidden" name="userId" value="${editProfile.userId}"/>
+        	<form id="user_form" name="user_form" action="/issuetracker/profile/${editProfile.userId}" method="POST">
                 <input id="user_first_name" name="firstName" value="${editProfile.firstName}" type="text" maxlength="45" placeholder="First name"/>
                 <input id="user_last_name" name="lastName"  value="${editProfile.lastName}" type="text" maxlength="45" placeholder="Last name"/>
                 <div id="password_container">

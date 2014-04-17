@@ -25,6 +25,10 @@ public class Status implements Serializable{
 	public static final String COLUMN_ID = "id";
 	public static final String COLUMN_NAME = "name";
 	
+	public static final int INDEX_NEW = 1;
+	public static final int INDEX_ASSIGNED = 2;
+	public static final int INDEX_CLOSED = 5;
+	
 	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name=COLUMN_ID)

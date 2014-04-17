@@ -6,7 +6,6 @@ import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -24,20 +23,18 @@ public class HibernateIssueDAO implements IssueDAO{
 	@Autowired
     protected SessionFactory sessionFactory;
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Issue> getIssues() {
 		List<Issue> issues = null;
 		
 		final Session session = sessionFactory.getCurrentSession();
-		final Transaction transaction = session.beginTransaction();	
 		try {
 	        Criteria criteria = session.createCriteria(Issue.class);
 	        criteria.addOrder(Order.asc(Issue.COLUMN_ID));
 	        issues = (List<Issue>) criteria.list();
-	        transaction.commit();
 		} catch (Exception e) {
 			logger.error(TAG + " Getting all issues failed!", e);
-		    transaction.rollback();
 		    throw e;
 		}
 		
@@ -49,13 +46,10 @@ public class HibernateIssueDAO implements IssueDAO{
 		Issue issue = null;
 		
 		final Session session = sessionFactory.getCurrentSession();
-		final Transaction transaction = session.beginTransaction();	
 		try {
 	        issue = (Issue) session.get(Issue.class, issueId);
-	        session.getTransaction().commit();
 		} catch (Exception e) {
 			logger.error(TAG + " Getting Issue-object " + issueId + "failed!", e);
-		    transaction.rollback();
 		    throw e;
 		}
         
@@ -67,13 +61,10 @@ public class HibernateIssueDAO implements IssueDAO{
 		boolean success = false;
 		
 		final Session session = sessionFactory.getCurrentSession();
-		final Transaction transaction = session.beginTransaction();	
 		try {
 		    session.save(issue);
-		    transaction.commit();
 		    success = true;
 		} catch(Exception e) {
-			transaction.rollback();
 		    logger.error(TAG + " Creating Issue-object failed!", e);
 		}
 		
@@ -85,13 +76,10 @@ public class HibernateIssueDAO implements IssueDAO{
 		boolean success = false;
 		
 		final Session session = sessionFactory.getCurrentSession();
-		final Transaction transaction = session.beginTransaction();	
 		try {
 		    session.update(issue);
-		    transaction.commit();
 		    success = true;
 		} catch(Exception e) {
-			transaction.rollback();
 		    logger.warn(TAG + " Updating Issue-object with id=" + issue.getIssueId() + " failed!", e);
 		}
 		
@@ -106,13 +94,10 @@ public class HibernateIssueDAO implements IssueDAO{
 		deletingIssue.setIssueId(issueId);
 		
 		final Session session = sessionFactory.getCurrentSession();
-		final Transaction transaction = session.beginTransaction();	
 		try {
 		    session.delete(deletingIssue);
-		    transaction.commit();
 		    success = true;
 		} catch(Exception e) {
-			transaction.rollback();
 		    logger.error(TAG + " Deleting Issue-object with id=" + issueId + " failed!", e);
 		}
 		

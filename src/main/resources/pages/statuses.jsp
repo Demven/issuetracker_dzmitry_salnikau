@@ -5,9 +5,9 @@
 <head>
 <meta charset="utf-8">
 <title><c:out value="${pageTitle}"/></title>
-<link rel="stylesheet" href="./css/_header.css" type="text/css" />
-<link rel="stylesheet" href="./css/statuses.css" type="text/css" />
-<link rel="stylesheet" href="./css/_footer.css" type="text/css" />
+<link rel="stylesheet" href="/issuetracker/resources/css/_header.css" type="text/css" />
+<link rel="stylesheet" href="/issuetracker/resources/css/statuses.css" type="text/css" />
+<link rel="stylesheet" href="/issuetracker/resources/css/_footer.css" type="text/css" />
 </head>
 
 <body>
@@ -24,7 +24,7 @@
             	<c:forEach items="${statuses}" var="status">
                     <div class="status_line">
                     	<div class="name">
-                            <a href="main?command=editStatus&statusId=${status.statusId}">
+                            <a href="/issuetracker/status/${status.statusId}">
                                 <c:out value="${status.name}"/>
                             </a>
                         </div>

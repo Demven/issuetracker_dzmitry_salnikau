@@ -5,9 +5,9 @@
 <head>
 <meta charset="utf-8">
 <title><c:out value="${pageTitle}"/></title>
-<link rel="stylesheet" href="./css/_header.css" type="text/css" />
-<link rel="stylesheet" href="./css/user.css" type="text/css" />
-<link rel="stylesheet" href="./css/_footer.css" type="text/css" />
+<link rel="stylesheet" href="/issuetracker/resources/css/_header.css" type="text/css" />
+<link rel="stylesheet" href="/issuetracker/resources/css/user.css" type="text/css" />
+<link rel="stylesheet" href="/issuetracker/resources/css/_footer.css" type="text/css" />
 </head>
 
 <body>
@@ -17,8 +17,7 @@
 	<div id="content_title"><c:out value="${pageTitle}"/></div>
     
     <!-- Create user -->
-    <form id="user_form" name="user_form" action="main">
-        <input type="hidden" name="command" value="createUser"/>
+    <form id="user_form" name="user_form" action="/issuetracker/user" method="POST">
         <input id="user_first_name" name="firstName" type="text" maxlength="45" placeholder="First name"/>
         <input id="user_last_name" name="lastName" type="text" maxlength="45" placeholder="Last name"/>
         <input id="user_email" name="email" type="email" maxlength="45" placeholder="Email address"/>

@@ -5,9 +5,9 @@
 <head>
 <meta charset="utf-8">
 <title><c:out value="${pageTitle}"/></title>
-<link rel="stylesheet" href="./css/_header.css" type="text/css" />
-<link rel="stylesheet" href="./css/resolution.css" type="text/css" />
-<link rel="stylesheet" href="./css/_footer.css" type="text/css" />
+<link rel="stylesheet" href="/issuetracker/resources/css/_header.css" type="text/css" />
+<link rel="stylesheet" href="/issuetracker/resources/css/resolution.css" type="text/css" />
+<link rel="stylesheet" href="/issuetracker/resources/css/_footer.css" type="text/css" />
 </head>
 
 <body>
@@ -19,17 +19,14 @@
     <c:choose>
         <c:when test="${empty editResolution}">
             <!-- Create resolution -->
-            <form id="resolution_form" action="main">
-            	<input type="hidden" name="command" value="createResolution" />
+            <form id="resolution_form" action="/issuetracker/resolution" method="POST">
                 <input id="resolution_name" name="name" type="text" maxlength="45" placeholder="Name of resolution"/>
                 <input id="resolution_submit" type="submit" name="submit" value="Create"/>
             </form>
         </c:when>
        	<c:when test="${not empty editResolution}">
         	<!-- Edit resolution -->
-            <form id="resolution_form" action="main">
-            	<input type="hidden" name="command" value="editResolution" />
-                <input type="hidden" name="resolutionId" value="${editResolution.resolutionId}" />
+            <form id="resolution_form" action="/issuetracker/resolution/${editResolution.resolutionId}" method="POST">
                 <input id="resolution_name" name="name" value="${editResolution.name}" type="text" maxlength="45" placeholder="Name of resolution"/>
                 <input id="resolution_submit" type="submit" name="submit" value="Done"/>
             </form>

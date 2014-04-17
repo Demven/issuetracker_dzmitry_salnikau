@@ -5,9 +5,9 @@
 <head>
 <meta charset="utf-8">
 <title><c:out value="${pageTitle}"/></title>
-<link rel="stylesheet" href="./css/_header.css" type="text/css" />
-<link rel="stylesheet" href="./css/type.css" type="text/css" />
-<link rel="stylesheet" href="./css/_footer.css" type="text/css" />
+<link rel="stylesheet" href="/issuetracker/resources/css/_header.css" type="text/css" />
+<link rel="stylesheet" href="/issuetracker/resources/css/type.css" type="text/css" />
+<link rel="stylesheet" href="/issuetracker/resources/css/_footer.css" type="text/css" />
 </head>
 
 <body>
@@ -19,17 +19,14 @@
     <c:choose>
         <c:when test="${empty editType}">
             <!-- Create type -->
-            <form id="type_form" action="main">
-            	<input type="hidden" name="command" value="createType" />
+            <form id="type_form" action="/issuetracker/type" method="POST">
                 <input id="type_name" name="name" type="text" maxlength="45" placeholder="Name of type"/>
                 <input id="type_submit" type="submit" name="submit" value="Create"/>
             </form>
         </c:when>
        	<c:when test="${not empty editType}">
         	<!-- Edit type -->
-            <form id="type_form" action="main">
-            	<input type="hidden" name="command" value="editType" />
-                <input type="hidden" name="typeId" value="${editType.typeId}" />
+            <form id="type_form" action="/issuetracker/type/${editType.typeId}" method="POST">
                 <input id="type_name" name="name" value="${editType.name}" type="text" maxlength="45" placeholder="Name of type"/>
                 <input id="type_submit" type="submit" name="submit" value="Done"/>
             </form>
