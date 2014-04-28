@@ -41,6 +41,8 @@ public class Issue implements Serializable{
 	public static final String COLUMN_BUILD_FOUND = "buildfound";
 	public static final String COLUMN_ASSIGNEE = "assignee";
 	
+	public static final String PROPERTY_TYPE = "type";
+	
 	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name=COLUMN_ID)

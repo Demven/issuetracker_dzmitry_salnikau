@@ -49,6 +49,11 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class> 
 	</listener> 
 	
+	<!-- Own listener to init  -->
+	<listener>
+		<listener-class>org.training.issuetracker.listeners.ContextListener</listener-class>
+	</listener>
+	
 	<!-- Обработка запросов приложения --> 
 	<servlet> 
 		<servlet-name>dispatcher</servlet-name> 

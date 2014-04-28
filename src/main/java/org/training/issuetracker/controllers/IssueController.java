@@ -1,8 +1,15 @@
 package org.training.issuetracker.controllers;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -13,26 +20,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.training.issuetracker.dao.hibernate.entities.Build;
-import org.training.issuetracker.dao.hibernate.entities.Issue;
-import org.training.issuetracker.dao.hibernate.entities.Priority;
-import org.training.issuetracker.dao.hibernate.entities.Project;
-import org.training.issuetracker.dao.hibernate.entities.Resolution;
-import org.training.issuetracker.dao.hibernate.entities.Status;
-import org.training.issuetracker.dao.hibernate.entities.Type;
-import org.training.issuetracker.dao.hibernate.entities.User;
+import org.springframework.web.multipart.MultipartFile;
+import org.training.issuetracker.dao.hibernate.entities.*;
+import org.training.issuetracker.listeners.ContextListener;
 import org.training.issuetracker.managers.DateManager;
 import org.training.issuetracker.managers.SessionManager;
 import org.training.issuetracker.pages.IssuePage;
 import org.training.issuetracker.pages.MainPage;
-import org.training.issuetracker.services.BuildService;
-import org.training.issuetracker.services.IssueService;
-import org.training.issuetracker.services.PriorityService;
-import org.training.issuetracker.services.ProjectService;
-import org.training.issuetracker.services.ResolutionService;
-import org.training.issuetracker.services.StatusService;
-import org.training.issuetracker.services.TypeService;
-import org.training.issuetracker.services.UserService;
+import org.training.issuetracker.services.*;
 
 @Controller
 @RequestMapping("/issue")
@@ -66,7 +61,15 @@ public class IssueController {
 	private ResolutionService resolutionService;
 	
 	@Autowired
+	private CommentService commentService;
+	
+	@Autowired
+	private AttachmentService attachmentService;
+	
+	@Autowired
 	private SessionManager sessionManager; 
+	
+	private String saveDirectory = ContextListener.getServerPath() + "data\\attachments\\issues\\";
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public String createIssue(Model model) {
@@ -247,6 +250,16 @@ public class IssueController {
 				model.addAttribute(IssuePage.ATTR_USERS, users);
 			}
 			
+			List<Comment> comments = commentService.getCommentsForIssue(id);
+			if(comments != null){
+				model.addAttribute(IssuePage.ATTR_COMMENTS, comments);
+			}
+			
+			List<Attachment> attachments = attachmentService.getAttachmentsForIssue(id);
+			if(attachments != null){
+				model.addAttribute(IssuePage.ATTR_ATTACHMENTS, attachments);
+			}
+			
 		} else{
 			// id is not valid, tell this to a user and forward him to the main page
 			model.addAttribute(MainPage.ATTR_ERROR_MESSAGE, "Such issue doesn't exist!");
@@ -256,7 +269,7 @@ public class IssueController {
 		return page;
 	}
 	
-	@RequestMapping(value = "/{id}", method=RequestMethod.POST)
+	@RequestMapping(value = "/{id}", method=RequestMethod.POST, params=IssuePage.PARAM_SUMMARY)
 	public String saveEditedIssue(
 			Model model,
 			@PathVariable("id") Integer id,
@@ -376,6 +389,187 @@ public class IssueController {
 		}
 		
 		return page;
+	}
+	
+	@RequestMapping(value = "/{id}", method=RequestMethod.POST, params=IssuePage.PARAM_COMMENT)
+	public String addCommentForIssue(
+			Model model,
+			@PathVariable("id") Integer issueId,
+			HttpServletRequest request,
+			@RequestParam(IssuePage.PARAM_USER_ID) Integer userId,
+			@RequestParam(IssuePage.PARAM_COMMENT) String text) {
+		
+		String page = IssuePage.NAME;
+		
+		Issue editIssue = issueService.getIssueById(issueId);
+		
+		if(editIssue != null){
+			
+			if(userId != null && !text.equals("") && text != null){
+				
+				boolean isSuccess = false;
+				
+				Comment newComment = new Comment();
+				Issue commentIssue = new Issue();
+				commentIssue.setIssueId(issueId);
+				
+				User commentUser = new User();
+				commentUser.setUserId(userId);
+				
+				newComment.setIssue(commentIssue);
+				newComment.setUser(commentUser);
+				newComment.setTime(DateManager.getCurrentTime());
+				newComment.setDate(DateManager.getCurrentDate());
+				newComment.setText(text);
+				
+				// save comment
+				if(commentService.createComment(newComment)){
+					isSuccess = true;
+				}
+					
+				if(isSuccess){
+					// All data saved succesfully
+					// Show user popup-window with this message
+					model.addAttribute(IssuePage.ATTR_SUCCESS_MESSAGE, "Comment saved successfully!");
+				} else{
+					// Show user popup-window with error
+					model.addAttribute(IssuePage.ATTR_ERROR_MESSAGE, "Failed to save comment!");
+				}
+				
+			} else{
+				model.addAttribute(IssuePage.ATTR_ERROR_MESSAGE, "Please enter your comment!");
+			}
+			
+			page = editIssue(model, issueId, request);
+			
+		} else{
+			// id is not valid, tell this to a user and forward him to the main page
+			model.addAttribute(MainPage.ATTR_ERROR_MESSAGE, "Such issue doesn't exist!");
+			page = mainController.showMainPage(model, request);
+		}
+		
+		return page;
+	}
+	
+	@RequestMapping(value = "/{id}/upload", method=RequestMethod.POST)
+	public String addAttachment(
+			Model model,
+			HttpServletRequest request,
+			@PathVariable("id") Integer issueId,
+			@RequestParam(IssuePage.PARAM_USER_ID) Integer userId,
+			@RequestParam(IssuePage.PARAM_FILE) MultipartFile file){
+        
+		String page = IssuePage.NAME;
+
+		Issue editIssue = issueService.getIssueById(issueId);
+		
+		if(editIssue != null){
+			boolean success = false;
+			
+			if (!file.isEmpty()) {
+				
+				Attachment attachment = new Attachment();
+				attachment.setReference(file.getOriginalFilename());
+				
+				User uploadingUser = new User();
+				uploadingUser.setUserId(userId);
+				attachment.setUser(uploadingUser);
+				
+				Issue issue = new Issue();
+				issue.setIssueId(issueId);
+				attachment.setIssue(issue);
+				
+				attachment.setTime(DateManager.getCurrentTime());
+				attachment.setDate(DateManager.getCurrentDate());
+				
+				// try to save in database
+				success = attachmentService.createAttachment(attachment);
+				
+				if(success){
+					// try to save file in the data directory
+		            try {
+		            	// Create directory for that issue
+		        		File saveIssueDirectory = new File(saveDirectory + issueId);
+		        		
+		        		if (!saveIssueDirectory.exists()) {
+		        			saveIssueDirectory.mkdirs();
+		        		}
+		        		
+		        		File savedFile = new File(saveIssueDirectory.getAbsolutePath() + "\\" + file.getOriginalFilename());
+		        		
+		                byte[] bytes = file.getBytes();
+		                BufferedOutputStream stream = new BufferedOutputStream(
+		                		new FileOutputStream(savedFile));
+		                stream.write(bytes);
+		                stream.close();
+		                model.addAttribute(IssuePage.ATTR_SUCCESS_MESSAGE, "Attachment saved successfully!");
+		            } catch (Exception e) {
+		            	success = false;
+		            	model.addAttribute(IssuePage.ATTR_ERROR_MESSAGE, "Failed to save file!");
+		            }
+		            
+				} else{
+					model.addAttribute(IssuePage.ATTR_ERROR_MESSAGE, "Failed to save file!");
+				}
+				
+	        } else {
+	        	model.addAttribute(IssuePage.ATTR_ERROR_MESSAGE, "Your file is empty!");
+	        }
+			
+			page = editIssue(model, issueId, request);
+		
+		} else{
+			// id is not valid, tell this to a user and forward him to the main page
+			model.addAttribute(MainPage.ATTR_ERROR_MESSAGE, "Such issue doesn't exist!");
+			page = mainController.showMainPage(model, request);
+		}
+		
+		return page;
+	}
+	
+	@RequestMapping(value = "/{id}/download/{fileId}", method=RequestMethod.GET)
+	public void downloadAttachment(HttpServletRequest request,
+				HttpServletResponse response,
+				@PathVariable("id") Integer issueId,
+				@PathVariable("fileId") Integer fileId){
+		
+		Attachment attachment = attachmentService.getAttachmentById(fileId);
+		
+		File downloadFile = new File(saveDirectory + issueId + "\\" + attachment.getReference());
+		
+		int bufferSize = 1024 * 1024 * 10;
+		response.reset();
+		response.setBufferSize(bufferSize);
+		response.setContentType("application/download");
+		response.setHeader("Content-Length", String.valueOf(downloadFile.length()));
+		response.setHeader("Content-Disposition", "attachment; filename=\"" + downloadFile.getName() + "\"");
+		BufferedInputStream input = null;
+		BufferedOutputStream output = null;
+		try {
+			input = new BufferedInputStream(new FileInputStream(downloadFile), bufferSize);
+			output = new BufferedOutputStream(response.getOutputStream(), bufferSize);
+
+			byte[] buffer = new byte[bufferSize];
+			int length;
+			while ((length = input.read(buffer)) > 0) {
+				output.write(buffer, 0, length);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (output != null) {
+					output.close();
+				}
+				if (input != null) {
+					input.close();
+				}
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
 	}
 	
 	/**

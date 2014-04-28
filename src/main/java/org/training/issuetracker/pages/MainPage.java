@@ -21,5 +21,8 @@ public class MainPage extends AbstractPage{
 	// Attributes
 	public static final String ATTR_ASSIGNED_ISSUES = "assignedIssues";
 	public static final String ATTR_LATEST_ISSUES = "latestIssues";
-	
+	public static final String ATTR_SEARCHED_ISSUES = "searchedIssues";
+	public static final String ATTR_PAGES = "pages";
+	public static final String ATTR_CURRENT_PAGE = "currentPage";
+	public static final String ATTR_SEARCH_FILTER = "searchFilter";
 }

@@ -17,22 +17,22 @@
 		popup_window.id = success_popup_id;
 		popup_window.style.visibility = "visible";
 		popup_message.innerHTML = message;
-		popup_window.style.opacity = 1.0; // убираем прозрачность => плавное появление
-		setTimeout(hidePopupWindow, 4000); // запускаем таймер закрытия окошка
+		popup_window.style.opacity = 1.0; 
+		setTimeout(hidePopupWindow, 4000); 
 	}
 	
 	function showErrorPopupWindow(message){
 		popup_window.id = error_popup_id;
 		popup_window.style.visibility = "visible";
 		popup_message.innerHTML = message;
-		popup_window.style.opacity = 0.9; // убираем прозрачность => плавное появление
-		setTimeout(hidePopupWindow, 4000); // запускаем таймер закрытия окошка
+		popup_window.style.opacity = 0.9;
+		setTimeout(hidePopupWindow, 4000);
 	}
 	
 	function hidePopupWindow(){
 		popup_message.innerHTML = "";
-		popup_window.style.opacity = 0; // ставим прозрачность => плавное исчезновение
-		setTimeout("popup_window.style.visibility = 'hidden'", 1000); // убираем видимость после анимации
+		popup_window.style.opacity = 0;
+		setTimeout("popup_window.style.visibility = 'hidden'", 1000);
 	}
 </script>
 

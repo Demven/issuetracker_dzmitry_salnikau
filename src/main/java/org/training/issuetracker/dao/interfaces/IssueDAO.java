@@ -24,6 +24,12 @@ public interface IssueDAO {
 	public Issue getIssueById(Integer issueId);
 	
 	/**
+	 * @param filter
+	 * @return List of all issues that matches search filter
+	 */
+	public List<Issue> getIssuesUsingFilter(String filter);
+	
+	/**
 	 * Adds new issue in a data storage
 	 * @param Issue
 	 * @return boolean - true, if it was successful

@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,31 @@ public class HibernateUserDAO implements UserDAO{
 		    throw e;
 		}
 
+        return users;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<User> getUsersWithFilter(String filter) {
+		List<User> users = null;
+		
+		final Session session = sessionFactory.getCurrentSession();
+		try {
+	        Criteria criteria = session.createCriteria(User.class);
+	        
+	        Disjunction disjunction = Restrictions.disjunction();
+	       
+	        disjunction.add(Restrictions.like(User.COLUMN_FIRST_NAME, "%" + filter + "%").ignoreCase());
+	        disjunction.add(Restrictions.like(User.COLUMN_LAST_NAME, "%" + filter + "%").ignoreCase());
+	        
+	        criteria.addOrder(Order.asc(User.COLUMN_ID));
+	        criteria.add(disjunction);
+	        users = (List<User>) criteria.list();
+		} catch (Exception e) {
+			logger.error(TAG + " Getting users using filter " + filter + " failed!", e);
+		    throw e;
+		}
+		
         return users;
 	}
 
@@ -121,6 +147,7 @@ public class HibernateUserDAO implements UserDAO{
         return userId;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public User getUserByEmail(String email) {
 		User user = null;

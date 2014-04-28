@@ -1,6 +1,5 @@
 package org.training.issuetracker.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.training.issuetracker.dao.hibernate.entities.User;
 import org.training.issuetracker.logic.AccessLogic;
-import org.training.issuetracker.logic.SearchLogic;
 import org.training.issuetracker.pages.MainPage;
 import org.training.issuetracker.pages.UsersPage;
 import org.training.issuetracker.services.UserService;
@@ -50,7 +48,14 @@ public class UsersController {
 			
 			model.addAttribute(UsersPage.ATTR_FILTER, filter);
 			
-			List<User> users = getUsers(filter);
+			List<User> users = null;
+			if(filter == null){
+				// full list
+				users = userService.getUsers();
+			} else{
+				// search users
+				users = userService.getUsersWithFilter(filter);
+			}		
 			
 			if(users != null){
 				model.addAttribute(UsersPage.ATTR_USERS, users);
@@ -67,33 +72,4 @@ public class UsersController {
 		return page;
 	}
 	
-	/**
-	 * Returns the filtered list of User-objects
-	 * @param filter - some String, that a user typed in the form
-	 * @return List<User>- filtered list
-	 */
-	private List<User> getUsers(String filter){
-		List<User> users = new ArrayList<User>();
-		
-		List<User> allUsers = userService.getUsers();
-
-		if(filter != null){
-			// use filter to fill the list of users
-			SearchLogic search = new SearchLogic(filter);
-			for(User user: allUsers){
-				if(search.isMatchesToFilter(user.getFirstName() + " " + user.getLastName())){
-					// This User is matches to the filter - add him to the list
-					users.add(user);
-				}
-			}
-		} else{
-			users = allUsers;
-		}
-		
-		if(users.size() == 0){
-			users = null;
-		}
-		
-		return users;
-	}
 }

@@ -1,5 +1,6 @@
 ﻿<%@ page contentType="text/html; charset=utf-8" language="java"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <!doctype html>
 <html>
 <head>
@@ -24,47 +25,68 @@
 
 <div class="content">
 
+	 <spring:message code="label.issue.js.popup.summary_short" var="i18n_summary_short"/>
+     <spring:message code="label.issue.js.popup.summary_invalid" var="i18n_summary_invalid"/>
+     <spring:message code="label.issue.js.popup.summary_long" var="i18n_summary_long"/>
+     <spring:message code="label.issue.js.popup.summary_should_enter" var="i18n_summary_should_enter"/>
+     
+     <spring:message code="label.issue.js.popup.description_short" var="i18n_description_short"/>
+     <spring:message code="label.issue.js.popup.description_invalid" var="i18n_description_invalid"/>
+     <spring:message code="label.issue.js.popup.description_long" var="i18n_description_long"/>
+     <spring:message code="label.issue.js.popup.description_should_enter" var="i18n_description_should_enter"/>
+     
+     <spring:message code="label.issue.js.popup.status_choose" var="i18n_status_choose"/>
+     <spring:message code="label.issue.js.popup.resolution_choose" var="i18n_resolution_choose"/>
+     <spring:message code="label.issue.js.popup.type_choose" var="i18n_type_choose"/>
+     <spring:message code="label.issue.js.popup.priority_choose" var="i18n_priority_choose"/>
+     <spring:message code="label.issue.js.popup.project_choose" var="i18n_project_choose"/>
+     <spring:message code="label.issue.js.popup.build_choose" var="i18n_build_choose"/>
+     <spring:message code="label.issue.js.popup.assignee_choose" var="i18n_assignee_choose"/>
+
     <c:choose>
         <c:when test="${empty editIssue}">
             <!-- Create issue --> 
             <div id="content_title"><c:out value="${pageTitle}"/></div>
             
             <form id="issue_form" action="/issuetracker/issue" method="POST">
-                <input id="issue_summary" name="summary" type="text" maxlength="45" placeholder="Summary">
-                <textarea id="issue_description" name="description" rows="4" placeholder="Description"></textarea>
+            	<spring:message code="label.issue.issue_form.summary" var="i18n_summary"/>
+                <input id="issue_summary" name="summary" type="text" maxlength="45" placeholder="${i18n_summary}">
+                <spring:message code="label.issue.issue_form.description" var="i18n_description"/>
+                <textarea id="issue_description" name="description" rows="4" placeholder="${i18n_description}"></textarea>
                 <select id="issue_status" name="statusIndex" size="1" onChange="setStatusChanged();">
-                    <option selected disabled value="0">Status</option>
+                    <option selected disabled value="0"><spring:message code="label.issue.issue_form.status"/></option>
                     <option value="1">New</option>
                     <option value="2">Assigned</option>
                 </select>
                 <select id="issue_type" name="typeId" size="1">
-                    <option selected disabled value="0">Type</option>
+                    <option selected disabled value="0"><spring:message code="label.issue.issue_form.type"/></option>
                     <c:forEach items="${types}" var="type">
                         <option value="${type.typeId}"><c:out value="${type.name}"/></option>
                     </c:forEach>
                 </select>
                 <select id="issue_priority" name="priorityId" size="1">
-                    <option selected disabled value="0">Priority</option>
+                    <option selected disabled value="0"><spring:message code="label.issue.issue_form.priority"/></option>
                     <c:forEach items="${priorities}" var="priority">
                         <option value="${priority.priorityId}"><c:out value="${priority.name}"/></option>
                     </c:forEach>
                 </select>
                 <select id="issue_project" name="projectId" size="1" onChange="setProjectChanged();">
-                    <option selected disabled value="0">Project</option>
+                    <option selected disabled value="0"><spring:message code="label.issue.issue_form.project"/></option>
                     <c:forEach items="${projects}" var="project">
                         <option value="${project.projectId}"><c:out value="${project.name}"/></option>
                     </c:forEach>
                 </select>
                 <select id="issue_build" name="buildId" size="1">
-                    <option selected disabled value="0">Build</option>
+                    <option selected disabled value="0"><spring:message code="label.issue.issue_form.build"/></option>
                 </select>
                 <select id="issue_assignee" name="assigneeId" size="1">
-                    <option selected disabled value="0">Assignee</option>
+                    <option selected disabled value="0"><spring:message code="label.issue.issue_form.assignee"/></option>
                     <c:forEach items="${users}" var="assignee">
                         <option value="${assignee.userId}"><c:out value="${assignee.firstName}"/> <c:out value="${assignee.lastName}"/></option>
                     </c:forEach>
                 </select>
-                <input id="issue_submit" type="button" onClick="trySubmit();" value="Done">
+                <spring:message code="label.issue.issue_form.done" var="i18n_done"/>
+                <input id="issue_submit" type="button" onClick="trySubmit();" value="${i18n_done}">
             </form>
             
             <c:if test="${not empty builds}">
@@ -172,20 +194,20 @@
                     var regexp = /\<|\>|\~/;
                     if(summary != ""){
                         if(summary.length < 15){
-                            showErrorPopupWindow("Summary is too short! It cannot be less than 15 characters.");
+                            showErrorPopupWindow("${i18n_summary_short}");
                             return false;
                         } else if(summary.search(regexp) != -1){
-                            showErrorPopupWindow("Summary contains invalid characters!");
+                            showErrorPopupWindow("${i18n_summary_invalid}");
                             return false;
                         } else if(summary.length > 20){
-                            showErrorPopupWindow("Summary is too long! It cannot be more than 45 characters.");
+                            showErrorPopupWindow("${i18n_summary_long}");
                             return false;
                         } else{
                             // summary is ok
                             return true;
                         }
                     } else{
-                        showErrorPopupWindow("You should enter a summary for a new issue!");
+                        showErrorPopupWindow("${i18n_summary_should_enter}");
                         return false;
                     }
                 }
@@ -195,13 +217,13 @@
                     var regexp = /\<|\>|\~/;
                     if(description != ""){
                         if(description.length < 15){
-                            showErrorPopupWindow("Description is too short! It cannot be less than 15 characters.");
+                            showErrorPopupWindow("${i18n_description_short}");
                             return false;
                         } else if(description.search(regexp) != -1){
-                            showErrorPopupWindow("Description contains invalid characters!");
+                            showErrorPopupWindow("${i18n_description_invalid}");
                             return false;
                         } else if(description.length > 500){
-                            showErrorPopupWindow("Description is too long! It cannot be more than 500 characters.");
+                            showErrorPopupWindow("${i18n_description_long}");
                             return false;
                         } else{
                             // description is ok
@@ -209,7 +231,7 @@
                         }
             
                     } else{
-                        showErrorPopupWindow("You should enter a description of a new issue!");
+                        showErrorPopupWindow("${i18n_description_should_enter}");
                         return false;
                     }
                 }
@@ -220,7 +242,7 @@
                         // status is ok
                         return true;
                     } else{
-                        showErrorPopupWindow("You should choose a status of a new issue!");
+                        showErrorPopupWindow("${i18n_status_choose}");
                         return false;
                     }
                 }
@@ -231,7 +253,7 @@
                         // type is ok
                         return true;
                     } else{
-                        showErrorPopupWindow("You should choose a type of a new issue!");
+                        showErrorPopupWindow("${i18n_type_choose}");
                         return false;
                     }
                 }
@@ -242,7 +264,7 @@
                         // priority is ok
                         return true;
                     } else{
-                        showErrorPopupWindow("You should choose a priority for a new issue!");
+                        showErrorPopupWindow("${i18n_priority_choose}");
                         return false;
                     }
                 }
@@ -253,7 +275,7 @@
                         // project is ok
                         return true;
                     } else{
-                        showErrorPopupWindow("You should choose a project for a new issue!");
+                        showErrorPopupWindow("${i18n_project_choose}");
                         return false;
                     }
                 }
@@ -264,7 +286,7 @@
                         // build is ok
                         return true;
                     } else{
-                        showErrorPopupWindow("You should choose a build for a new issue!");
+                        showErrorPopupWindow("${i18n_build_choose}");
                         return false;
                     }
                 }
@@ -275,7 +297,7 @@
                         // assignee is ok
                         return true;
                     } else{
-                        showErrorPopupWindow("You should choose an assignee for a new issue!");
+                        showErrorPopupWindow("${i18n_assignee_choose}");
                         return false;
                     }
                 }
@@ -290,20 +312,21 @@
                 <form id="issue_form" action="/issuetracker/issue/${editIssue.issueId}" method="POST">
                     <div id="issue_subtitle">Id:</div>
                     <div id="issue_id" class="text_field"><c:out value="${editIssue.issueId}"/></div>
-                    <div id="issue_subtitle">Create date:</div>
+                    <div id="issue_subtitle"><spring:message code="label.issue.issue_form.create_date"/>:</div>
                     <div id="issue_create_date" class="text_field"><c:out value="${editIssue.createDate}"/></div>
-                    <div id="issue_subtitle">Created by:</div>
+                    <div id="issue_subtitle"><spring:message code="label.issue.issue_form.created_by"/>:</div>
                     <div id="issue_created_by" class="text_field"><c:out value="${editIssue.createdBy.firstName}"/> <c:out value="${editIssue.createdBy.lastName}"/></div>
-                    <div id="issue_subtitle">Modify date:</div>
+                    <div id="issue_subtitle"><spring:message code="label.issue.issue_form.modify_date"/>:</div>
                     <div id="issue_modify_date" class="text_field"><c:out value="${editIssue.modifyDate}"/></div>
-                    <div id="issue_subtitle">Modified by:</div>
+                    <div id="issue_subtitle"><spring:message code="label.issue.issue_form.modified_by"/>:</div>
                     <div id="issue_modified_by" class="text_field"><c:out value="${editIssue.modifiedBy.firstName}"/> <c:out value="${editIssue.modifiedBy.lastName}"/></div>
-                    <div id="issue_subtitle">Summary:</div>
+                    <div id="issue_subtitle"><spring:message code="label.issue.issue_form.summary"/>:</div>
                     <input id="issue_summary" class="text_field" name="summary" type="text" maxlength="45" value="${editIssue.summary}" placeholder="Summary">
-                    <div id="issue_subtitle">Description:</div>
-                    <textarea id="issue_description" name="description" rows="4" placeholder="Description"><c:out value="${editIssue.description}"/></textarea>
+                    <div id="issue_subtitle"><spring:message code="label.issue.issue_form.description"/>:</div>
+                    <spring:message code="label.issue.issue_form.description" var="i18n_description"/>
+                    <textarea id="issue_description" name="description" rows="4" placeholder="${i18n_description}"><c:out value="${editIssue.description}"/></textarea>
                     <select id="issue_status" class="drop_list" name="statusIndex" size="1" onChange="setStatusChanged();">
-                        <option selected disabled value="0">Status</option>
+                        <option selected disabled value="0"><spring:message code="label.issue.issue_form.status"/></option>
                         <c:forEach items="${statuses}" var="status">
                             <c:choose>
                                 <c:when test="${status.statusId eq editIssue.status.statusId}">
@@ -316,7 +339,7 @@
                         </c:forEach>
                     </select>
                     <select id="issue_resolution" class="drop_list" name="resolutionId" size="1">
-                        <option selected disabled value="0">Resolution</option>
+                        <option selected disabled value="0"><spring:message code="label.issue.issue_form.resolution"/></option>
                         <c:forEach items="${resolutions}" var="resolution">
                             <c:choose>
                                 <c:when test="${resolution.resolutionId eq editIssue.resolution.resolutionId}">
@@ -329,7 +352,7 @@
                         </c:forEach>
                     </select>
                     <select id="issue_type" class="drop_list" name="typeId" size="1">
-                        <option selected disabled value="0">Type</option>
+                        <option selected disabled value="0"><spring:message code="label.issue.issue_form.type"/></option>
                         <c:forEach items="${types}" var="type">
                             <c:choose>
                                 <c:when test="${type.typeId eq editIssue.type.typeId}">
@@ -342,7 +365,7 @@
                         </c:forEach>
                     </select>
                     <select id="issue_priority" class="drop_list" name="priorityId" size="1">
-                        <option selected disabled value="0">Priority</option>
+                        <option selected disabled value="0"><spring:message code="label.issue.issue_form.priority"/></option>
                         <c:forEach items="${priorities}" var="priority">
                             <c:choose>
                                 <c:when test="${priority.priorityId eq editIssue.priority.priorityId}">
@@ -355,7 +378,7 @@
                         </c:forEach>
                     </select>
                     <select id="issue_project" class="drop_list" name="projectId" size="1" onChange="setProjectChanged();">
-                        <option selected disabled value="0">Project</option>
+                        <option selected disabled value="0"><spring:message code="label.issue.issue_form.project"/></option>
                         <c:forEach items="${projects}" var="project">
                             <c:choose>
                                 <c:when test="${project.projectId eq editIssue.project.projectId}">
@@ -368,11 +391,11 @@
                         </c:forEach>
                     </select>
                     <select id="issue_build" class="drop_list" name="buildId" size="1">
-                        <option selected disabled value="0">Build</option>
+                        <option selected disabled value="0"><spring:message code="label.issue.issue_form.build"/></option>
                         <option value="${editIssue.buildFound.buildId}"><c:out value="${editIssue.buildFound.version}"/></option>
                     </select>
                     <select id="issue_assignee" class="drop_list" name="assigneeId" size="1">
-                        <option selected disabled value="0">Assignee</option>
+                        <option selected disabled value="0"><spring:message code="label.issue.issue_form.assignee"/></option>
                         <c:forEach items="${users}" var="user">
                             <c:choose>
                                 <c:when test="${user.userId eq editIssue.assignee.userId}">
@@ -384,7 +407,8 @@
                             </c:choose>
                         </c:forEach>
                     </select>
-                    <input id="issue_submit" type="button" onClick="trySubmit();" value="Done">
+                    <spring:message code="label.issue.issue_form.done" var="i18n_done"/>
+                    <input id="issue_submit" type="button" onClick="trySubmit();" value="${i18n_done}">
                 </form>
             </div>
             
@@ -528,20 +552,20 @@
 					var regexp = /\<|\>|\~/;
 					if(summary != ""){
 						if(summary.length < 15){
-							showErrorPopupWindow("Summary is too short! It cannot be less than 15 characters.");
+							showErrorPopupWindow("${i18n_summary_short}");
 							return false;
 						} else if(summary.search(regexp) != -1){
-							showErrorPopupWindow("Summary contains invalid characters!");
+							showErrorPopupWindow("${i18n_summary_invalid}");
 							return false;
 						} else if(summary.length > 20){
-							showErrorPopupWindow("Summary is too long! It cannot be more than 45 characters.");
+							showErrorPopupWindow("${i18n_summary_long}");
 							return false;
 						} else{
 							// summary is ok
 							return true;
 						}
 					} else{
-						showErrorPopupWindow("You should enter a summary for a new issue!");
+						showErrorPopupWindow("${i18n_summary_should_enter}");
 						return false;
 					}
 				}
@@ -551,20 +575,20 @@
 					var regexp = /\<|\>|\~/;
 					if(description != ""){
 						if(description.length < 15){
-							showErrorPopupWindow("Description is too short! It cannot be less than 15 characters.");
+							showErrorPopupWindow("${i18n_description_short}");
 							return false;
 						} else if(description.search(regexp) != -1){
-							showErrorPopupWindow("Description contains invalid characters!");
+							showErrorPopupWindow("${i18n_description_invalid}");
 							return false;
 						} else if(description.length > 500){
-							showErrorPopupWindow("Description is too long! It cannot be more than 500 characters.");
+							showErrorPopupWindow("${i18n_description_long}");
 							return false;
 						} else{
 							// description is ok
 							return true;
 						}
 					} else{
-						showErrorPopupWindow("You should enter a description of a new issue!");
+						showErrorPopupWindow("${i18n_description_should_enter}");
 						return false;
 					}
 				}
@@ -575,7 +599,7 @@
 						// status is ok
 						return true;
 					} else{
-						showErrorPopupWindow("You should choose a status of a new issue!");
+						showErrorPopupWindow("${i18n_status_choose}");
 						return false;
 					}
 				}
@@ -586,7 +610,7 @@
 						// resolution is ok
 						return true;
 					} else{
-						showErrorPopupWindow("You should choose a resolution for the closed issue!");
+						showErrorPopupWindow("${i18n_resolution_choose}");
 						return false;
 					}
 				}
@@ -597,7 +621,7 @@
 						// type is ok
 						return true;
 					} else{
-						showErrorPopupWindow("You should choose a type of a new issue!");
+						showErrorPopupWindow("${i18n_type_choose}");
 						return false;
 					}
 				}
@@ -608,7 +632,7 @@
 						// priority is ok
 						return true;
 					} else{
-						showErrorPopupWindow("You should choose a priority for a new issue!");
+						showErrorPopupWindow("${i18n_priority_choose}");
 						return false;
 					}
 				}
@@ -619,7 +643,7 @@
 						// project is ok
 						return true;
 					} else{
-						showErrorPopupWindow("You should choose a project for a new issue!");
+						showErrorPopupWindow("${i18n_project_choose}");
 						return false;
 					}
 				}
@@ -630,7 +654,7 @@
 						// build is ok
 						return true;
 					} else{
-						showErrorPopupWindow("You should choose a build for a new issue!");
+						showErrorPopupWindow("${i18n_build_choose}");
 						return false;
 					}
 				}
@@ -641,7 +665,7 @@
 						// assignee is ok
 						return true;
 					} else{
-						showErrorPopupWindow("You should choose an assignee for a new issue!");
+						showErrorPopupWindow("${i18n_assignee_choose}");
 						return false;
 					}
 				}
@@ -652,65 +676,67 @@
 		
 			<div class="side_container">
 				<div class="tabs_container">
-					<div id="tab_comments" class="tab_selected" title="Show comments" onClick="showComments();"><img src="/issuetracker/resources/img/icons/tab_comments.png" /></div>
-					<div id="tab_attachments" class="tab" title="Show attachments" onClick="showAttachments();"><img src="/issuetracker/resources/img/icons/tab_attachments.png" /></div>
+					<spring:message code="label.issue.tabs.show_comments" var="i18n_show_comments"/>
+					<div id="tab_comments" class="tab_selected" title="${i18n_show_comments}" onClick="showComments();"><img src="/issuetracker/resources/img/icons/tab_comments.png" /></div>
+					<spring:message code="label.issue.tabs.show_attachments" var="i18n_show_attachments"/>
+					<div id="tab_attachments" class="tab" title="${i18n_show_attachments}" onClick="showAttachments();"><img src="/issuetracker/resources/img/icons/tab_attachments.png" /></div>
 				</div>
 				
-				<div id="side_title">Comments</div>
+				<div id="side_title"><spring:message code="label.issue.side_title.comments"/></div>
 				<div id="comments_container">
-					<div class="comment">
-						<div class="comment_header">
-							<div class="name">Dzmitry Salnikau</div>
-							<div class="time">at 12:34</div><div class="date">15.06.2013</div>
-						</div>
-					  <div class="comment_text">I think it's much better than it were before. Thank you for your time!
-						 I think it's much better than it were before.</div>
-					</div>
-					<div class="comment">
-						<div class="comment_header">
-							<div class="name">Sergey German</div>
-							<div class="time">at 12:34</div><div class="date">15.06.2013</div>
-						</div>
-					  <div class="comment_text">I think it's much better than it were before. Thank you for your time!</div>
-					</div>
+					<c:if test="${not empty comments}">
+						<c:forEach items="${comments}" var="comment">
+							<div class="comment">
+								<div class="comment_header">
+									<div class="name"><c:out value="${comment.user.firstName}"/> <c:out value="${comment.user.lastName}"/></div>
+									<div class="time">at <c:out value="${comment.time}"/></div><div class="date"><c:out value="${comment.date}"/></div>
+								</div>
+							  <div class="comment_text"><c:out value="${comment.text}"/></div>
+							</div>
+                        </c:forEach>
+					</c:if>
+					
 					<div class="add_comment">
 						<div class="add_comment_header">
-							<div class="add_name">Sergey German</div>
+							<div class="add_name"><c:out value="${loginUser.firstName}"/> <c:out value="${loginUser.lastName}"/></div>
 						</div>
-						<form action="main">
-							<input type="hidden" name="command" value="newComment"/>
-							<input type="hidden" name="issueId" value="1"/>
-							<textarea id="add_comment_text" name="comment" placeholder="New comment"></textarea>
-							<input id="add_comment_submit" type="submit" value="Done"/>
+						<form action="/issuetracker/issue/${editIssue.issueId}" method="POST">
+							<input type="hidden" name="userId" value="${loginUser.userId}"/>
+							<spring:message code="label.issue.comments.new_comment" var="i18n_new_comment"/>
+							<textarea id="add_comment_text" name="comment" placeholder="${i18n_new_comment}"></textarea>
+							<spring:message code="label.issue.comments.done" var="i18n_done"/>
+							<input id="add_comment_submit" type="submit" value="${i18n_done}"/>
 						</form>
 				  	</div>
 				</div>
 			   
 				<div id="attachments_container">
-					<div class="attachment">
-						<div class="attachment_header">
-						  <div class="name">Dzmitry Salnikau</div>
-						  <div class="time">at 12:34</div><div class="date">15.06.2013</div>
-						</div>
-						<div class="attachment_link">Bug_screenshot.jpeg</div>
-					</div>
-					<div class="attachment">
-						<div class="attachment_header">
-						  <div class="name">Sergey German</div>
-						  <div class="time">at 12:34</div><div class="date">15.06.2013</div>
-						</div>
-					  <div class="attachment_link">list of proposals.docx</div>
-					</div>
+					<c:if test="${not empty attachments}">
+						<c:forEach items="${attachments}" var="attachment">
+							<div class="attachment">
+								<div class="attachment_header">
+								  <div class="name"><c:out value="${attachment.user.firstName}"/> <c:out value="${attachment.user.lastName}"/></div>
+								  <div class="time">at <c:out value="${attachment.time}"/></div><div class="date"><c:out value="${attachment.date}"/></div>
+								</div>
+								<a href="/issuetracker/issue/${editIssue.issueId}/download/${attachment.attachmentId}" target="_blank">
+									<div class="attachment_link"><c:out value="${attachment.reference}"/></div>
+								</a>
+							</div>
+                        </c:forEach>
+					</c:if>
 					
-					<input id="add_attachment_submit" class="attachment_button" type="button" value="Uploud"/>
+					<spring:message code="label.issue.attachments.upload" var="i18n_upload"/>
+					<input id="add_attachment_submit" class="attachment_button" type="button" value="${i18n_upload}"/>
 					
-					<form name="upload_form" action="main" enctype="multipart/form-data" method="post">
-						<input type="hidden" name="command" value="newAttachment"/>
-						<input type="hidden" name="issueId" value="1"/>
-						<input id="file_input" type="file" name="file"/>
+					<form name="upload_form" action="/issuetracker/issue/${editIssue.issueId}/upload" enctype="multipart/form-data" method="POST">
+						<input type="hidden" name="userId" value="${loginUser.userId}"/>
+						<input id="file_input" type="file" name="file" onChange="submitAttachment();"/>
 					</form>
 				</div>
 			</div>
+            
+            <spring:message code="label.issue.side_title.comments" var="i18n_comments"/>
+            <spring:message code="label.issue.side_title.attachments" var="i18n_attachments"/>
             
             <script type="text/javascript" language="javascript">
 				var tabComments = document.getElementById("tab_comments");
@@ -723,8 +749,8 @@
 				var TAB_DEFAULT_CLASS = "tab";
 				var TAB_SELECTED_CLASS = "tab_selected";
 				
-				var TITLE_COMMENTS = "Comments";
-				var TITLE_ATTACHMENTS = "Attachments";
+				var TITLE_COMMENTS = "${i18n_comments}";
+				var TITLE_ATTACHMENTS = "${i18n_attachments}";
 				
 				var CONTAINER_MIN_HEIGHT = "0px";
 				var CONTAINER_MAX_HEIGHT = "1375px";
@@ -763,6 +789,10 @@
 				fileInputButton.onmouseout = function(){
 					addAttachmentButton.className = ATTACHMENT_BUTTON_DEFAULT;
 				};
+				
+				function submitAttachment(){
+					document.forms.upload_form.submit();
+				}
 			</script>
        </c:when>
 	</c:choose>

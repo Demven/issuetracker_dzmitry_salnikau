@@ -3,7 +3,7 @@ package org.training.issuetracker.managers;
 import java.util.Calendar;
 
 /**
- * Class, used to operating with dates
+ * Class, used to operating with dates and time
  * @author Dzmitry Salnikau
  * @since 27.01.2014
  */
@@ -16,9 +16,10 @@ public final class DateManager {
     public final static int MAX_MONTH = 12;
 
     public final static String DATE_SEPARATOR = ".";
+    public final static String TIME_SEPARATOR = ":";
 
     /**
-     * @return String, containing current date in format "MM/DD/YEAR"
+     * @return String, containing current date
      */
     public static String getCurrentDate(){
         Calendar calendar = Calendar.getInstance();
@@ -28,6 +29,18 @@ public final class DateManager {
         int year = calendar.get(Calendar.YEAR);
 
         return formatDateParts(day, month, year);
+    }
+    
+    /**
+     * @return String, containing current time
+     */
+    public static String getCurrentTime(){
+        Calendar calendar = Calendar.getInstance();
+        
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+        
+        return formatTimeParts(hour, minute);
     }
 
     /**
@@ -90,6 +103,29 @@ public final class DateManager {
         }
 
         return day + DATE_SEPARATOR + month + DATE_SEPARATOR + year;
+    }
+    
+    /**
+     * Formats received parts of time to the format "HH:MM"
+     * @param intHour - hour
+     * @param intMinute - minute
+     * @return String - formatted time
+     */
+    public static String formatTimeParts(int intHour, int intMinute){
+        String hour = String.valueOf(intHour);
+        String minute = String.valueOf(intMinute);
+
+        // Hour should be in 01-24 format
+        if(hour.length() == 1){
+        	hour = "0" + hour;
+        }
+
+        // Minute should be in 01-59 format
+        if(minute.length() == 1){
+        	minute = "0" + minute;
+        }
+
+        return hour + TIME_SEPARATOR + minute;
     }
 }
 

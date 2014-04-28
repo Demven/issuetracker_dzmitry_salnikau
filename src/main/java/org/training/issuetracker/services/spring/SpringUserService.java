@@ -27,6 +27,12 @@ public class SpringUserService implements UserService{
 	public List<User> getUsers() {
 		return userDAO.getUsers();
 	}
+	
+	@Transactional
+	@Override
+	public List<User> getUsersWithFilter(String filter) {
+		return userDAO.getUsersWithFilter(filter);
+	}
 
 	@Transactional
 	@Override

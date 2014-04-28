@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -63,6 +64,73 @@ public class MainController {
 		}
 		
 		return MainPage.NAME;
+	}
+	
+	@RequestMapping(value = "/search/{filter}/page/{page}", method=RequestMethod.GET)
+	public String searchIssues(Model model,
+				HttpServletRequest request,
+				@PathVariable("page") Integer pageNumber,
+				@PathVariable("filter") String filter) {
+		
+		String page = MainPage.NAME;
+		
+		List<Issue> allIssues = issueService.getIssuesUsingFilter(filter);
+		int totalPagesNumber = (int) Math.ceil((double)allIssues.size() / (double)Issue.MAX_SHOWN_NUMBER);
+		
+		if(pageNumber > 0){
+	
+			if(allIssues.size() > 0){
+				List<Issue> portion = getIssuesPortion(pageNumber, totalPagesNumber, allIssues);
+				
+				if(pageNumber <= totalPagesNumber){
+					if(portion != null && portion.size() > 0){
+						model.addAttribute(MainPage.ATTR_PAGE_TITLE, "Searched issues");
+						model.addAttribute(MainPage.ATTR_SEARCHED_ISSUES, portion);
+					} else{
+						model.addAttribute(MainPage.ATTR_ERROR_MESSAGE, "There is no issues or some error occured!");
+					}
+					
+					if(totalPagesNumber > 1){
+						model.addAttribute(MainPage.ATTR_PAGES, new Integer[totalPagesNumber]);
+						model.addAttribute(MainPage.ATTR_CURRENT_PAGE, pageNumber);
+						model.addAttribute(MainPage.ATTR_SEARCH_FILTER, filter);
+					}
+				} else {
+					model.addAttribute(MainPage.ATTR_ERROR_MESSAGE, "Such page doesn't exists!");
+					page = showMainPage(model, request);
+				}
+			} else{
+				model.addAttribute(MainPage.ATTR_PAGE_TITLE, "No matches :(");
+			}
+		}else{
+			// such page doesn't exists
+			model.addAttribute(MainPage.ATTR_ERROR_MESSAGE, "Such page doesn't exists!");
+			page = showMainPage(model, request);
+		}
+		
+		return page;
+	}
+	
+	/**
+	 * Returns the list, containing a portion of issues to show on a specified page
+	 * @param pageNumber - page to show portion of issues
+	 * @param totalPagesNumber - total number of pages with issues
+	 * @param allIssues - ArrayList<Issue>
+	 * @return ArrayList<Issue> - list, containing a portion of issues to show on a specified page
+	 */
+	private ArrayList<Issue> getIssuesPortion(int pageNumber, int totalPagesNumber, List<Issue> allIssues){
+		ArrayList<Issue> issuesPortion = new ArrayList<Issue>();
+
+		int from = (pageNumber - 1) * Issue.MAX_SHOWN_NUMBER;
+		int to = allIssues.size();
+		if(pageNumber < totalPagesNumber){
+			to = from + Issue.MAX_SHOWN_NUMBER;
+		}
+		
+		for(int i=from; i < to; i++){
+			issuesPortion.add(allIssues.get(i));
+		}
+		return issuesPortion;
 	}
 
 	@RequestMapping(value = "/auth", method=RequestMethod.POST)

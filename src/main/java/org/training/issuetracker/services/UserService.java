@@ -12,6 +12,11 @@ public interface UserService {
 	public List<User> getUsers();
 	
 	/**
+	 * @return ArrayList of all users that matches a specified filter
+	 */
+	public List<User> getUsersWithFilter(String filter);
+	
+	/**
 	 * Check existing of the user with such parameters
 	 * @param email
 	 * @param password

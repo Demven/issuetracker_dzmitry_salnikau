@@ -1,5 +1,6 @@
 ﻿<%@ page contentType="text/html; charset=utf-8" language="java"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <!doctype html>
 <html>
 <head>
@@ -20,16 +21,20 @@
         <c:when test="${empty editProject}">
             <!-- Create project -->
             <form id="project_form" name="project_form" action="/issuetracker/project" method="POST">
-                <input id="project_name" name="name" type="text" maxlength="45" placeholder="Name of project">
-                <textarea id="project_description" name="description" rows="4" placeholder="Description"></textarea>
-                <input id="project_build" name="buildName" type="text" maxlength="45" placeholder="Initial build">
+            	<spring:message code="label.project.project_form.name" var="i18n_name"/>
+                <input id="project_name" name="name" type="text" maxlength="45" placeholder="${i18n_name}">
+                <spring:message code="label.project.project_form.description" var="i18n_description"/>
+                <textarea id="project_description" name="description" rows="4" placeholder="${i18n_description}"></textarea>
+                <spring:message code="label.project.project_form.init_build" var="i18n_init_build"/>
+                <input id="project_build" name="buildName" type="text" maxlength="45" placeholder="${i18n_init_build}">
                 <select id="project_manager" name="managerId" size="1">
-                    <option selected disabled value="0">Manager</option>
+                    <option selected disabled value="0"><spring:message code="label.project.project_form.manager"/></option>
                     <c:forEach items="${managers}" var="manager">
                         <option value="${manager.userId}"><c:out value="${manager.firstName}"/> <c:out value="${manager.lastName}"/></option>
                     </c:forEach>
                 </select>
-                <input id="project_submit" type="button" onClick="trySubmit();" value="Create">
+                <spring:message code="label.project.project_form.create" var="i18n_create"/>
+                <input id="project_submit" type="button" onClick="trySubmit();" value="${i18n_create}">
             </form>
 			<script type="text/javascript" language="javascript">
 				// Check all fields and if all is fine - submit 
@@ -50,24 +55,29 @@
        	<c:when test="${not empty editProject}">
         	<!-- Edit project -->
             <form name="project_form" id="project_form" action="/issuetracker/project/${editProject.projectId}" method="POST">
-                <input id="project_name" name="name" value="${editProject.name}" type="text" maxlength="45" placeholder="Name of project">
-                <textarea id="project_description" name="description" rows="4" placeholder="Description"><c:out value="${editProject.description}"/></textarea>
+            	<spring:message code="label.project.project_form.name" var="i18n_name"/>
+                <input id="project_name" name="name" value="${editProject.name}" type="text" maxlength="45" placeholder="${i18n_name}">
+                <spring:message code="label.project.project_form.description" var="i18n_description"/>
+                <textarea id="project_description" name="description" rows="4" placeholder="${i18n_description}"><c:out value="${editProject.description}"/></textarea>
                 <div class="build_container">
                 	<!-- List of builds -->
                     <select id="project_select_build" name="buildId" size="1">
-                        <option selected disabled value="0">Build</option>
+                        <option selected disabled value="0"><spring:message code="label.project.project_form.build"/></option>
                         <c:forEach items="${builds}" var="build">
                         	<option value="${build.buildId}"><c:out value="${build.version}"/></option>
                    	    </c:forEach>
                     </select>
                     <!-- Text field for a new build -->
-                    <input id="project_new_build" name="buildName" type="text" maxlength="45" placeholder="New build" style="display:none">
+                    <spring:message code="label.project.project_form.new_build" var="i18n_new_build"/>
+                    <input id="project_new_build" name="buildName" type="text" maxlength="45" placeholder="${i18n_new_build}" style="display:none">
                     <!-- Buttons add-clear -->
-                    <div id="clear_build" title="Return to the list" onClick="clearBuild();" style="display:none"></div>
-                    <div id="add_build" title="Add new build" onClick="addBuild();"></div>
+                    <spring:message code="label.project.project_form.return_to_list" var="i18n_return_to_list"/>
+                    <div id="clear_build" title="${i18n_return_to_list}" onClick="clearBuild();" style="display:none"></div>
+                    <spring:message code="label.project.project_form.add_build" var="i18n_add_build"/>
+                    <div id="add_build" title="${i18n_add_build}" onClick="addBuild();"></div>
                 </div>
                 <select id="project_manager" name="managerId" size="1">
-                  	<option selected disabled value="0">Manager</option>
+                  	<option selected disabled value="0"><spring:message code="label.project.project_form.manager"/></option>
                     <c:forEach items="${managers}" var="manager">
                     	<c:choose>
                             <c:when test="${manager.userId eq editProject.manager.userId}">
@@ -79,7 +89,8 @@
                         </c:choose>
                     </c:forEach>
                 </select>
-                <input id="project_submit" type="button" onClick="trySubmit();" value="Done">
+                <spring:message code="label.project.project_form.done" var="i18n_done"/>
+                <input id="project_submit" type="button" onClick="trySubmit();" value="${i18n_done}">
             </form>
 			<script type="text/javascript" language="javascript">
 				// Check all fields and if all is fine - submit 
@@ -128,26 +139,38 @@
 	</c:choose>
 </div>
 
+<spring:message code="label.project.js.popup.name_short" var="i18n_name_short"/>
+<spring:message code="label.project.js.popup.name_invalid" var="i18n_name_invalid"/>
+<spring:message code="label.project.js.popup.name_long" var="i18n_name_long"/>
+<spring:message code="label.project.js.popup.name_should_enter" var="i18n_name_should_enter"/>
+
+<spring:message code="label.project.js.popup.description_short" var="i18n_description_short"/>
+<spring:message code="label.project.js.popup.description_should_enter" var="i18n_description_should_enter"/>
+
+<spring:message code="label.project.js.popup.initial_build_should_enter" var="i18n_initial_build_should_enter"/>
+<spring:message code="label.project.js.popup.build_should_choose" var="i18n_build_should_choose"/>
+<spring:message code="label.project.js.popup.manager_should_choose" var="i18n_manager_should_choose"/>
+
 <script type="text/javascript" language="javascript">
 	function  isNameValid(){
 		var projectName = document.getElementById("project_name").value.trim();
 		var regexp = /\!|\@|\№|\%|\^|\&|\*|\(|\)|\_|\=|\+|\?|\"|\'|\;|\<|\>|\,|\.|\`|\~/;
 		if(projectName != ""){
 			if(projectName.length < 2){
-				showErrorPopupWindow("Project name is too short! It cannot be less than 2 characters.");
+				showErrorPopupWindow("${i18n_name_short}");
 				return false;
 			} else if(projectName.search(regexp) != -1){
-				showErrorPopupWindow("Project name contains invalid characters!");
+				showErrorPopupWindow("${i18n_name_invalid}");
 				return false;
 			} else if(projectName.length > 40){
-				showErrorPopupWindow("First name is too long! It cannot be more than 40 characters.");
+				showErrorPopupWindow("${i18n_name_long}");
 				return false;
 			} else{
 				// projectName is ok
 				return true;
 			}
 		} else{
-			showErrorPopupWindow("You should enter a correct project name!");
+			showErrorPopupWindow("${i18n_name_should_enter}");
 			return false;
 		}
 	}
@@ -156,14 +179,14 @@
 		var projectDescription = document.getElementById("project_description").value.trim();
 		if(projectDescription != ""){
 			if(projectDescription.length < 20){
-				showErrorPopupWindow("Project description is too short! It cannot be less than 20 characters.");
+				showErrorPopupWindow("${i18n_description_short}");
 				return false;
 			} else{
 				// projectDescription is ok
 				return true;
 			}
 		} else{
-			showErrorPopupWindow("You should enter a correct project description!");
+			showErrorPopupWindow("${i18n_description_should_enter}");
 			return false;
 		}
 	}
@@ -174,7 +197,7 @@
 			// projectBuild is ok
 			return true;
 		} else{
-			showErrorPopupWindow("You should enter a correct initial build!");
+			showErrorPopupWindow("${i18n_initial_build_should_enter}");
 			return false;
 		}
 	}
@@ -186,7 +209,7 @@
 			// projectBuild is ok
 			return true;
 		} else{
-			showErrorPopupWindow("You should choose corect build");
+			showErrorPopupWindow("${i18n_build_should_choose}");
 			return false;
 		}
 	}
@@ -197,7 +220,7 @@
 			// projectManager is ok
 			return true;
 		} else{
-			showErrorPopupWindow("You should choose manager to proceed!");
+			showErrorPopupWindow("${i18n_manager_should_choose}");
 			return false;
 		}
 	}

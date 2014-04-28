@@ -23,6 +23,9 @@ public class IssuePage extends AbstractPage{
 	public static final String PARAM_PROJECT_ID = "projectId";
 	public static final String PARAM_BUILD_ID = "buildId";
 	public static final String PARAM_ASSIGNEE_ID = "assigneeId";
+	public static final String PARAM_COMMENT = "comment";
+	public static final String PARAM_USER_ID = "userId";
+	public static final String PARAM_FILE = "file";
 	
 	// Attributes
 	
@@ -35,5 +38,6 @@ public class IssuePage extends AbstractPage{
 	public static final String ATTR_USERS = "users";
 	public static final String ATTR_STATUSES = "statuses";
 	public static final String ATTR_RESOLUTIONS = "resolutions";
-	
+	public static final String ATTR_COMMENTS = "comments";
+	public static final String ATTR_ATTACHMENTS = "attachments";
 }

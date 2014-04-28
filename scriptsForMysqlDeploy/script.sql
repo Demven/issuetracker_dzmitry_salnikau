@@ -210,4 +210,37 @@ CREATE TABLE issuetracker.roles (
 INSERT INTO `issuetracker`.`roles` (`id`, `name`) VALUES ('1', 'User');
 INSERT INTO `issuetracker`.`roles` (`id`, `name`) VALUES ('2', 'Administrator');
 
+DROP TABLE IF EXISTS issuetracker.comments;
+CREATE TABLE issuetracker.comments (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `issue` INT NULL,
+  `user` INT NULL,
+  `time` VARCHAR(45) NULL,
+  `date` VARCHAR(45) NULL,
+  `text` TEXT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `idcomments_UNIQUE` (`id` ASC));
+
+INSERT INTO `issuetracker`.`comments` (`id`, `issue`, `user`, `time`, `date`, `text`) VALUES ('1', '4', '1', '10:23', '04.02.2014', 'It seems all right. Try to check once again.');
+INSERT INTO `issuetracker`.`comments` (`id`, `issue`, `user`, `time`, `date`, `text`) VALUES ('2', '4', '2', '11:15', '25.02.2014', 'It still doen\'t close. You should try to test it more attentively.');
+INSERT INTO `issuetracker`.`comments` (`id`, `issue`, `user`, `time`, `date`, `text`) VALUES ('3', '4', '3', '09:34', '27.02.2014', 'Ok, I see the problem and have already assigned this task to Sergey.');
+INSERT INTO `issuetracker`.`comments` (`id`, `issue`, `user`, `time`, `date`, `text`) VALUES ('4', '8', '4', '17:12', '29.02.2014', 'We need to resolve this problem as much quicker!');
+INSERT INTO `issuetracker`.`comments` (`id`, `issue`, `user`, `time`, `date`, `text`) VALUES ('5', '8', '5', '15:55', '05.03.2014', 'All\'ve been done. Check it please.');
+INSERT INTO `issuetracker`.`comments` (`id`, `issue`, `user`, `time`, `date`, `text`) VALUES ('6', '9', '6', '12:01', '07.03.2014', 'Who can fix it? I don\'t know on which developer to assign.');
+INSERT INTO `issuetracker`.`comments` (`id`, `issue`, `user`, `time`, `date`, `text`) VALUES ('7', '9', '7', '13:45', '11.03.2014', 'I can do that, but only in a few days. ');
+INSERT INTO `issuetracker`.`comments` (`id`, `issue`, `user`, `time`, `date`, `text`) VALUES ('8', '12', '8', '09:13', '17.03.2014', 'Try to connect with Kate, she is our UI specialist. ');
+INSERT INTO `issuetracker`.`comments` (`id`, `issue`, `user`, `time`, `date`, `text`) VALUES ('9', '12', '9', '10:11', '18.04.2014', 'Kate Donnigton?');
+INSERT INTO `issuetracker`.`comments` (`id`, `issue`, `user`, `time`, `date`, `text`) VALUES ('10', '12', '10', '16:40', '23.04.2014', 'Yes, I wrote her and we discussed this problem. Connect with her ans she\'ll  explain how it should be done.');
+
+DROP TABLE IF EXISTS issuetracker.attachments;
+CREATE TABLE issuetracker.attachments (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `issue` INT NULL,
+  `user` INT NULL,
+  `time` VARCHAR(45) NULL,
+  `date` VARCHAR(45) NULL,
+  `reference` VARCHAR(255) NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC));
+
 commit;

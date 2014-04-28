@@ -33,6 +33,11 @@ public class SpringIssueService implements IssueService{
 	public Issue getIssueById(Integer issueId) {
 		return issueDAO.getIssueById(issueId);
 	}
+	
+	@Override
+	public List<Issue> getIssuesUsingFilter(String filter) {
+		return issueDAO.getIssuesUsingFilter(filter);
+	}
 
 	@Transactional
 	@Override
