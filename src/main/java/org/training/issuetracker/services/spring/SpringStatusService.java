@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.training.issuetracker.dao.hibernate.entities.Status;
+import org.training.issuetracker.dao.entities.Status;
 import org.training.issuetracker.dao.interfaces.StatusDAO;
 import org.training.issuetracker.services.StatusService;
 

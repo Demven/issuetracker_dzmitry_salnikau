@@ -50,3 +50,11 @@
 	width: 100%;
 	border-top: 1px solid #ccc;
 }
+.footer .locale_container{
+	height: 25px;
+	line-height: 25px;
+	font-size: 14px;
+	font-family: "Century Gothic";
+	margin-top: 12px;
+	text-align: center;
+}

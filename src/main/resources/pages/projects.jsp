@@ -1,5 +1,6 @@
 ﻿<%@ page contentType="text/html; charset=utf-8" language="java"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <!doctype html>
 <html>
 <head>
@@ -17,9 +18,9 @@
 	<div id="content_title"><c:out value="${pageTitle}"/></div>
     <div class="project_table">
     	<div class="header_line">
-   	  	  <div class="name">Name</div>
-          <div class="manager">Manager</div>
-            <div class="description">Description</div>
+   	  	  <div class="name"><spring:message code="label.projects.project_table.name"/></div>
+          <div class="manager"><spring:message code="label.projects.project_table.manager"/></div>
+            <div class="description"><spring:message code="label.projects.project_table.description"/></div>
         </div>
         <div id="project_lines">
         	<c:forEach items="${projects}" var="project">

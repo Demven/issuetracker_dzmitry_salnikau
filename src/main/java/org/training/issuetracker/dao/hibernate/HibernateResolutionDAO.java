@@ -10,7 +10,7 @@ import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import org.training.issuetracker.dao.hibernate.entities.Resolution;
+import org.training.issuetracker.dao.entities.Resolution;
 import org.training.issuetracker.dao.interfaces.ResolutionDAO;
 
 @Repository("resolutionDAO") 

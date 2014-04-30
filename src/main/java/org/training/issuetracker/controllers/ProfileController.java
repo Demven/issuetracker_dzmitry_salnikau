@@ -1,16 +1,19 @@
 package org.training.issuetracker.controllers;
 
+import java.util.Locale;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.training.issuetracker.dao.hibernate.entities.Role;
-import org.training.issuetracker.dao.hibernate.entities.User;
+import org.training.issuetracker.dao.entities.Role;
+import org.training.issuetracker.dao.entities.User;
 import org.training.issuetracker.logic.ValidationLogic;
 import org.training.issuetracker.managers.SessionManager;
 import org.training.issuetracker.pages.MainPage;
@@ -25,6 +28,9 @@ public class ProfileController {
 	private UserService userService;
 	
 	@Autowired
+    private MessageSource messageSource;
+	
+	@Autowired
 	private SessionManager sessionManager; 
 	
 	@Autowired
@@ -36,6 +42,7 @@ public class ProfileController {
 	@RequestMapping(value = "/{id}", method=RequestMethod.GET)
 	public String showProfile(
 				Model model,
+				Locale locale,
 				@PathVariable("id") Integer id,
 				HttpServletRequest request) {
 
@@ -47,18 +54,19 @@ public class ProfileController {
 			User editProfile = userService.getUserById(id);
 			
 			if(editProfile != null){
-				model.addAttribute(ProfilePage.ATTR_PAGE_TITLE, "Profile");
+				model.addAttribute(ProfilePage.ATTR_PAGE_TITLE, 
+						ProfilePage.getMessage(ProfilePage.MSG_TTL_PROFILE, messageSource, locale));
 				model.addAttribute(ProfilePage.ATTR_EDIT_PROFILE, editProfile);
 			} else{
 				// id is not valid, tell this to a user and forward him to the main page
-				model.addAttribute(MainPage.ATTR_ERROR_MESSAGE, "Such a user doesn't exist!");
-				page = mainController.showMainPage(model, request);
+				model.addAttribute(MainPage.ATTR_ERROR_MESSAGE, ProfilePage.getMessage(ProfilePage.MSG_ERR_NO_USER, messageSource, locale));
+				page = mainController.showMainPage(model, request, locale);
 			}
 		} else{
 			// we don't have access to this page
 			// tell this to a user and forward him to the main page
-			model.addAttribute(MainPage.ATTR_ERROR_MESSAGE, "You don't have access to this page!");
-			page = mainController.showMainPage(model, request);
+			model.addAttribute(MainPage.ATTR_ERROR_MESSAGE, ProfilePage.getMessage(ProfilePage.MSG_ERR_NO_ACCESS, messageSource, locale));
+			page = mainController.showMainPage(model, request, locale);
 		}
 		
 		return page;
@@ -69,6 +77,7 @@ public class ProfileController {
 				Model model,
 				@PathVariable("id") Integer id,
 				HttpServletRequest request,
+				Locale locale,
 				@RequestParam(ProfilePage.PARAM_FIRST_NAME) String firstName,
 				@RequestParam(ProfilePage.PARAM_LAST_NAME) String lastName,
 				@RequestParam(ProfilePage.PARAM_EMAIL) String email,
@@ -83,7 +92,7 @@ public class ProfileController {
 			User editProfile = userService.getUserById(id);
 			
 			if(editProfile != null){
-				model.addAttribute(ProfilePage.ATTR_PAGE_TITLE, "Profile");
+				model.addAttribute(ProfilePage.ATTR_PAGE_TITLE, ProfilePage.getMessage(ProfilePage.MSG_TTL_PROFILE, messageSource, locale));
 				
 				if(validation.isFirstNameValid(firstName)
 						&& validation.isLastNameValid(lastName)
@@ -103,28 +112,28 @@ public class ProfileController {
 					if(userSuccess){
 						// All data saved succesfully
 						// Show user popup-window with this message
-						model.addAttribute(ProfilePage.ATTR_SUCCESS_MESSAGE, "Changes saved successfully!");
+						model.addAttribute(ProfilePage.ATTR_SUCCESS_MESSAGE, ProfilePage.getMessage(ProfilePage.MSG_SCS_CHANGES_SAVED, messageSource, locale));
 					} else{
 						// Show user popup-window with error
-						model.addAttribute(ProfilePage.ATTR_ERROR_MESSAGE, "Failed to save changes!");
+						model.addAttribute(ProfilePage.ATTR_ERROR_MESSAGE, ProfilePage.getMessage(ProfilePage.MSG_ERR_FAILED_TO_SAVE, messageSource, locale));
 					}
 				} else{
 					// There is some error in the values
-					model.addAttribute(ProfilePage.ATTR_ERROR_MESSAGE, "Invalid values! Failed to save changes.");
+					model.addAttribute(ProfilePage.ATTR_ERROR_MESSAGE, ProfilePage.getMessage(ProfilePage.MSG_ERR_INVALID_VALUES, messageSource, locale));
 				}
 				
 				model.addAttribute(ProfilePage.ATTR_EDIT_PROFILE, editProfile);
 			} else{
 				// id is not valid, tell this to a user and forward him to the main page
-				model.addAttribute(MainPage.ATTR_ERROR_MESSAGE, "Such a user doesn't exist!");
-				page = mainController.showMainPage(model, request);
+				model.addAttribute(MainPage.ATTR_ERROR_MESSAGE, ProfilePage.getMessage(ProfilePage.MSG_ERR_NO_USER, messageSource, locale));
+				page = mainController.showMainPage(model, request, locale);
 			}
 			
 		} else{
 			// we don't have access to this page
 			// tell this to a user and forward him to the main page
-			model.addAttribute(MainPage.ATTR_ERROR_MESSAGE, "You don't have access to this page!");
-			page = mainController.showMainPage(model, request);
+			model.addAttribute(MainPage.ATTR_ERROR_MESSAGE, ProfilePage.getMessage(ProfilePage.MSG_ERR_NO_ACCESS, messageSource, locale));
+			page = mainController.showMainPage(model, request, locale);
 		}
 		
 		return page;

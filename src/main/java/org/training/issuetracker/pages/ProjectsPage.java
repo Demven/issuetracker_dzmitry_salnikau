@@ -20,5 +20,13 @@ public class ProjectsPage extends AbstractPage{
 	public static final String ATTR_PROJECTS = "projects";
 	public static final String ATTR_PAGES = "pages";
 	public static final String ATTR_CURRENT_PAGE = "currentPage";
+	
+	// Messages
+	// titles
+	public static final String MSG_TTL_PROJECTS = "label.projects.title.projects";
+	// errors
+	public static final String MSG_ERR_NO_ACCESS = "label.projects.error.no_access";
+	public static final String MSG_ERR_NO_PAGE = "label.projects.error.no_page";
+	public static final String MSG_ERR_NO_PROJECTS = "label.projects.error.no_projects";
 
 }

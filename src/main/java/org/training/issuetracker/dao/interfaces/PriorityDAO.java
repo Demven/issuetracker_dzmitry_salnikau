@@ -2,7 +2,7 @@ package org.training.issuetracker.dao.interfaces;
 
 import java.util.List;
 
-import org.training.issuetracker.dao.hibernate.entities.Priority;
+import org.training.issuetracker.dao.entities.Priority;
 
 /**
  * Interface, providing access to the priorities and their data

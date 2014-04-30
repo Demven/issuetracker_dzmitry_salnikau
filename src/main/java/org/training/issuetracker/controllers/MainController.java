@@ -2,19 +2,21 @@ package org.training.issuetracker.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.training.issuetracker.dao.hibernate.entities.Issue;
-import org.training.issuetracker.dao.hibernate.entities.User;
+import org.training.issuetracker.dao.entities.Issue;
+import org.training.issuetracker.dao.entities.User;
 import org.training.issuetracker.logic.ValidationLogic;
 import org.training.issuetracker.managers.CookieManager;
 import org.training.issuetracker.managers.SessionManager;
@@ -40,8 +42,11 @@ public class MainController {
 	@Autowired
 	private ValidationLogic validation; 
 	
+	@Autowired
+    private MessageSource messageSource;
+	
 	@RequestMapping(value = { "/", "/main" })
-	public String showMainPage(Model model, HttpServletRequest request) {
+	public String showMainPage(Model model, HttpServletRequest request, Locale locale) {
 		List<Issue> allIssues = issueService.getIssues();
 		
 		User loginUser = (User) sessionManager.getSessionValue(request, SessionManager.NAME_LOGIN_USER);
@@ -51,16 +56,16 @@ public class MainController {
 			ArrayList<Issue> assignedIssues = getAssignedIssues(allIssues, loginUser.getUserId());
 			
 			if(assignedIssues.size() > 0){
-				model.addAttribute(MainPage.ATTR_ASSIGNED_ISSUES, assignedIssues);		
-				model.addAttribute(MainPage.ATTR_PAGE_TITLE, "Assigned issues");	
-			} else{	
-				model.addAttribute(MainPage.ATTR_PAGE_TITLE, "No assigned issues");	
+				model.addAttribute(MainPage.ATTR_ASSIGNED_ISSUES, assignedIssues);
+				model.addAttribute(MainPage.ATTR_PAGE_TITLE, MainPage.getMessage(MainPage.MSG_TTL_ASSIGNED_ISSUES, messageSource, locale));	
+			} else{
+				model.addAttribute(MainPage.ATTR_PAGE_TITLE, MainPage.getMessage(MainPage.MSG_TTL_NO_ASSIGNED, messageSource, locale));	
 			}
 		} else{
 			// show the latest issues
 			ArrayList<Issue> latestIssues = getLatestIssues(allIssues);
 			model.addAttribute(MainPage.ATTR_LATEST_ISSUES, latestIssues);
-			model.addAttribute(MainPage.ATTR_PAGE_TITLE, "Latest issues");	
+			model.addAttribute(MainPage.ATTR_PAGE_TITLE, MainPage.getMessage(MainPage.MSG_TTL_LATEST_ISSUES, messageSource, locale));	
 		}
 		
 		return MainPage.NAME;
@@ -69,6 +74,7 @@ public class MainController {
 	@RequestMapping(value = "/search/{filter}/page/{page}", method=RequestMethod.GET)
 	public String searchIssues(Model model,
 				HttpServletRequest request,
+				Locale locale,
 				@PathVariable("page") Integer pageNumber,
 				@PathVariable("filter") String filter) {
 		
@@ -84,10 +90,10 @@ public class MainController {
 				
 				if(pageNumber <= totalPagesNumber){
 					if(portion != null && portion.size() > 0){
-						model.addAttribute(MainPage.ATTR_PAGE_TITLE, "Searched issues");
+						model.addAttribute(MainPage.ATTR_PAGE_TITLE, MainPage.getMessage(MainPage.MSG_TTL_SEARCHED_ISSUES, messageSource, locale));
 						model.addAttribute(MainPage.ATTR_SEARCHED_ISSUES, portion);
 					} else{
-						model.addAttribute(MainPage.ATTR_ERROR_MESSAGE, "There is no issues or some error occured!");
+						model.addAttribute(MainPage.ATTR_ERROR_MESSAGE, MainPage.getMessage(MainPage.MSG_ERR_NO_ISSUES, messageSource, locale));
 					}
 					
 					if(totalPagesNumber > 1){
@@ -96,16 +102,16 @@ public class MainController {
 						model.addAttribute(MainPage.ATTR_SEARCH_FILTER, filter);
 					}
 				} else {
-					model.addAttribute(MainPage.ATTR_ERROR_MESSAGE, "Such page doesn't exists!");
-					page = showMainPage(model, request);
+					model.addAttribute(MainPage.ATTR_ERROR_MESSAGE, MainPage.getMessage(MainPage.MSG_ERR_NO_PAGE, messageSource, locale));
+					page = showMainPage(model, request, locale);
 				}
 			} else{
-				model.addAttribute(MainPage.ATTR_PAGE_TITLE, "No matches :(");
+				model.addAttribute(MainPage.ATTR_PAGE_TITLE, MainPage.getMessage(MainPage.MSG_ERR_NO_MATCHES, messageSource, locale));
 			}
 		}else{
 			// such page doesn't exists
-			model.addAttribute(MainPage.ATTR_ERROR_MESSAGE, "Such page doesn't exists!");
-			page = showMainPage(model, request);
+			model.addAttribute(MainPage.ATTR_ERROR_MESSAGE, MainPage.getMessage(MainPage.MSG_ERR_NO_PAGE, messageSource, locale));
+			page = showMainPage(model, request, locale);
 		}
 		
 		return page;
@@ -138,6 +144,7 @@ public class MainController {
 			Model model,
 			HttpServletRequest request,
 			HttpServletResponse response,
+			Locale locale,
 			@RequestParam(MainPage.PARAM_EMAIL) String email,
 			@RequestParam(MainPage.PARAM_PASSWORD) String password) {
 		
@@ -163,8 +170,8 @@ public class MainController {
 		
 		String page = MainPage.REDIRECT_NAME;
 		if(!success){
-			model.addAttribute(MainPage.ATTR_ERROR_MESSAGE, "Not correct login or password! Try again please.");
-			page = showMainPage(model, request);
+			model.addAttribute(MainPage.ATTR_ERROR_MESSAGE, MainPage.getMessage(MainPage.MSG_ERR_NOT_CORRECT_PASSWORD, messageSource, locale));
+			page = showMainPage(model, request, locale);
 		}
 		
 		return page;

@@ -12,11 +12,11 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import org.training.issuetracker.dao.hibernate.entities.Issue;
-import org.training.issuetracker.dao.hibernate.entities.Priority;
-import org.training.issuetracker.dao.hibernate.entities.Status;
-import org.training.issuetracker.dao.hibernate.entities.Type;
-import org.training.issuetracker.dao.hibernate.entities.User;
+import org.training.issuetracker.dao.entities.Issue;
+import org.training.issuetracker.dao.entities.Priority;
+import org.training.issuetracker.dao.entities.Status;
+import org.training.issuetracker.dao.entities.Type;
+import org.training.issuetracker.dao.entities.User;
 import org.training.issuetracker.dao.interfaces.IssueDAO;
 
 @Repository("issueDAO") 

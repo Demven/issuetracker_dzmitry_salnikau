@@ -2,7 +2,7 @@ package org.training.issuetracker.dao.interfaces;
 
 import java.util.List;
 
-import org.training.issuetracker.dao.hibernate.entities.Comment;
+import org.training.issuetracker.dao.entities.Comment;
 
 /**
  * Interface, providing access to comments and their data

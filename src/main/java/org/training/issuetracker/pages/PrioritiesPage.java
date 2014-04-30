@@ -15,4 +15,11 @@ public class PrioritiesPage extends AbstractPage{
 	
 	// Attributes
 	public static final String ATTR_PRIORITIES = "priorities";
+	
+	// Messages
+	// titles
+	public static final String MSG_TTL_PRIORITIES = "label.priorities.title.priorities";
+	// errors
+	public static final String MSG_ERR_NO_PRIORITIES = "label.priorities.error.no_priorities";
+	public static final String MSG_ERR_NO_ACCESS = "label.priorities.error.no_access";
 }

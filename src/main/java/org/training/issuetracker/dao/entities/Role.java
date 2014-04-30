@@ -1,4 +1,4 @@
-package org.training.issuetracker.dao.hibernate.entities;
+package org.training.issuetracker.dao.entities;
 
 import java.io.Serializable;
 
@@ -10,39 +10,38 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * Class, describing an issue's status, that used in Hibernate
+ * Class, describing a user's role, that used in Hibernate
  * @author Dzmitry Salnikau
  * @since 24.02.2014
  */
 @Entity
-@Table(name=Status.TABLE_NAME)
-public class Status implements Serializable{
+@Table(name=Role.TABLE_NAME)
+public class Role implements Serializable {
 
-	private static final long serialVersionUID = -9186983276134215323L;
+	private static final long serialVersionUID = 6971497664543758197L;
 
-	public static final String TABLE_NAME = "statuses";
+	public static final String TABLE_NAME = "roles";
 	
 	public static final String COLUMN_ID = "id";
 	public static final String COLUMN_NAME = "name";
 	
-	public static final int INDEX_NEW = 1;
-	public static final int INDEX_ASSIGNED = 2;
-	public static final int INDEX_CLOSED = 5;
+	public static final String ROLE_ADMIN = "Administrator";
+	public static final String ROLE_USER = "User";
 	
 	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name=COLUMN_ID)
-	private Integer statusId;
+	private Integer roleId;
 	
 	@Column(name=COLUMN_NAME)
 	private String name;
 
 	
-	public Integer getStatusId() {
-		return statusId;
+	public Integer getRoleId() {
+		return roleId;
 	}
-	public void setStatusId(Integer statusId) {
-		this.statusId = statusId;
+	public void setRoleId(Integer roleId) {
+		this.roleId = roleId;
 	}
 
 	
@@ -53,4 +52,3 @@ public class Status implements Serializable{
 		this.name = name;
 	}
 }
-

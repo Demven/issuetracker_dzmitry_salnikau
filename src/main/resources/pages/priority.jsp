@@ -1,5 +1,6 @@
 ﻿<%@ page contentType="text/html; charset=utf-8" language="java"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <!doctype html>
 <html>
 <head>
@@ -20,15 +21,19 @@
         <c:when test="${empty editPriority}">
             <!-- Create priority -->
             <form id="priority_form" action="/issuetracker/priority" method="POST">
-                <input id="priority_name" name="name" type="text" maxlength="45" placeholder="Name of priority"/>
-                <input id="priority_submit" type="submit" name="submit" value="Create"/>
+            	<spring:message code="label.priority.priority_form.name" var="i18n_name"/>
+                <input id="priority_name" name="name" type="text" maxlength="45" placeholder="${i18n_name}"/>
+                <spring:message code="label.priority.priority_form.create" var="i18n_create"/>
+                <input id="priority_submit" type="submit" name="submit" value="${i18n_create}"/>
             </form>
         </c:when>
        	<c:when test="${not empty editPriority}">
         	<!-- Edit priority -->
             <form id="priority_form" action="/issuetracker/priority/${editPriority.priorityId}" method="POST">
-                <input id="priority_name" name="name" value="${editPriority.name}" type="text" maxlength="45" placeholder="Name of priority"/>
-                <input id="priority_submit" type="submit" name="submit" value="Done"/>
+            	<spring:message code="label.priority.priority_form.name" var="i18n_name"/>
+                <input id="priority_name" name="name" value="${editPriority.name}" type="text" maxlength="45" placeholder="${i18n_name}"/>
+                <spring:message code="label.priority.priority_form.done" var="i18n_done"/>
+                <input id="priority_submit" type="submit" name="submit" value="${i18n_done}"/>
             </form>
        	</c:when>
 	</c:choose>

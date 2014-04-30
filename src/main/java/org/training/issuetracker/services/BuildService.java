@@ -2,7 +2,7 @@ package org.training.issuetracker.services;
 
 import java.util.List;
 
-import org.training.issuetracker.dao.hibernate.entities.Build;
+import org.training.issuetracker.dao.entities.Build;
 
 public interface BuildService {
 

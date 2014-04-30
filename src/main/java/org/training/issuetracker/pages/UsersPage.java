@@ -20,4 +20,10 @@ public class UsersPage extends AbstractPage{
 	public static final String ATTR_USERS = "users";
 	public static final String ATTR_FILTER = "filter";
 
+	// Messages
+	// titles
+	public static final String MSG_TTL_FIND_USER = "label.users.title.find_user";
+	// errors
+	public static final String MSG_ERR_NO_USERS = "label.users.error.no_users";
+	public static final String MSG_ERR_NO_ACCESS = "label.users.error.no_access";
 }

@@ -2,16 +2,18 @@ package org.training.issuetracker.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.training.issuetracker.dao.hibernate.entities.Project;
+import org.training.issuetracker.dao.entities.Project;
 import org.training.issuetracker.logic.AccessLogic;
 import org.training.issuetracker.pages.MainPage;
 import org.training.issuetracker.pages.ProjectsPage;
@@ -28,24 +30,28 @@ public class ProjectsController {
 	private ProjectService projectService;
 	
 	@Autowired
+    private MessageSource messageSource;
+	
+	@Autowired
 	private AccessLogic accessLogic;
 	
 	private final int FIRST_PAGE = 1;
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public String showProjects(Model model, HttpServletRequest request) {
-		return showProjects(model, request, FIRST_PAGE);
+	public String showProjects(Model model, Locale locale, HttpServletRequest request) {
+		return showProjects(model, request, locale, FIRST_PAGE);
 	}
 	
 	@RequestMapping(value = "page/{pageNumber}", method=RequestMethod.GET)
 	public String showProjects(Model model,
 				HttpServletRequest request,
+				Locale locale,
 				@PathVariable("pageNumber") Integer pageNumber) {
 
 		String page = ProjectsPage.NAME;
 		
 		if(accessLogic.isHaveAdminAccess(request)){
-			model.addAttribute(ProjectsPage.ATTR_PAGE_TITLE, "Projects");
+			model.addAttribute(ProjectsPage.ATTR_PAGE_TITLE, ProjectsPage.getMessage(ProjectsPage.MSG_TTL_PROJECTS, messageSource, locale));
 			
 			List<Project> allProjects = projectService.getProjects();
 			int totalPagesNumber = (int) Math.ceil((double)allProjects.size() / (double)Project.MAX_SHOWN_NUMBER);
@@ -58,7 +64,8 @@ public class ProjectsController {
 				if(projects != null){
 					model.addAttribute(ProjectsPage.ATTR_PROJECTS, projects);
 				} else{
-					model.addAttribute(ProjectsPage.ATTR_ERROR_MESSAGE, "There is no projects or some error occured!");
+					model.addAttribute(ProjectsPage.ATTR_ERROR_MESSAGE, 
+							ProjectsPage.getMessage(ProjectsPage.MSG_ERR_NO_PROJECTS, messageSource, locale));
 				}
 				
 				if(totalPagesNumber > 1){
@@ -68,14 +75,14 @@ public class ProjectsController {
 			} else{
 				// such page soesn't exists
 				// tell this to a user and forward him to the main page
-				model.addAttribute(MainPage.ATTR_ERROR_MESSAGE, "Such page doesn't exists!");
-				page = mainController.showMainPage(model, request);
+				model.addAttribute(MainPage.ATTR_ERROR_MESSAGE, ProjectsPage.getMessage(ProjectsPage.MSG_ERR_NO_PAGE, messageSource, locale));
+				page = mainController.showMainPage(model, request, locale);
 			}
 		} else{
 			// we don't have access to this page
 			// tell this to a user and forward him to the main page
-			model.addAttribute(MainPage.ATTR_ERROR_MESSAGE, "You don't have access to this page!");
-			page = mainController.showMainPage(model, request);
+			model.addAttribute(MainPage.ATTR_ERROR_MESSAGE, ProjectsPage.getMessage(ProjectsPage.MSG_ERR_NO_ACCESS, messageSource, locale));
+			page = mainController.showMainPage(model, request, locale);
 		}
 		
 		return page;

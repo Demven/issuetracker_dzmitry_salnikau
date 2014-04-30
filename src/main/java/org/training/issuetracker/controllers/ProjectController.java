@@ -1,19 +1,21 @@
 package org.training.issuetracker.controllers;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.training.issuetracker.dao.hibernate.entities.Build;
-import org.training.issuetracker.dao.hibernate.entities.Project;
-import org.training.issuetracker.dao.hibernate.entities.User;
+import org.training.issuetracker.dao.entities.Build;
+import org.training.issuetracker.dao.entities.Project;
+import org.training.issuetracker.dao.entities.User;
 import org.training.issuetracker.logic.AccessLogic;
 import org.training.issuetracker.pages.MainPage;
 import org.training.issuetracker.pages.ProjectPage;
@@ -32,6 +34,9 @@ public class ProjectController {
 	private AccessLogic accessLogic;
 	
 	@Autowired
+    private MessageSource messageSource;
+	
+	@Autowired
 	private UserService userService;
 	
 	@Autowired
@@ -41,17 +46,18 @@ public class ProjectController {
 	private BuildService buildService;
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public String createProject(Model model, HttpServletRequest request) {
+	public String createProject(Model model, Locale locale, HttpServletRequest request) {
 		
 		String page = ProjectPage.NAME;
 		
 		if(accessLogic.isHaveAdminAccess(request)){
-			page = showCreateProject(model);
+			page = showCreateProject(model, locale);
 		} else{
 			// we don't have access to this page
 			// tell this to a user and forward him to the main page
-			model.addAttribute(MainPage.ATTR_ERROR_MESSAGE, "You don't have access to this page!");
-			page = mainController.showMainPage(model, request);
+			model.addAttribute(MainPage.ATTR_ERROR_MESSAGE, 
+					ProjectPage.getMessage(ProjectPage.MSG_ERR_NO_ACCESS, messageSource, locale));
+			page = mainController.showMainPage(model, request, locale);
 		}
 		
 		return page;
@@ -61,6 +67,7 @@ public class ProjectController {
 	public String saveProject(
 			Model model,
 			HttpServletRequest request,
+			Locale locale,
 			@RequestParam(ProjectPage.PARAM_NAME) String name,
 			@RequestParam(ProjectPage.PARAM_DESCRIPTION) String description,
 			@RequestParam(ProjectPage.PARAM_BUILD_NAME) String buildName,
@@ -103,27 +110,27 @@ public class ProjectController {
 					if(buildSuccess){
 						// All data saved succesfully
 						// Show user popup-window with this message
-						model.addAttribute(ProjectPage.ATTR_SUCCESS_MESSAGE, "Project created successfully!");
+						model.addAttribute(ProjectPage.ATTR_SUCCESS_MESSAGE, ProjectPage.getMessage(ProjectPage.MSG_SCS_PROJECT_CREATED, messageSource, locale));
 					} else{
 						// As build failed to save - delete project
 						projectService.deleteProject(projectId);
 						// Show user popup-window with error
-						model.addAttribute(ProjectPage.ATTR_ERROR_MESSAGE, "Failed to save new project!");
+						model.addAttribute(ProjectPage.ATTR_ERROR_MESSAGE, ProjectPage.getMessage(ProjectPage.MSG_ERR_FAILED_TO_SAVE, messageSource, locale));
 					}
 				} else{
 					// Show user popup-window with error
-					model.addAttribute(ProjectPage.ATTR_ERROR_MESSAGE, "Failed to save new project!");
+					model.addAttribute(ProjectPage.ATTR_ERROR_MESSAGE, ProjectPage.getMessage(ProjectPage.MSG_ERR_FAILED_TO_SAVE, messageSource, locale));
 				}
 			}
 			
 			// show page
-			page = showCreateProject(model);
+			page = showCreateProject(model, locale);
 		
 		} else{
 			// we don't have access to this page
 			// tell this to a user and forward him to the main page
-			model.addAttribute(MainPage.ATTR_ERROR_MESSAGE, "You don't have access to this page!");
-			page = mainController.showMainPage(model, request);
+			model.addAttribute(MainPage.ATTR_ERROR_MESSAGE, ProjectPage.getMessage(ProjectPage.MSG_ERR_NO_ACCESS, messageSource, locale));
+			page = mainController.showMainPage(model, request, locale);
 		}
 		
 		return page;
@@ -132,6 +139,7 @@ public class ProjectController {
 	@RequestMapping(value = "/{id}", method=RequestMethod.GET)
 	public String editProject(
 				Model model,
+				Locale locale,
 				@PathVariable("id") Integer id,
 				HttpServletRequest request) {
 
@@ -141,19 +149,19 @@ public class ProjectController {
 			Project editProject = projectService.getProjectById(id);
 			
 			if(editProject != null){
-				page = showEditProject(model, editProject);
+				page = showEditProject(model, locale, editProject);
 			} else{
 				// There was illegal project id
 				// tell this to a user and forward him to the main page
-				model.addAttribute(MainPage.ATTR_ERROR_MESSAGE, "Such a project doesn't exist!");
-				page = mainController.showMainPage(model, request);
+				model.addAttribute(MainPage.ATTR_ERROR_MESSAGE, ProjectPage.getMessage(ProjectPage.MSG_ERR_NO_PROJECT, messageSource, locale));
+				page = mainController.showMainPage(model, request, locale);
 			}
 			
 		} else{
 			// we don't have access to this page
 			// tell this to a user and forward him to the main page
-			model.addAttribute(MainPage.ATTR_ERROR_MESSAGE, "You don't have access to this page!");
-			page = mainController.showMainPage(model, request);
+			model.addAttribute(MainPage.ATTR_ERROR_MESSAGE, ProjectPage.getMessage(ProjectPage.MSG_ERR_NO_ACCESS, messageSource, locale));
+			page = mainController.showMainPage(model, request, locale);
 		}
 		
 		return page;
@@ -163,6 +171,7 @@ public class ProjectController {
 	public String saveEditedProject(
 			Model model,
 			HttpServletRequest request,
+			Locale locale,
 			@PathVariable("id") Integer id,
 			@RequestParam(ProjectPage.PARAM_NAME) String name,
 			@RequestParam(ProjectPage.PARAM_DESCRIPTION) String description,
@@ -223,27 +232,27 @@ public class ProjectController {
 					
 					if(projectSuccess){
 						// project saved succesfully - show user message about success
-						model.addAttribute(ProjectPage.ATTR_SUCCESS_MESSAGE, "Project updated successfully!");
+						model.addAttribute(ProjectPage.ATTR_SUCCESS_MESSAGE, ProjectPage.getMessage(ProjectPage.MSG_SCS_PROJECT_UPDATED, messageSource, locale));
 					} else{
 						// There was some error - tell this to a user
-						model.addAttribute(ProjectPage.ATTR_ERROR_MESSAGE, "Failed to update the project!");
+						model.addAttribute(ProjectPage.ATTR_ERROR_MESSAGE, ProjectPage.getMessage(ProjectPage.MSG_ERR_FAILED_TO_UPDATE, messageSource, locale));
 					}
 				}
 				
-				page = showEditProject(model, editProject);
+				page = showEditProject(model, locale, editProject);
 				
 			} else{
 				// There was illegal project id
 				// tell this to a user and forward him to the main page
-				model.addAttribute(MainPage.ATTR_ERROR_MESSAGE, "Such a project doesn't exist!");
-				page = mainController.showMainPage(model, request);
+				model.addAttribute(MainPage.ATTR_ERROR_MESSAGE, ProjectPage.getMessage(ProjectPage.MSG_ERR_NO_PROJECT, messageSource, locale));
+				page = mainController.showMainPage(model, request, locale);
 			}
 		
 		} else{
 			// we don't have access to this page
 			// tell this to a user and forward him to the main page
-			model.addAttribute(MainPage.ATTR_ERROR_MESSAGE, "You don't have access to this page!");
-			page = mainController.showMainPage(model, request);
+			model.addAttribute(MainPage.ATTR_ERROR_MESSAGE, ProjectPage.getMessage(ProjectPage.MSG_ERR_NO_ACCESS, messageSource, locale));
+			page = mainController.showMainPage(model, request, locale);
 		}
 		
 		return page;
@@ -252,8 +261,8 @@ public class ProjectController {
 	/**
 	 * Shows the page to create a project
 	 */
-	private String showCreateProject(Model model){
-		model.addAttribute(ProjectPage.ATTR_PAGE_TITLE, "New project");
+	private String showCreateProject(Model model, Locale locale){
+		model.addAttribute(ProjectPage.ATTR_PAGE_TITLE, ProjectPage.getMessage(ProjectPage.MSG_TTL_NEW_PROJECT, messageSource, locale));
 		
 		List<User> managers = userService.getUsers();
 		if(managers != null){
@@ -266,8 +275,8 @@ public class ProjectController {
 	/**
 	 * Shows the page to edit a project
 	 */
-	private String showEditProject(Model model, Project editProject){
-		model.addAttribute(ProjectPage.ATTR_PAGE_TITLE, "Edit project");
+	private String showEditProject(Model model, Locale locale, Project editProject){
+		model.addAttribute(ProjectPage.ATTR_PAGE_TITLE, ProjectPage.getMessage(ProjectPage.MSG_TTL_EDIT_PROJECT, messageSource, locale));
 		
 		model.addAttribute(ProjectPage.ATTR_EDIT_PROJECT, editProject);
 		

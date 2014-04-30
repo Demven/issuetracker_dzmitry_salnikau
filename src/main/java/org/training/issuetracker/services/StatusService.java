@@ -2,7 +2,7 @@ package org.training.issuetracker.services;
 
 import java.util.List;
 
-import org.training.issuetracker.dao.hibernate.entities.Status;
+import org.training.issuetracker.dao.entities.Status;
 
 public interface StatusService {
 

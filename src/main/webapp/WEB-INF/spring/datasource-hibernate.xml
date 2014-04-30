@@ -40,7 +40,7 @@
 	<!-- Настройки фабрики сессий Хибернейта  -->
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"> 
 		<property name="dataSource" ref="dataSource"/>
-		<property name="packagesToScan" value="org.training.issuetracker.dao.hibernate.entities"/> 
+		<property name="packagesToScan" value="org.training.issuetracker.dao.entities"/> 
 		<property name="hibernateProperties"> 
 			<props> 
 				<prop key="hibernate.dialect">${jdbc.dialect}</prop>

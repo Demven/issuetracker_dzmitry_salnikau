@@ -2,7 +2,7 @@ package org.training.issuetracker.dao.interfaces;
 
 import java.util.List;
 
-import org.training.issuetracker.dao.hibernate.entities.Status;
+import org.training.issuetracker.dao.entities.Status;
 
 /**
  * Interface, providing access to the statuses and their data

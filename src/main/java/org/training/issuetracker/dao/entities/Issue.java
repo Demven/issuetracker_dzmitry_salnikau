@@ -1,4 +1,4 @@
-package org.training.issuetracker.dao.hibernate.entities;
+package org.training.issuetracker.dao.entities;
 
 import java.io.Serializable;
 

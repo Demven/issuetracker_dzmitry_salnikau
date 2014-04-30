@@ -47,7 +47,10 @@
 	</script>
 </c:if>
 
-<div class="footer"></div>
+<div class="footer">
+	<div class="locale_container">
+    <a href="?lang=en">English</a> | <a href="?lang=ru">Русский</a>
+</div>
 
 </html>
 

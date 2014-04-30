@@ -1,4 +1,4 @@
-package org.training.issuetracker.dao.hibernate.entities;
+package org.training.issuetracker.dao.entities;
 
 import java.io.Serializable;
 
@@ -12,29 +12,29 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Class, describing an issue's comment, that used in Hibernate
+ * Class, describing an issue's attachment, that used in Hibernate
  * @author Dzmitry Salnikau
  * @since 23.04.2014
  */
 @Entity
-@Table(name=Comment.TABLE_NAME)
-public class Comment implements Serializable{
+@Table(name=Attachment.TABLE_NAME)
+public class Attachment implements Serializable{
 
-	private static final long serialVersionUID = -803844871428587049L;
+	private static final long serialVersionUID = -2362889607780245989L;
 
-	public static final String TABLE_NAME = "comments";
+	public static final String TABLE_NAME = "attachments";
 	
 	public static final String COLUMN_ID = "id";
 	public static final String COLUMN_ISSUE = "issue";
 	public static final String COLUMN_USER = "user";
 	public static final String COLUMN_TIME= "time";
 	public static final String COLUMN_DATE= "date";
-	public static final String COLUMN_TEXT= "text";
+	public static final String COLUMN_REFERENCE= "reference";
 	
 	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name=COLUMN_ID)
-	private Integer commentId;
+	private Integer attachmentId;
 	
 	@ManyToOne
     @JoinColumn(name=COLUMN_ISSUE)
@@ -50,15 +50,15 @@ public class Comment implements Serializable{
 	@Column(name=COLUMN_DATE)
 	private String date;
 	
-	@Column(name=COLUMN_TEXT)
-	private String text;
+	@Column(name=COLUMN_REFERENCE)
+	private String reference;
 
 	
-	public Integer getCommentId() {
-		return commentId;
+	public Integer getAttachmentId() {
+		return attachmentId;
 	}
-	public void setCommentId(Integer commentId) {
-		this.commentId = commentId;
+	public void setAttachmentId(Integer attachmentId) {
+		this.attachmentId = attachmentId;
 	}
 
 	
@@ -94,12 +94,10 @@ public class Comment implements Serializable{
 	}
 
 	
-	public String getText() {
-		return text;
+	public String getReference() {
+		return reference;
 	}
-	public void setText(String text) {
-		this.text = text;
+	public void setReference(String reference) {
+		this.reference = reference;
 	}
-	
-	
 }

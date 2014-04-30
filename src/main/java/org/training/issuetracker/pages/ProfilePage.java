@@ -23,4 +23,15 @@ public class ProfilePage extends AbstractPage{
 	
 	// Attributes
 	public static final String ATTR_EDIT_PROFILE = "editProfile";
+	
+	// Messages
+	// titles
+	public static final String MSG_TTL_PROFILE = "label.profile.title.profile";
+	// success
+	public static final String MSG_SCS_CHANGES_SAVED = "label.profile.success.changes_saved";
+	// errors
+	public static final String MSG_ERR_NO_USER = "label.profile.error.no_user";
+	public static final String MSG_ERR_NO_ACCESS = "label.profile.error.no_access";
+	public static final String MSG_ERR_FAILED_TO_SAVE = "label.profile.error.failed_to_save";
+	public static final String MSG_ERR_INVALID_VALUES = "label.profile.error.invalid_values";
 }

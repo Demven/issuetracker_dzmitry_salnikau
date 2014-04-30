@@ -17,7 +17,7 @@
 <%@ include file="_header.jsp" %>
 
 <div class="content">
-    <div id="content_title"><c:out value="${pageTitle}"/><a href="?lang=en">en</a>|<a href="?lang=ru">ru</a></div>
+    <div id="content_title"><c:out value="${pageTitle}"/></div>
     
     <c:if test="${not empty latestIssues or not empty assignedIssues or not empty searchedIssues}">
         <div class="issue_table">

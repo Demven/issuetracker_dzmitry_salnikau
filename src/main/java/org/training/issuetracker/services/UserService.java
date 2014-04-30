@@ -2,7 +2,7 @@ package org.training.issuetracker.services;
 
 import java.util.List;
 
-import org.training.issuetracker.dao.hibernate.entities.User;
+import org.training.issuetracker.dao.entities.User;
 
 public interface UserService {
 

@@ -18,4 +18,18 @@ public class PriorityPage extends AbstractPage{
 	
 	// Attributes
 	public static final String ATTR_EDIT_PRIORITY = "editPriority";
+	
+	// Messages
+	// titles
+	public static final String MSG_TTL_NEW_ISSUE = "label.priority.title.new_priority";
+	public static final String MSG_TTL_EDIT_ISSUE = "label.priority.title.edit_priority";
+	// success
+	public static final String MSG_SCS_PRIORITY_CREATED = "label.priority.success.priority_created";
+	public static final String MSG_SCS_PRIORITY_UPDATED = "label.priority.success.priority_updated";
+	// errors
+	public static final String MSG_ERR_NO_ACCESS = "label.priority.error.no_access";
+	public static final String MSG_ERR_FAILED_TO_SAVE = "label.priority.error.failed_to_save";
+	public static final String MSG_ERR_INVALID_VALUES = "label.priority.error.invalid_values";
+	public static final String MSG_ERR_NO_PRIORITY = "label.priority.error.no_priority";
+	public static final String MSG_ERR_FAILED_TO_UPDATE = "label.priority.error.failed_to_update";
 }

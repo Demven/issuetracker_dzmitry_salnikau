@@ -2,7 +2,7 @@ package org.training.issuetracker.dao.interfaces;
 
 import java.util.List;
 
-import org.training.issuetracker.dao.hibernate.entities.Role;
+import org.training.issuetracker.dao.entities.Role;
 
 /**
  * Interface, providing access to the user's roles and their data

@@ -1,9 +1,8 @@
 package org.training.issuetracker.dao.interfaces;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.training.issuetracker.dao.hibernate.entities.Project;
+import org.training.issuetracker.dao.entities.Project;
 
 
 /**

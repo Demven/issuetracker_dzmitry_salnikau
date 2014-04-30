@@ -16,4 +16,10 @@ public class TypesPage extends AbstractPage{
 	// Attributes
 	public static final String ATTR_TYPES = "types";
 
+	// Messages
+	// titles
+	public static final String MSG_TTL_TYPES = "label.types.title.types";
+	// errors
+	public static final String MSG_ERR_NO_TYPES = "label.types.error.no_types";
+	public static final String MSG_ERR_NO_ACCESS = "label.types.error.no_access";
 }

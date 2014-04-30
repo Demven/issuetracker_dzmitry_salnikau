@@ -4,8 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.training.issuetracker.dao.hibernate.entities.Role;
-import org.training.issuetracker.dao.hibernate.entities.User;
+import org.training.issuetracker.dao.entities.Role;
+import org.training.issuetracker.dao.entities.User;
 import org.training.issuetracker.managers.SessionManager;
 
 /**

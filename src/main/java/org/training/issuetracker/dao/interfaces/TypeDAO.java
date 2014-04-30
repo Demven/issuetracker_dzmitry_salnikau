@@ -2,7 +2,7 @@ package org.training.issuetracker.dao.interfaces;
 
 import java.util.List;
 
-import org.training.issuetracker.dao.hibernate.entities.Type;
+import org.training.issuetracker.dao.entities.Type;
 
 /**
  * Interface, providing access to the types and their data

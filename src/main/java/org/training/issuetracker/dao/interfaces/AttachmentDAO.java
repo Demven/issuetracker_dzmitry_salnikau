@@ -2,7 +2,7 @@ package org.training.issuetracker.dao.interfaces;
 
 import java.util.List;
 
-import org.training.issuetracker.dao.hibernate.entities.Attachment;
+import org.training.issuetracker.dao.entities.Attachment;
 
 /**
  * Interface, providing access to attachments and their data

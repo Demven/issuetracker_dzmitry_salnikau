@@ -1,5 +1,6 @@
 ﻿<%@ page contentType="text/html; charset=utf-8" language="java"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <!doctype html>
 <html>
 <head>
@@ -19,8 +20,10 @@
     <c:if test="${not empty editStatus}">
         <!-- Edit status -->
         <form id="status_form" action="/issuetracker/status/${editStatus.statusId}" method="POST">
-            <input id="status_name" name="name" value="${editStatus.name}" type="text" maxlength="45" placeholder="Name of status"/>
-            <input id="status_submit" type="submit" name="submit" value="Done"/>
+            <spring:message code="label.status.status_form.name" var="i18n_name"/>
+            <input id="status_name" name="name" value="${editStatus.name}" type="text" maxlength="45" placeholder="${i18n_name}"/>
+            <spring:message code="label.status.status_form.done" var="i18n_done"/>
+            <input id="status_submit" type="submit" name="submit" value="${i18n_done}"/>
         </form>
     </c:if>
 </div>

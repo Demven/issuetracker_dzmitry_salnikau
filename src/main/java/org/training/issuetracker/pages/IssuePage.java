@@ -40,4 +40,34 @@ public class IssuePage extends AbstractPage{
 	public static final String ATTR_RESOLUTIONS = "resolutions";
 	public static final String ATTR_COMMENTS = "comments";
 	public static final String ATTR_ATTACHMENTS = "attachments";
+	
+	// Messages
+	// titles
+	public static final String MSG_TTL_NEW_ISSUE = "label.issue.title.new_issue";
+	public static final String MSG_TTL_EDIT_ISSUE = "label.issue.title.edit_issue";
+	// success
+	public static final String MSG_SCS_ISSUE_CREATED = "label.issue.success.issue_created";
+	public static final String MSG_SCS_CHANGES_SAVED = "label.issue.success.changes_saved";
+	public static final String MSG_SCS_COMMENT_SAVED = "label.issue.success.comment_saved";
+	public static final String MSG_SCS_ATTACHMENT_SAVED = "label.issue.success.attachment_saved";
+	// errors
+	public static final String MSG_ERR_ISSUE_FAILED = "label.issue.error.issue_failed";
+	public static final String MSG_ERR_FILL_SUMMARY = "label.issue.error.fill_summary";
+	public static final String MSG_ERR_NO_ISSUE = "label.issue.error.no_issue";
+	public static final String MSG_ERR_CHANGES_FAILED = "label.issue.error.changes_failed";
+	public static final String MSG_ERR_COMMENT_FAILED = "label.issue.error.comment_failed";
+	public static final String MSG_ERR_ENTER_COMMENT = "label.issue.error.enter_comment";
+	public static final String MSG_ERR_FILE_FAILED = "label.issue.error.file_failed";
+	public static final String MSG_ERR_FILE_EMPTY = "label.issue.error.file_empty";
+
 }
+
+
+
+
+
+
+
+
+
+

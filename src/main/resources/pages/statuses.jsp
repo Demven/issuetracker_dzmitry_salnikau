@@ -1,5 +1,6 @@
 ﻿<%@ page contentType="text/html; charset=utf-8" language="java"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <!doctype html>
 <html>
 <head>
@@ -18,7 +19,7 @@
     <div id="table_container">
         <div class="status_table">
             <div class="header_line">
-              <div class="name">Name</div>
+              <div class="name"><spring:message code="label.statuses.status_table.name"/></div>
             </div>
             <div id="status_lines">
             	<c:forEach items="${statuses}" var="status">

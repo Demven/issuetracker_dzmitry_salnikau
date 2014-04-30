@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.training.issuetracker.dao.hibernate.entities.*;
+import org.training.issuetracker.dao.entities.*;
 import org.training.issuetracker.listeners.ContextListener;
 import org.training.issuetracker.managers.DateManager;
 import org.training.issuetracker.managers.SessionManager;
@@ -67,14 +69,17 @@ public class IssueController {
 	private AttachmentService attachmentService;
 	
 	@Autowired
+    private MessageSource messageSource;
+	
+	@Autowired
 	private SessionManager sessionManager; 
 	
 	private String saveDirectory = ContextListener.getServerPath() + "data\\attachments\\issues\\";
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public String createIssue(Model model) {
+	public String createIssue(Model model, Locale locale) {
 		
-		model.addAttribute(IssuePage.ATTR_PAGE_TITLE, "New issue");
+		model.addAttribute(IssuePage.ATTR_PAGE_TITLE, IssuePage.getMessage(IssuePage.MSG_TTL_NEW_ISSUE, messageSource, locale));
 		
 		List<Type> types = typeService.getTypes();
 		if(types != null){
@@ -109,6 +114,7 @@ public class IssueController {
 	public String saveIssue(
 			Model model,
 			HttpServletRequest request,
+			Locale locale,
 			@RequestParam(IssuePage.PARAM_SUMMARY) String summary,
 			@RequestParam(IssuePage.PARAM_DESCRIPTION) String description,
 			@RequestParam(IssuePage.PARAM_STATUS_INDEX) Integer statusIndex,
@@ -188,21 +194,22 @@ public class IssueController {
 			if(isSuccess){
 				// All data saved succesfully
 				// Show user popup-window with this message
-				model.addAttribute(IssuePage.ATTR_SUCCESS_MESSAGE, "Issue created successfully!");
+				model.addAttribute(IssuePage.ATTR_SUCCESS_MESSAGE, IssuePage.getMessage(IssuePage.MSG_SCS_ISSUE_CREATED, messageSource, locale));
 			} else{
 				// Show user popup-window with error
-				model.addAttribute(IssuePage.ATTR_ERROR_MESSAGE, "Failed to save new issue!");
+				model.addAttribute(IssuePage.ATTR_ERROR_MESSAGE, IssuePage.getMessage(IssuePage.MSG_ERR_ISSUE_FAILED, messageSource, locale));
 			}
 		} else{
-			model.addAttribute(IssuePage.ATTR_ERROR_MESSAGE, "Please fill summary and description!");
+			model.addAttribute(IssuePage.ATTR_ERROR_MESSAGE, IssuePage.getMessage(IssuePage.MSG_ERR_FILL_SUMMARY, messageSource, locale));
 		}
 		
-		return createIssue(model);
+		return createIssue(model, locale);
 	}
 	
 	@RequestMapping(value = "/{id}", method=RequestMethod.GET)
 	public String editIssue(
 				Model model,
+				Locale locale,
 				@PathVariable("id") Integer id,
 				HttpServletRequest request) {
 
@@ -211,7 +218,7 @@ public class IssueController {
 		Issue editIssue = issueService.getIssueById(id);
 		
 		if(editIssue != null){
-			model.addAttribute(IssuePage.ATTR_PAGE_TITLE, "Edit issue");
+			model.addAttribute(IssuePage.ATTR_PAGE_TITLE, IssuePage.getMessage(IssuePage.MSG_TTL_EDIT_ISSUE, messageSource, locale));
 			model.addAttribute(IssuePage.ATTR_EDIT_ISSUE, editIssue);
 			
 			List<Status> statuses = statusService.getStatuses();
@@ -262,8 +269,8 @@ public class IssueController {
 			
 		} else{
 			// id is not valid, tell this to a user and forward him to the main page
-			model.addAttribute(MainPage.ATTR_ERROR_MESSAGE, "Such issue doesn't exist!");
-			page = mainController.showMainPage(model, request);
+			model.addAttribute(MainPage.ATTR_ERROR_MESSAGE, IssuePage.getMessage(IssuePage.MSG_ERR_NO_ISSUE, messageSource, locale));
+			page = mainController.showMainPage(model, request, locale);
 		}
 		
 		return page;
@@ -274,6 +281,7 @@ public class IssueController {
 			Model model,
 			@PathVariable("id") Integer id,
 			HttpServletRequest request,
+			Locale locale,
 			@RequestParam(IssuePage.PARAM_SUMMARY) String summary,
 			@RequestParam(IssuePage.PARAM_DESCRIPTION) String description,
 			@RequestParam(IssuePage.PARAM_STATUS_INDEX) Integer statusIndex,
@@ -370,22 +378,22 @@ public class IssueController {
 				if(isSuccess){
 					// All data saved succesfully
 					// Show user popup-window with this message
-					model.addAttribute(IssuePage.ATTR_SUCCESS_MESSAGE, "Changes saved successfully!");
+					model.addAttribute(IssuePage.ATTR_SUCCESS_MESSAGE, IssuePage.getMessage(IssuePage.MSG_SCS_CHANGES_SAVED, messageSource, locale));
 				} else{
 					// Show user popup-window with error
-					model.addAttribute(IssuePage.ATTR_ERROR_MESSAGE, "Failed to save changes!");
+					model.addAttribute(IssuePage.ATTR_ERROR_MESSAGE, IssuePage.getMessage(IssuePage.MSG_ERR_CHANGES_FAILED, messageSource, locale));
 				}
 				
 			} else{
-				model.addAttribute(IssuePage.ATTR_ERROR_MESSAGE, "Please fill summary and description!");
+				model.addAttribute(IssuePage.ATTR_ERROR_MESSAGE, IssuePage.getMessage(IssuePage.MSG_ERR_FILL_SUMMARY, messageSource, locale));
 			}
 			
-			page = editIssue(model, id, request);
+			page = editIssue(model, locale, id, request);
 			
 		} else{
 			// id is not valid, tell this to a user and forward him to the main page
-			model.addAttribute(MainPage.ATTR_ERROR_MESSAGE, "Such issue doesn't exist!");
-			page = mainController.showMainPage(model, request);
+			model.addAttribute(MainPage.ATTR_ERROR_MESSAGE, IssuePage.getMessage(IssuePage.MSG_ERR_NO_ISSUE, messageSource, locale));
+			page = mainController.showMainPage(model, request, locale);
 		}
 		
 		return page;
@@ -396,6 +404,7 @@ public class IssueController {
 			Model model,
 			@PathVariable("id") Integer issueId,
 			HttpServletRequest request,
+			Locale locale,
 			@RequestParam(IssuePage.PARAM_USER_ID) Integer userId,
 			@RequestParam(IssuePage.PARAM_COMMENT) String text) {
 		
@@ -430,22 +439,22 @@ public class IssueController {
 				if(isSuccess){
 					// All data saved succesfully
 					// Show user popup-window with this message
-					model.addAttribute(IssuePage.ATTR_SUCCESS_MESSAGE, "Comment saved successfully!");
+					model.addAttribute(IssuePage.ATTR_SUCCESS_MESSAGE, IssuePage.getMessage(IssuePage.MSG_SCS_COMMENT_SAVED, messageSource, locale));
 				} else{
 					// Show user popup-window with error
-					model.addAttribute(IssuePage.ATTR_ERROR_MESSAGE, "Failed to save comment!");
+					model.addAttribute(IssuePage.ATTR_ERROR_MESSAGE, IssuePage.getMessage(IssuePage.MSG_ERR_COMMENT_FAILED, messageSource, locale));
 				}
 				
 			} else{
-				model.addAttribute(IssuePage.ATTR_ERROR_MESSAGE, "Please enter your comment!");
+				model.addAttribute(IssuePage.ATTR_ERROR_MESSAGE, IssuePage.getMessage(IssuePage.MSG_ERR_ENTER_COMMENT, messageSource, locale));
 			}
 			
-			page = editIssue(model, issueId, request);
+			page = editIssue(model, locale, issueId, request);
 			
 		} else{
 			// id is not valid, tell this to a user and forward him to the main page
-			model.addAttribute(MainPage.ATTR_ERROR_MESSAGE, "Such issue doesn't exist!");
-			page = mainController.showMainPage(model, request);
+			model.addAttribute(MainPage.ATTR_ERROR_MESSAGE, IssuePage.getMessage(IssuePage.MSG_ERR_NO_ISSUE, messageSource, locale));
+			page = mainController.showMainPage(model, request, locale);
 		}
 		
 		return page;
@@ -455,6 +464,7 @@ public class IssueController {
 	public String addAttachment(
 			Model model,
 			HttpServletRequest request,
+			Locale locale,
 			@PathVariable("id") Integer issueId,
 			@RequestParam(IssuePage.PARAM_USER_ID) Integer userId,
 			@RequestParam(IssuePage.PARAM_FILE) MultipartFile file){
@@ -502,26 +512,26 @@ public class IssueController {
 		                		new FileOutputStream(savedFile));
 		                stream.write(bytes);
 		                stream.close();
-		                model.addAttribute(IssuePage.ATTR_SUCCESS_MESSAGE, "Attachment saved successfully!");
+		                model.addAttribute(IssuePage.ATTR_SUCCESS_MESSAGE, IssuePage.getMessage(IssuePage.MSG_SCS_ATTACHMENT_SAVED, messageSource, locale));
 		            } catch (Exception e) {
 		            	success = false;
-		            	model.addAttribute(IssuePage.ATTR_ERROR_MESSAGE, "Failed to save file!");
+		            	model.addAttribute(IssuePage.ATTR_ERROR_MESSAGE, IssuePage.getMessage(IssuePage.MSG_ERR_FILE_FAILED, messageSource, locale));
 		            }
 		            
 				} else{
-					model.addAttribute(IssuePage.ATTR_ERROR_MESSAGE, "Failed to save file!");
+					model.addAttribute(IssuePage.ATTR_ERROR_MESSAGE, IssuePage.getMessage(IssuePage.MSG_ERR_FILE_FAILED, messageSource, locale));
 				}
 				
 	        } else {
-	        	model.addAttribute(IssuePage.ATTR_ERROR_MESSAGE, "Your file is empty!");
+	        	model.addAttribute(IssuePage.ATTR_ERROR_MESSAGE, IssuePage.getMessage(IssuePage.MSG_ERR_FILE_EMPTY, messageSource, locale));
 	        }
 			
-			page = editIssue(model, issueId, request);
+			page = editIssue(model, locale, issueId, request);
 		
 		} else{
 			// id is not valid, tell this to a user and forward him to the main page
-			model.addAttribute(MainPage.ATTR_ERROR_MESSAGE, "Such issue doesn't exist!");
-			page = mainController.showMainPage(model, request);
+			model.addAttribute(MainPage.ATTR_ERROR_MESSAGE, IssuePage.getMessage(IssuePage.MSG_ERR_NO_ISSUE, messageSource, locale));
+			page = mainController.showMainPage(model, request, locale);
 		}
 		
 		return page;
